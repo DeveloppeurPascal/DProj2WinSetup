@@ -36,6 +36,7 @@ To download this code repository, we recommend using "git", but you can also dow
 
 This project uses dependencies in the form of sub-modules. They will be absent from the ZIP file. You'll have to download them by hand.
 
+* [DeveloppeurPascal/AboutDialog-Delphi-Component](https://github.com/DeveloppeurPascal/AboutDialog-Delphi-Component) must be installed in the ./lib-externes/AboutDialog-Delphi-Component subfolder.
 * [DeveloppeurPascal/librairies](https://github.com/DeveloppeurPascal/librairies) must be installed in the ./lib-externes/librairies subfolder.
 
 To run, the program requires access to [Exe Bulk Signing](http://exebulksigning.olfsoftware.fr) (in server mode on the same workstation or on the local network) and [Inno Setup](https://jrsoftware.org/isinfo.php) (on the same computer).
