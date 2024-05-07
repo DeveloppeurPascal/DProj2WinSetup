@@ -21,7 +21,7 @@ object frmOptions: TfrmOptions
     Size.Width = 630.000000000000000000
     Size.Height = 438.000000000000000000
     Size.PlatformDefault = False
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     TabPosition = PlatformDefault
     Sizes = (
@@ -34,7 +34,7 @@ object frmOptions: TfrmOptions
         item
         end>
       TextSettings.Trimming = None
-      IsSelected = True
+      IsSelected = False
       Size.Width = 107.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -169,7 +169,7 @@ object frmOptions: TfrmOptions
           ControlCollection = <
             item
               Column = 0
-              Control = btnEBDSave
+              Control = btnEBSSave
               Row = 0
             end
             item
@@ -181,7 +181,7 @@ object frmOptions: TfrmOptions
             item
               Value = 100.000000000000000000
             end>
-          object btnEBDSave: TButton
+          object btnEBSSave: TButton
             Align = Client
             Margins.Left = 5.000000000000000000
             Margins.Top = 5.000000000000000000
@@ -193,7 +193,7 @@ object frmOptions: TfrmOptions
             TabOrder = 0
             Text = 'Save'
             TextSettings.Trimming = None
-            OnClick = btnEBDSaveClick
+            OnClick = btnEBSSaveClick
           end
           object btnEBSCancel: TButton
             Align = Client
@@ -263,7 +263,7 @@ object frmOptions: TfrmOptions
         item
         end>
       TextSettings.Trimming = None
-      IsSelected = False
+      IsSelected = True
       Size.Width = 78.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -325,7 +325,7 @@ object frmOptions: TfrmOptions
           Size.Width = 610.000000000000000000
           Size.Height = 17.000000000000000000
           Size.PlatformDefault = False
-          Text = 'Inno Setup path'
+          Text = 'Inno Setup Command-Line Compiler (ISCC.exe) path'
           TabOrder = 2
         end
         object edtISPath: TEdit
@@ -441,5 +441,11 @@ object frmOptions: TfrmOptions
       TextSettings.Trimming = None
       OnClick = btnCloseClick
     end
+  end
+  object odISCC: TOpenDialog
+    Filter = 'Inno Setup CL Compiler (ISCC.exe)|ISCC.exe'
+    Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
+    Left = 576
+    Top = 192
   end
 end

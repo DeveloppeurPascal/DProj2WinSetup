@@ -2,8 +2,6 @@ unit fOptions;
 
 interface
 
-// TODO : fill edtISPath text prompt with default InnoSetup installation path (if the program is detected)
-
 uses
   System.SysUtils,
   System.Types,
@@ -37,7 +35,7 @@ type
     edtEBSServerPort: TEdit;
     edtEBSAuthKey: TEdit;
     gplEBSSaveCancel: TGridPanelLayout;
-    btnEBDSave: TButton;
+    btnEBSSave: TButton;
     btnEBSCancel: TButton;
     btnEBSDownload: TButton;
     lblEBSServerIP: TLabel;
@@ -51,6 +49,7 @@ type
     btnISCancel: TButton;
     btnISPathSelect: TEllipsesEditButton;
     PasswordEditButton1: TPasswordEditButton;
+    odISCC: TOpenDialog;
     procedure FormCreate(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -60,12 +59,21 @@ type
     procedure btnEBSDownloadClick(Sender: TObject);
     procedure btnISDownloadClick(Sender: TObject);
     procedure btnEBSTestConnectionClick(Sender: TObject);
-    procedure btnEBDSaveClick(Sender: TObject);
+    procedure btnEBSSaveClick(Sender: TObject);
     procedure btnEBSCancelClick(Sender: TObject);
   private
-    { Déclarations privées }
+    /// <summary>
+    /// Search default path for the Inno Setup Command-Line Compiler (ISCC.exe)
+    /// </summary>
+    procedure InitISCCDefaultPath;
+
+    procedure InitEBSSettings;
+    procedure SaveEBSSettings(Const SaveParams: Boolean);
+    function HasEBSSettingsChanged: Boolean;
+    procedure InitISSettings;
+    procedure SaveISSettings(Const SaveParams: Boolean);
+    function HasISSettingsChanged: Boolean;
   public
-    { Déclarations publiques }
   end;
 
 implementation
@@ -73,21 +81,24 @@ implementation
 {$R *.fmx}
 
 uses
-  uConfig, u_urlOpen;
+  FMX.DialogService,
+  System.IOUtils,
+  uConfig,
+  u_urlOpen;
 
 procedure TfrmOptions.btnCloseClick(Sender: TObject);
 begin
   close;
 end;
 
-procedure TfrmOptions.btnEBDSaveClick(Sender: TObject);
+procedure TfrmOptions.btnEBSSaveClick(Sender: TObject);
 begin
-  // TODO : à compléter
+  SaveEBSSettings(true);
 end;
 
 procedure TfrmOptions.btnEBSCancelClick(Sender: TObject);
 begin
-  // TODO : à compléter
+  InitEBSSettings;
 end;
 
 procedure TfrmOptions.btnEBSDownloadClick(Sender: TObject);
@@ -102,7 +113,7 @@ end;
 
 procedure TfrmOptions.btnISCancelClick(Sender: TObject);
 begin
-  // TODO : à compléter
+  InitISSettings;
 end;
 
 procedure TfrmOptions.btnISDownloadClick(Sender: TObject);
@@ -111,23 +122,170 @@ begin
 end;
 
 procedure TfrmOptions.btnISPathSelectClick(Sender: TObject);
+var
+  iscc: string;
 begin
-  // TODO : à compléter
+  iscc := edtISPath.Text.trim;
+
+  if iscc.IsEmpty then
+    iscc := tpath.GetDirectoryName(edtISPath.TextPrompt);
+
+  if iscc.IsEmpty then
+    iscc := GetEnvironmentVariable('ProgramFiles');
+
+  odISCC.InitialDir := iscc;
+
+  if odISCC.Execute then
+    if (odISCC.FileName <> edtISPath.TextPrompt) and string(odISCC.FileName)
+      .ToLower.EndsWith('iscc.exe') then
+      edtISPath.Text := odISCC.FileName
+    else
+      edtISPath.Text := '';
 end;
 
 procedure TfrmOptions.btnISSaveClick(Sender: TObject);
 begin
-  // TODO : à compléter
+  SaveISSettings(true);
 end;
 
 procedure TfrmOptions.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
-  // TODO : tester si des modifications sont en attente et proposer l'enregistrement ou l'abandon
+  if HasEBSSettingsChanged or HasISSettingsChanged then
+  begin
+    CanClose := false;
+    // TODO : traduire text
+    tdialogservice.MessageDialog('Do you want to save pending changes ?',
+      TMsgDlgType.mtConfirmation, mbYesNo, TMsgDlgBtn.mbYes, 0,
+      procedure(Const AModalResult: TModalResult)
+      begin
+        if AModalResult = mryes then
+        begin
+          SaveEBSSettings(true);
+          SaveISSettings(true);
+        end
+        else
+        begin
+          InitEBSSettings;
+          InitISSettings;
+        end;
+        tthread.forcequeue(nil,
+          procedure
+          begin
+            close;
+          end);
+      end);
+  end
+  else
+    CanClose := true;
 end;
 
 procedure TfrmOptions.FormCreate(Sender: TObject);
 begin
   TabControl1.ActiveTab := tiExeBulkSigning;
+
+  // Global program settings
+  // TODO : à compléter
+
+  // Exe Bulk Signing Settings
+  InitEBSSettings;
+
+  // Inno Setup Settings
+  InitISCCDefaultPath;
+  InitISSettings;
+end;
+
+function TfrmOptions.HasEBSSettingsChanged: Boolean;
+begin
+  result := (edtEBSServerIP.TagString <> edtEBSServerIP.Text) or
+    (edtEBSServerPort.TagString <> edtEBSServerPort.Text) or
+    (edtEBSAuthKey.TagString <> edtEBSAuthKey.Text);
+end;
+
+function TfrmOptions.HasISSettingsChanged: Boolean;
+begin
+  result := (edtISPath.TagString <> edtISPath.Text);
+end;
+
+procedure TfrmOptions.InitEBSSettings;
+begin
+  edtEBSServerIP.Text := tconfig.ExeBulkSigningServerIP;
+  edtEBSServerPort.Text := tconfig.ExeBulkSigningServerPort.ToString;
+  edtEBSAuthKey.Text := tconfig.ExeBulkSigningAuthKey;
+
+  SaveEBSSettings(false);
+end;
+
+procedure TfrmOptions.InitISCCDefaultPath;
+var
+  i: integer;
+  ISCCCurrentPath: string;
+begin
+  if tdirectory.Exists('C:\Program Files (Arm)') then
+    for i := 9 downto 1 do
+    begin
+      ISCCCurrentPath := 'C:\Program Files (Arm)\Inno Setup ' + i.ToString +
+        '\ISCC.exe';
+      if tfile.Exists(ISCCCurrentPath) then
+        break;
+    end;
+
+  if (not tfile.Exists(ISCCCurrentPath)) and
+    tdirectory.Exists('C:\Program Files') then
+    for i := 9 downto 1 do
+    begin
+      ISCCCurrentPath := 'C:\Program Files\Inno Setup ' + i.ToString +
+        '\ISCC.exe';
+      if tfile.Exists(ISCCCurrentPath) then
+        break;
+    end;
+
+  if (not tfile.Exists(ISCCCurrentPath)) and
+    tdirectory.Exists('C:\Program Files (x86)') then
+    for i := 9 downto 1 do
+    begin
+      ISCCCurrentPath := 'C:\Program Files (x86)\Inno Setup ' + i.ToString +
+        '\ISCC.exe';
+      if tfile.Exists(ISCCCurrentPath) then
+        break;
+    end;
+
+  if tfile.Exists(ISCCCurrentPath) then
+    edtISPath.TextPrompt := ISCCCurrentPath
+  else
+    edtISPath.TextPrompt := '';
+end;
+
+procedure TfrmOptions.InitISSettings;
+begin
+  edtISPath.Text := tconfig.InnoSetupPath;
+
+  SaveISSettings(false);
+end;
+
+procedure TfrmOptions.SaveEBSSettings(const SaveParams: Boolean);
+begin
+  if SaveParams then
+  begin
+    tconfig.ExeBulkSigningServerIP := edtEBSServerIP.Text;
+    tconfig.ExeBulkSigningServerPort := edtEBSServerPort.Text.ToInteger;
+    tconfig.ExeBulkSigningAuthKey := edtEBSAuthKey.Text;
+    tconfig.Save;
+  end;
+
+  edtEBSServerIP.TagString := edtEBSServerIP.Text;
+  edtEBSServerPort.TagString := edtEBSServerPort.Text;
+  edtEBSAuthKey.TagString := edtEBSAuthKey.Text;
+end;
+
+procedure TfrmOptions.SaveISSettings(const SaveParams: Boolean);
+begin
+  if SaveParams then
+  begin
+    tconfig.InnoSetupPath := edtISPath.Text;
+    tconfig.Save;
+  end;
+
+  edtISPath.TagString := edtISPath.Text;
 end;
 
 end.
