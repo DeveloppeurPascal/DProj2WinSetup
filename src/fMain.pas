@@ -14,7 +14,10 @@ uses
   FMX.Graphics,
   FMX.Dialogs,
   Olf.FMX.AboutDialog,
-  uDMLogo;
+  uDMLogo,
+  FMX.StdCtrls,
+  FMX.Controls.Presentation,
+  FMX.Edit;
 
 type
   TfrmMain = class(TForm)
@@ -35,7 +38,8 @@ implementation
 {$R *.fmx}
 
 uses
-  u_urlOpen;
+  u_urlOpen,
+  uConfig;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
@@ -90,5 +94,11 @@ procedure TfrmMain.OlfAboutDialog1URLClick(const AURL: string);
 begin
   url_Open_In_Browser(AURL);
 end;
+
+initialization
+
+{$IFDEF DEBUG}
+  ReportMemoryLeaksOnShutdown := true;
+{$ENDIF}
 
 end.
