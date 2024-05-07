@@ -13,7 +13,8 @@ uses
   FMX.Forms,
   FMX.Graphics,
   FMX.Dialogs,
-  Olf.FMX.AboutDialog;
+  Olf.FMX.AboutDialog,
+  uDMLogo;
 
 type
   TfrmMain = class(TForm)
