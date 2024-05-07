@@ -1,10 +1,18 @@
-# Delphi-Projects-Template
+# DProj2WinSetup
 
 [This page in english.](README.md)
 
-**Un modèle de dépôt git pour mes projets Delphi (ou autres).**
+DProj2WinSetup est un générateur de programmes d'installation pour logiciels sous Windows développés sous Delphi (dans une version récente).
 
-**Ce template est distribué sous licence MIT. La licence AGPL est pour les projets que je crée à partir de ce template de dépôt de code. Utilisez la licence que vous voulez si vous utilisez ce template.**
+La création d'installeurs se fait en plusieurs étapes :
+
+* Analyse des options du projet Delphi pour déterminer la liste des fichiers à packager et leur emplacement (d'origine et de destination).
+* Signature des programmes exécutables, DLL et autres susceptibles de déclencher des alertes à l'utilisation sous Windows par l'intermédiaire du mode client/server de [Exe Bulk Signing](http://exebulksigning.olfsoftware.fr) qui devra être installé sur le poste du développeur ou un ordinateur du réseau sur lequel se trouvent les certificats de signature de code ou token CSC.
+* Génération du script d'installation dans un fichier ISS au format demandé par [Inno Setup](https://jrsoftware.org/isinfo.php).
+* Lancement de la génération des installeurs en passant par Inno Setup[Inno Setup](https://jrsoftware.org/isinfo.php) qui devra être installé sur le poste du développeur et accessible de DProj2WinSetup.
+* Signature des programmes d'installation générés en passant également par [Exe Bulk Signing](http://exebulksigning.olfsoftware.fr).
+
+L'objectif étant de simplifier au maximum la génération d'installeurs pour les projets Delphi de base.
 
 Ce dépôt de code contient un projet développé en langage Pascal Objet sous Delphi. Vous ne savez pas ce qu'est Dephi ni où le télécharger ? Vous en saurez plus [sur ce site web](https://delphi-resources.developpeur-pascal.fr/).
 
@@ -14,22 +22,24 @@ Ce logiciel est disponible dans une version de production directement installabl
 
 Vous pouvez le télécharger et le rediffuser gratuitement à condition de ne pas en modifier le contenu (installeur, programme, fichiers annexes, ...).
 
-[Télécharger le programme ou son installeur](DDD)
+[Télécharger le programme ou son installeur](https://olfsoftware.lemonsqueezy.com/buy/a6513657-bc58-4079-a813-098906cbd8f8)
 
 Si vous utilisez régulièrement ce logiciel et en êtes satisfait vous êtes invité à en acheter une licence d'utilisateur final. L'achat d'une licence vous donnera accès aux mises à jour du logiciel en plus d'activer d'évenuelles fonctionnalités optionnelles.
 
-[Acheter une licence](FFF)
+[Acheter une licence](https://olfsoftware.lemonsqueezy.com/buy/5d6328a0-4ccf-40e9-87b7-784ebfdc1440)
 
-Vous pouvez aussi [consulter le site du logiciel](EEE) pour en savoir plus sur son fonctionnement, accéder à des vidéos et articles, connaître les différentes versions disponibles et leurs fonctionnalités, contacter le support utilisateurs...
+Vous pouvez aussi [consulter le site du logiciel](https://dproj2winsetup.olfsoftware.fr) pour en savoir plus sur son fonctionnement, accéder à des vidéos et articles, connaître les différentes versions disponibles et leurs fonctionnalités, contacter le support utilisateurs...
 
 ## Installation des codes sources
 
-Pour télécharger ce dépôt de code il est recommandé de passer par "git" mais vous pouvez aussi télécharger un ZIP directement depuis [son dépôt GitHub](https://github.com/DeveloppeurPascal/XXXXXXXXXX).
+Pour télécharger ce dépôt de code il est recommandé de passer par "git" mais vous pouvez aussi télécharger un ZIP directement depuis [son dépôt GitHub](https://github.com/DeveloppeurPascal/DProj2WinSetup).
 
 Ce projet utilise des dépendances sous forme de sous modules. Ils seront absents du fichier ZIP. Vous devrez les télécharger à la main.
 
 * [YYY](ZZZ) doit être installé dans le sous dossier ./lib-externes/YYY
 * [YYY](ZZZ) doit être installé dans le sous dossier ./lib-externes/YYY
+
+Pour fonctionner Le programme nécessite d'avoir accès à [Exe Bulk Signing](http://exebulksigning.olfsoftware.fr) (en mode serveur sur le même poste ou sur le réseau local) et [Inno Setup](https://jrsoftware.org/isinfo.php) (sur le même ordinateur).
 
 ## Licence d'utilisation de ce dépôt de code et de son contenu
 
@@ -48,7 +58,7 @@ Certains éléments inclus dans ce dépôt peuvent dépendre de droits d'utilisa
 
 ## Comment demander une nouvelle fonctionnalité, signaler un bogue ou une faille de sécurité ?
 
-Si vous voulez une réponse du propriétaire de ce dépôt la meilleure façon de procéder pour demander une nouvelle fonctionnalité ou signaler une anomalie est d'aller sur [le dépôt de code sur GitHub](https://github.com/DeveloppeurPascal/XXXXXXXXXX) et [d'ouvrir un ticket](https://github.com/DeveloppeurPascal/XXXXXXXXXX/issues).
+Si vous voulez une réponse du propriétaire de ce dépôt la meilleure façon de procéder pour demander une nouvelle fonctionnalité ou signaler une anomalie est d'aller sur [le dépôt de code sur GitHub](https://github.com/DeveloppeurPascal/DProj2WinSetup) et [d'ouvrir un ticket](https://github.com/DeveloppeurPascal/DProj2WinSetup/issues).
 
 Si vous avez trouvé une faille de sécurité n'en parlez pas en public avant qu'un correctif n'ait été déployé ou soit disponible. [Contactez l'auteur du dépôt en privé](https://developpeur-pascal.fr/nous-contacter.php) pour expliquer votre trouvaille.
 
