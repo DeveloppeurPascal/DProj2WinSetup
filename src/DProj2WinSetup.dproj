@@ -345,6 +345,10 @@
         <DCCReference Include="..\lib-externes\librairies\src\Olf.RTL.CryptDecrypt.pas"/>
         <DCCReference Include="..\lib-externes\librairies\src\Olf.RTL.Params.pas"/>
         <DCCReference Include="uConfig.pas"/>
+        <DCCReference Include="fOptions.pas">
+            <Form>frmOptions</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

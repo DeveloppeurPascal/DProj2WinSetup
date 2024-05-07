@@ -10,7 +10,8 @@ uses
   uDMLogo in 'uDMLogo.pas' {dmLogo: TDataModule},
   Olf.RTL.CryptDecrypt in '..\lib-externes\librairies\src\Olf.RTL.CryptDecrypt.pas',
   Olf.RTL.Params in '..\lib-externes\librairies\src\Olf.RTL.Params.pas',
-  uConfig in 'uConfig.pas';
+  uConfig in 'uConfig.pas',
+  fOptions in 'fOptions.pas' {frmOptions};
 
 {$R *.res}
 

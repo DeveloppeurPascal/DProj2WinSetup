@@ -59,7 +59,8 @@ implementation
 
 uses
   u_urlOpen,
-  uConfig;
+  uConfig,
+  fOptions;
 
 procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
@@ -153,8 +154,15 @@ begin
 end;
 
 procedure TfrmMain.mnuToolsOptionsClick(Sender: TObject);
+var
+  frm: TfrmOptions;
 begin
-  // TODO : à compléter
+  frm := TfrmOptions.Create(self);
+  try
+    frm.ShowModal;
+  finally
+    frm.Free;
+  end;
 end;
 
 procedure TfrmMain.OlfAboutDialog1URLClick(const AURL: string);
