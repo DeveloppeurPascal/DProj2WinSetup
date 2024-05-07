@@ -95,7 +95,7 @@ end;
 
 class function TConfig.GetExeBulkSigningServerIP: string;
 begin
-  result := ConfigFile.getValue('ESBServerIP', '');
+  result := ConfigFile.getValue('ESBServerIP', '127.0.0.1');
 end;
 
 class function TConfig.GetExeBulkSigningServerPort: word;
