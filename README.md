@@ -37,6 +37,7 @@ To download this code repository, we recommend using "git", but you can also dow
 This project uses dependencies in the form of sub-modules. They will be absent from the ZIP file. You'll have to download them by hand.
 
 * [DeveloppeurPascal/AboutDialog-Delphi-Component](https://github.com/DeveloppeurPascal/AboutDialog-Delphi-Component) must be installed in the ./lib-externes/AboutDialog-Delphi-Component subfolder.
+* [DeveloppeurPascal/ExeBulkSigning](https://github.com/DeveloppeurPascal/ExeBulkSigning) must be installed in the ./lib-externes/ExeBulkSigning subfolder.
 * [DeveloppeurPascal/librairies](https://github.com/DeveloppeurPascal/librairies) must be installed in the ./lib-externes/librairies subfolder.
 * [DeveloppeurPascal/Socket-Messaging-Library](https://github.com/DeveloppeurPascal/Socket-Messaging-Library) must be installed in the ./lib-externes/Socket-Messaging-Library subfolder.
 

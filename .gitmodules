@@ -7,3 +7,6 @@
 [submodule "lib-externes/Socket-Messaging-Library"]
 	path = lib-externes/Socket-Messaging-Library
 	url = https://github.com/DeveloppeurPascal/Socket-Messaging-Library.git
+[submodule "lib-externes/ExeBulkSigning"]
+	path = lib-externes/ExeBulkSigning
+	url = https://github.com/DeveloppeurPascal/ExeBulkSigning.git
