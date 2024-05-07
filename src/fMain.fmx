@@ -7,5 +7,19 @@ object frmMain: TfrmMain
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
   DesignerMasterStyle = 0
+  object OlfAboutDialog1: TOlfAboutDialog
+    Titre = 'DProj2WinSetup'
+    VersionNumero = '0.0a'
+    VersionDate = '20240507'
+    MultiResBitmap = <
+      item
+      end>
+    URL = 'https://dproj2winsetup.olfsoftware.fr'
+    onURLClick = OlfAboutDialog1URLClick
+    Copyright = '(c) 2024 Patrick Pr'#233'martin'
+    Left = 88
+    Top = 88
+  end
 end
