@@ -8,6 +8,7 @@ object frmMain: TfrmMain
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
+  OnCloseQuery = FormCloseQuery
   DesignerMasterStyle = 0
   object OlfAboutDialog1: TOlfAboutDialog
     Titre = 'DProj2WinSetup'
@@ -23,5 +24,56 @@ object frmMain: TfrmMain
     Copyright = '(c) 2024 Patrick Pr'#233'martin'
     Left = 88
     Top = 88
+  end
+  object MainMenu1: TMainMenu
+    Left = 96
+    Top = 176
+    object mnuFile: TMenuItem
+      Text = '&File'
+      object mnuFileOpen: TMenuItem
+        Locked = True
+        ShortCut = 16463
+        Text = '&Open'
+        OnClick = mnuFileOpenClick
+      end
+      object mnuFileSave: TMenuItem
+        Locked = True
+        ShortCut = 16467
+        Text = '&Save'
+        OnClick = mnuFileSaveClick
+      end
+      object mnuFileClose: TMenuItem
+        Locked = True
+        ShortCut = 16499
+        Text = '&Close'
+        OnClick = mnuFileCloseClick
+      end
+      object mnuSeparator: TMenuItem
+        Locked = True
+        Text = '-'
+      end
+      object mnuFileQuit: TMenuItem
+        Locked = True
+        ShortCut = 32883
+        Text = '&Quit'
+        OnClick = mnuFileQuitClick
+      end
+    end
+    object mnoTools: TMenuItem
+      Text = '&Tools'
+      object mnuToolsOptions: TMenuItem
+        Locked = True
+        Text = '&Options'
+        OnClick = mnuToolsOptionsClick
+      end
+    end
+    object mnuHelp: TMenuItem
+      Text = '&Help'
+      object mnuHelpAbout: TMenuItem
+        Locked = True
+        Text = '&About'
+        OnClick = mnuHelpAboutClick
+      end
+    end
   end
 end

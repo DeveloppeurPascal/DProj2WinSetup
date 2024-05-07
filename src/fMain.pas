@@ -17,17 +17,37 @@ uses
   uDMLogo,
   FMX.StdCtrls,
   FMX.Controls.Presentation,
-  FMX.Edit;
+  FMX.Edit,
+  FMX.Menus;
 
 type
   TfrmMain = class(TForm)
     OlfAboutDialog1: TOlfAboutDialog;
+    MainMenu1: TMainMenu;
+    mnuFile: TMenuItem;
+    mnoTools: TMenuItem;
+    mnuFileOpen: TMenuItem;
+    mnuFileSave: TMenuItem;
+    mnuFileClose: TMenuItem;
+    mnuSeparator: TMenuItem;
+    mnuHelp: TMenuItem;
+    mnuToolsOptions: TMenuItem;
+    mnuHelpAbout: TMenuItem;
+    mnuFileQuit: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure OlfAboutDialog1URLClick(const AURL: string);
+    procedure mnuToolsOptionsClick(Sender: TObject);
+    procedure mnuFileCloseClick(Sender: TObject);
+    procedure mnuFileOpenClick(Sender: TObject);
+    procedure mnuFileQuitClick(Sender: TObject);
+    procedure mnuFileSaveClick(Sender: TObject);
+    procedure mnuHelpAboutClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
   public
     procedure InitMainFormCaption;
     procedure InitAboutDialogBox;
+    procedure UpdateFileMenuOptionsVisibility;
   end;
 
 var
@@ -41,10 +61,19 @@ uses
   u_urlOpen,
   uConfig;
 
+procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  // TODO : à compléter
+  // Tester si projet modifié ouvert ou pas et proposer son enregistrement avant d'autoriser la fermeture du programme
+end;
+
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
-  InitMainFormCaption;
   InitAboutDialogBox;
+  InitMainFormCaption;
+  mnuHelpAbout.Text := '&About ' + OlfAboutDialog1.Titre;
+  // TODO : traduire texte
+  UpdateFileMenuOptionsVisibility;
 end;
 
 procedure TfrmMain.InitAboutDialogBox;
@@ -88,11 +117,56 @@ begin
 {$ENDIF}
   caption := caption + OlfAboutDialog1.Titre + ' v' +
     OlfAboutDialog1.VersionNumero;
+  // TODO : ajouter nom du projet ouvert s'il y en a un (éventuellement son statut de modification)
+end;
+
+procedure TfrmMain.mnuFileCloseClick(Sender: TObject);
+begin
+  // TODO : à compléter
+  // si projet avec modifications en cours, proposer son enregistrement avant (ou le faire par défaut)
+  // TODO : recalculer le titre de la fenêtre
+  UpdateFileMenuOptionsVisibility;
+end;
+
+procedure TfrmMain.mnuFileOpenClick(Sender: TObject);
+begin
+  // TODO : à compléter
+  // Open a DPROJ and/or DPROJ2Setup file
+  // TODO : recalculer le titre de la fenêtre
+  UpdateFileMenuOptionsVisibility;
+end;
+
+procedure TfrmMain.mnuFileQuitClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TfrmMain.mnuFileSaveClick(Sender: TObject);
+begin
+  // TODO : à compléter
+  // TODO : recalculer le titre de la fenêtre
+end;
+
+procedure TfrmMain.mnuHelpAboutClick(Sender: TObject);
+begin
+  OlfAboutDialog1.Execute;
+end;
+
+procedure TfrmMain.mnuToolsOptionsClick(Sender: TObject);
+begin
+  // TODO : à compléter
 end;
 
 procedure TfrmMain.OlfAboutDialog1URLClick(const AURL: string);
 begin
   url_Open_In_Browser(AURL);
+end;
+
+procedure TfrmMain.UpdateFileMenuOptionsVisibility;
+begin
+  // TODO : replace "False" by a test of current opened project
+  mnuFileSave.Enabled := false;
+  mnuFileClose.Enabled := false;
 end;
 
 initialization
