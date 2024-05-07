@@ -8,3 +8,7 @@
 * création de l'icone du projet avec Pic Mob Generator
 * mise en place des fonctionnalités permettant de gérer les options du logiciel
 * déclaration des options liées à ExeBulkSigning (pour InnoSetup, license et autres paramètres, impossible de savoir à l'avance ce dont on aura besoin, donc à ajouter le moment venu)
+* mise en place du menu de l'application, de ses options et des comportements de base
+* mise en place de la structure de l'écran des options du programme, de la saisie des paramètres pour EBS et IS.
+
+* restera donc le test de connexion pour Exe Bulk Signing dans les options du logiciel
