@@ -38,6 +38,7 @@ This project uses dependencies in the form of sub-modules. They will be absent f
 
 * [DeveloppeurPascal/AboutDialog-Delphi-Component](https://github.com/DeveloppeurPascal/AboutDialog-Delphi-Component) must be installed in the ./lib-externes/AboutDialog-Delphi-Component subfolder.
 * [DeveloppeurPascal/librairies](https://github.com/DeveloppeurPascal/librairies) must be installed in the ./lib-externes/librairies subfolder.
+* [DeveloppeurPascal/Socket-Messaging-Library](https://github.com/DeveloppeurPascal/Socket-Messaging-Library) must be installed in the ./lib-externes/Socket-Messaging-Library subfolder.
 
 To run, the program requires access to [Exe Bulk Signing](http://exebulksigning.olfsoftware.fr) (in server mode on the same workstation or on the local network) and [Inno Setup](https://jrsoftware.org/isinfo.php) (on the same computer).
 

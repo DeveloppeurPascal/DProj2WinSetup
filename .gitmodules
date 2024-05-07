@@ -4,3 +4,6 @@
 [submodule "lib-externes/AboutDialog-Delphi-Component"]
 	path = lib-externes/AboutDialog-Delphi-Component
 	url = https://github.com/DeveloppeurPascal/AboutDialog-Delphi-Component.git
+[submodule "lib-externes/Socket-Messaging-Library"]
+	path = lib-externes/Socket-Messaging-Library
+	url = https://github.com/DeveloppeurPascal/Socket-Messaging-Library.git
