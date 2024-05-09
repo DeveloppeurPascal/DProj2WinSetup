@@ -72,6 +72,7 @@ type
     btnWin64Cancel: TButton;
     btnWin32GuidGenerate: TEditButton;
     btnWin64GuidGenerate: TEditButton;
+    btnSendToExeBulkSigning: TButton;
     procedure FormCreate(Sender: TObject);
     procedure OlfAboutDialog1URLClick(const AURL: string);
     procedure mnuToolsOptionsClick(Sender: TObject);
@@ -89,6 +90,7 @@ type
     procedure btnWin64SaveClick(Sender: TObject);
     procedure btnWin64GuidGenerateClick(Sender: TObject);
     procedure btnWin32GuidGenerateClick(Sender: TObject);
+    procedure btnSendToExeBulkSigningClick(Sender: TObject);
   private
   public
     procedure InitMainFormCaption;
@@ -130,6 +132,11 @@ end;
 procedure TfrmMain.btnProjectSaveClick(Sender: TObject);
 begin
   SaveProjectSettings(true);
+end;
+
+procedure TfrmMain.btnSendToExeBulkSigningClick(Sender: TObject);
+begin
+  // TODO : à compléter
 end;
 
 procedure TfrmMain.btnWin32CancelClick(Sender: TObject);
