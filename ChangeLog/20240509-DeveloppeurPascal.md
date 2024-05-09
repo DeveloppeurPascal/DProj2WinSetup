@@ -18,3 +18,10 @@
 * finalisation du traitement de File/Close avec la proposition de l'enregistrement du projet actuel s'il a été modifié
 * finalisation du traitement de File/Save
 * ajout d'un bouton pour générer le GUID (si non renseigné) pour le GUID des setup en Windows 32 et Windows 64
+* uniformisation de la hauteur des boutons (écran d'accueil, écrans du projet et fenêtre d'options)
+* activation de la touche ESC pour sortir de la boite de dialogue des options
+* ajout d'un bouton pour signer les exécutables du projet
+* ajout d'un module de verrouillage de l'affichage de l'écran avec animation d'attente
+* ajout du verrouillage du clavier lorsque l'écran de verrouillage est affiché (par annulation des touches appuyées)
+* implémentation de l'envoi des fichiers exécutables (Win32/Win64 en RELEASE) en signature de code vers le serveur ExeBulkSigning configuré
+* remplacement du verrouillage du clavier (qui devrait être implémenté au niveau de chaque composant visuel pouvant traiter le clavier) par la désactivation des onglets et un refus d'exécution de chaque option de menu
