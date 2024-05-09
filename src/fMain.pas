@@ -398,9 +398,13 @@ end;
 
 procedure TfrmMain.mnuFileSaveClick(Sender: TObject);
 begin
-  if TDProj2WinSetupProject.IsOpened then
-    TDProj2WinSetupProject.Save;
-  InitMainFormCaption;
+  if TDProj2WinSetupProject.IsOpened and HasProjectChanged then
+  begin
+    SaveProjectSettings(true);
+    SaveWin32Settings(true);
+    SaveWin64Settings(true);
+    InitMainFormCaption;
+  end;
 end;
 
 procedure TfrmMain.mnuHelpAboutClick(Sender: TObject);
