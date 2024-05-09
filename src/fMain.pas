@@ -299,15 +299,33 @@ end;
 
 procedure TfrmMain.mnuFileCloseClick(Sender: TObject);
 begin
-  if TDProj2WinSetupProject.IsOpened then
+  if TDProj2WinSetupProject.IsOpened and HasProjectChanged then
+    // TODO : traduire text
+    tdialogservice.MessageDialog('Do you want to save pending changes ?',
+      TMsgDlgType.mtConfirmation, mbYesNo, TMsgDlgBtn.mbYes, 0,
+      procedure(Const AModalResult: TModalResult)
+      begin
+        if AModalResult = mryes then
+        begin
+          SaveProjectSettings(true);
+          SaveWin32Settings(true);
+          SaveWin64Settings(true);
+        end
+        else
+        begin
+          InitProjectSettings;
+          InitWin32Settings;
+          InitWin64Settings;
+        end;
+        mnuFileCloseClick(Sender);
+      end)
+  else
   begin
-    // TODO : tester si le projet a été modifié et proposer son enregistrement
     TDProj2WinSetupProject.close;
+    InitMainFormCaption;
+    UpdateFileMenuOptionsVisibility;
+    tcScreens.ActiveTab := tiHome;
   end;
-
-  InitMainFormCaption;
-  UpdateFileMenuOptionsVisibility;
-  tcScreens.ActiveTab := tiHome;
 end;
 
 procedure TfrmMain.mnuFileOpenClick(Sender: TObject);
