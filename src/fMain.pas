@@ -272,6 +272,7 @@ begin
 
   InitMainFormCaption;
   UpdateFileMenuOptionsVisibility;
+  tcScreens.ActiveTab := tiHome;
 end;
 
 procedure TfrmMain.mnuFileOpenClick(Sender: TObject);
