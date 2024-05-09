@@ -99,6 +99,7 @@ type
     procedure InitWin64Settings;
     procedure SaveWin64Settings(Const SaveParams: Boolean);
     function HasWin64SettingsChanged: Boolean;
+    function HasProjectChanged: Boolean;
   end;
 
 var
@@ -109,6 +110,7 @@ implementation
 {$R *.fmx}
 
 uses
+  FMX.DialogService,
   System.IOUtils,
   u_urlOpen,
   uConfig,
@@ -147,8 +149,35 @@ end;
 
 procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
-  // TODO : à compléter
-  // Tester si projet modifié ouvert ou pas et proposer son enregistrement avant d'autoriser la fermeture du programme
+  if (tcScreens.ActiveTab = tiProject) and HasProjectChanged then
+  begin
+    CanClose := false;
+    // TODO : traduire text
+    tdialogservice.MessageDialog('Do you want to save pending changes ?',
+      TMsgDlgType.mtConfirmation, mbYesNo, TMsgDlgBtn.mbYes, 0,
+      procedure(Const AModalResult: TModalResult)
+      begin
+        if AModalResult = mryes then
+        begin
+          SaveProjectSettings(true);
+          SaveWin32Settings(true);
+          SaveWin64Settings(true);
+        end
+        else
+        begin
+          InitProjectSettings;
+          InitWin32Settings;
+          InitWin64Settings;
+        end;
+        tthread.forcequeue(nil,
+          procedure
+          begin
+            close;
+          end);
+      end);
+  end
+  else
+    CanClose := true;
 end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
@@ -160,6 +189,12 @@ begin
   UpdateFileMenuOptionsVisibility;
   tcScreens.TabPosition := TTabPosition.None;
   tcScreens.ActiveTab := tiHome;
+end;
+
+function TfrmMain.HasProjectChanged: Boolean;
+begin
+  result := HasProjectSettingsChanged or HasWin32SettingsChanged or
+    HasWin64SettingsChanged;
 end;
 
 function TfrmMain.HasProjectSettingsChanged: Boolean;
@@ -226,7 +261,7 @@ begin
     caption := caption + tpath.GetFileNameWithoutExtension
       (TDProj2WinSetupProject.DProj2WinSetupProjectFileName);
 
-    if TDProj2WinSetupProject.HasChanged then
+    if HasProjectChanged then
       caption := caption + ' (*) ';
 
     caption := caption + ' - ';
@@ -267,7 +302,7 @@ begin
   if TDProj2WinSetupProject.IsOpened then
   begin
     // TODO : tester si le projet a été modifié et proposer son enregistrement
-    TDProj2WinSetupProject.Close;
+    TDProj2WinSetupProject.close;
   end;
 
   InitMainFormCaption;
@@ -340,7 +375,7 @@ end;
 
 procedure TfrmMain.mnuFileQuitClick(Sender: TObject);
 begin
-  Close;
+  close;
 end;
 
 procedure TfrmMain.mnuFileSaveClick(Sender: TObject);
