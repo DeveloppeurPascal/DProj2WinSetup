@@ -10,3 +10,6 @@
 [submodule "lib-externes/ExeBulkSigning"]
 	path = lib-externes/ExeBulkSigning
 	url = https://github.com/DeveloppeurPascal/ExeBulkSigning.git
+[submodule "ChangeLog/DOSCommand"]
+	path = ChangeLog/DOSCommand
+	url = https://github.com/TurboPack/DOSCommand.git

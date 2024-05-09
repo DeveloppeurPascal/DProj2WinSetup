@@ -40,6 +40,7 @@ Ce projet utilise des dépendances sous forme de sous modules. Ils seront absent
 * [DeveloppeurPascal/ExeBulkSigning](https://github.com/DeveloppeurPascal/ExeBulkSigning) doit être installé dans le sous dossier ./lib-externes/ExeBulkSigning
 * [DeveloppeurPascal/librairies](https://github.com/DeveloppeurPascal/librairies) doit être installé dans le sous dossier ./lib-externes/librairies
 * [DeveloppeurPascal/Socket-Messaging-Library](https://github.com/DeveloppeurPascal/Socket-Messaging-Library) doit être installé dans le sous dossier ./lib-externes/Socket-Messaging-Library
+* [TurboPack/DOSCommand](https://github.com/TurboPack/DOSCommand) doit être installé dans le sous dossier ./lib-externes/DOSCommand
 
 Pour fonctionner Le programme nécessite d'avoir accès à [Exe Bulk Signing](http://exebulksigning.olfsoftware.fr) (en mode serveur sur le même poste ou sur le réseau local) et [Inno Setup](https://jrsoftware.org/isinfo.php) (sur le même ordinateur).
 
