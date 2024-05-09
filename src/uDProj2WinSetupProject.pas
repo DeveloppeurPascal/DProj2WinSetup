@@ -45,7 +45,6 @@ type
     class function GetDelphiProjectFileNameFromDProj2WinSetupProjectFileName
       (Const ADProj2WinSetupProjectFileName: string): string;
     class function IsOpened: boolean;
-    class function HasChanged: boolean;
   end;
 
 implementation
@@ -100,7 +99,8 @@ class function TDProj2WinSetupProject.
   (Const ADelphiProjectFileName: string): string;
 begin
   result := tpath.combine(tpath.GetDirectoryName(ADelphiProjectFileName),
-    tpath.GetFileNameWithoutExtension(ADelphiProjectFileName) + '.dproj2winsetup');
+    tpath.GetFileNameWithoutExtension(ADelphiProjectFileName) +
+    '.dproj2winsetup');
 end;
 
 class function TDProj2WinSetupProject.GetISGUID32: string;
@@ -141,13 +141,6 @@ end;
 class function TDProj2WinSetupProject.GetSignURL: string;
 begin
   result := ProjectFile.getValue('SignURL', '');
-end;
-
-class function TDProj2WinSetupProject.HasChanged: boolean;
-begin
-  // TODO : à prendre en charge lorsque le ticket https://github.com/DeveloppeurPascal/librairies/issues/86 aura été traité
-  // Result := ProjectFileName.HasChanged;
-  result := false;
 end;
 
 class function TDProj2WinSetupProject.IsOpened: boolean;
