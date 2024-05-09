@@ -19,7 +19,8 @@ uses
   FMX.Controls.Presentation,
   FMX.Edit,
   FMX.Menus,
-  FMX.TabControl;
+  FMX.TabControl,
+  FMX.Layouts;
 
 type
   TfrmMain = class(TForm)
@@ -40,6 +41,35 @@ type
     tiProject: TTabItem;
     btnProjectOpen: TButton;
     OpenDialog1: TOpenDialog;
+    tcProject: TTabControl;
+    tiProjectOptions: TTabItem;
+    tiSetupWin32: TTabItem;
+    tiSetupWin64: TTabItem;
+    lblSignTitle: TLabel;
+    edtSignTitle: TEdit;
+    lblSignURL: TLabel;
+    edtSignURL: TEdit;
+    lblWin32Title: TLabel;
+    lblWin32Version: TLabel;
+    lblWin32Guid: TLabel;
+    edtWin32Title: TEdit;
+    edtWin32Guid: TEdit;
+    edtWin32Version: TEdit;
+    edtWin64Title: TEdit;
+    edtWin64Guid: TEdit;
+    edtWin64Version: TEdit;
+    lblWin64Title: TLabel;
+    lblWin64Version: TLabel;
+    lblWin64Guid: TLabel;
+    GridPanelLayout1: TGridPanelLayout;
+    btnProjectSave: TButton;
+    btnProjectCancel: TButton;
+    GridPanelLayout2: TGridPanelLayout;
+    btnWin32Save: TButton;
+    btnWin32Cancel: TButton;
+    GridPanelLayout3: TGridPanelLayout;
+    btnWin64Save: TButton;
+    btnWin64Cancel: TButton;
     procedure FormCreate(Sender: TObject);
     procedure OlfAboutDialog1URLClick(const AURL: string);
     procedure mnuToolsOptionsClick(Sender: TObject);
@@ -49,11 +79,26 @@ type
     procedure mnuFileSaveClick(Sender: TObject);
     procedure mnuHelpAboutClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure btnProjectSaveClick(Sender: TObject);
+    procedure btnProjectCancelClick(Sender: TObject);
+    procedure btnWin32CancelClick(Sender: TObject);
+    procedure btnWin32SaveClick(Sender: TObject);
+    procedure btnWin64CancelClick(Sender: TObject);
+    procedure btnWin64SaveClick(Sender: TObject);
   private
   public
     procedure InitMainFormCaption;
     procedure InitAboutDialogBox;
     procedure UpdateFileMenuOptionsVisibility;
+    procedure InitProjectSettings;
+    procedure SaveProjectSettings(Const SaveParams: Boolean);
+    function HasProjectSettingsChanged: Boolean;
+    procedure InitWin32Settings;
+    procedure SaveWin32Settings(Const SaveParams: Boolean);
+    function HasWin32SettingsChanged: Boolean;
+    procedure InitWin64Settings;
+    procedure SaveWin64Settings(Const SaveParams: Boolean);
+    function HasWin64SettingsChanged: Boolean;
   end;
 
 var
@@ -70,6 +115,36 @@ uses
   fOptions,
   uDProj2WinSetupProject;
 
+procedure TfrmMain.btnProjectCancelClick(Sender: TObject);
+begin
+  InitProjectSettings;
+end;
+
+procedure TfrmMain.btnProjectSaveClick(Sender: TObject);
+begin
+  SaveProjectSettings(true);
+end;
+
+procedure TfrmMain.btnWin32CancelClick(Sender: TObject);
+begin
+  InitWin32Settings;
+end;
+
+procedure TfrmMain.btnWin32SaveClick(Sender: TObject);
+begin
+  SaveWin32Settings(true);
+end;
+
+procedure TfrmMain.btnWin64CancelClick(Sender: TObject);
+begin
+  InitWin64Settings;
+end;
+
+procedure TfrmMain.btnWin64SaveClick(Sender: TObject);
+begin
+  SaveWin64Settings(true);
+end;
+
 procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   // TODO : à compléter
@@ -85,6 +160,26 @@ begin
   UpdateFileMenuOptionsVisibility;
   tcScreens.TabPosition := TTabPosition.None;
   tcScreens.ActiveTab := tiHome;
+end;
+
+function TfrmMain.HasProjectSettingsChanged: Boolean;
+begin
+  result := (edtSignTitle.TagString <> edtSignTitle.Text) or
+    (edtSignURL.TagString <> edtSignURL.Text);
+end;
+
+function TfrmMain.HasWin32SettingsChanged: Boolean;
+begin
+  result := (edtWin32Title.TagString <> edtWin32Title.Text) or
+    (edtWin32Version.TagString <> edtWin32Version.Text) or
+    (edtWin32Guid.TagString <> edtWin32Guid.Text);
+end;
+
+function TfrmMain.HasWin64SettingsChanged: Boolean;
+begin
+  result := (edtWin64Title.TagString <> edtWin64Title.Text) or
+    (edtWin64Version.TagString <> edtWin64Version.Text) or
+    (edtWin64Guid.TagString <> edtWin64Guid.Text);
 end;
 
 procedure TfrmMain.InitAboutDialogBox;
@@ -139,6 +234,32 @@ begin
 
   caption := caption + OlfAboutDialog1.Titre + ' v' +
     OlfAboutDialog1.VersionNumero;
+end;
+
+procedure TfrmMain.InitProjectSettings;
+begin
+  edtSignTitle.Text := TDProj2WinSetupProject.SignTitle;
+  edtSignURL.Text := TDProj2WinSetupProject.SignURL;
+
+  SaveProjectSettings(false);
+end;
+
+procedure TfrmMain.InitWin32Settings;
+begin
+  edtWin32Title.Text := TDProj2WinSetupProject.ISTitle32;
+  edtWin32Version.Text := TDProj2WinSetupProject.ISVersion32;
+  edtWin32Guid.Text := TDProj2WinSetupProject.ISGUID32;
+
+  SaveWin32Settings(false);
+end;
+
+procedure TfrmMain.InitWin64Settings;
+begin
+  edtWin64Title.Text := TDProj2WinSetupProject.ISTitle64;
+  edtWin64Version.Text := TDProj2WinSetupProject.ISVersion64;
+  edtWin64Guid.Text := TDProj2WinSetupProject.ISGUID64;
+
+  SaveWin64Settings(false);
 end;
 
 procedure TfrmMain.mnuFileCloseClick(Sender: TObject);
@@ -206,7 +327,10 @@ begin
   begin
     InitMainFormCaption;
     tcScreens.ActiveTab := tiProject;
-    // TODO : charger les paramètres du projet à l'écran
+    tcProject.ActiveTab := tiProjectOptions;
+    InitProjectSettings;
+    InitWin32Settings;
+    InitWin64Settings;
   end
   else
     tcScreens.ActiveTab := tiHome;
@@ -245,6 +369,49 @@ end;
 procedure TfrmMain.OlfAboutDialog1URLClick(const AURL: string);
 begin
   url_Open_In_Browser(AURL);
+end;
+
+procedure TfrmMain.SaveProjectSettings(const SaveParams: Boolean);
+begin
+  if SaveParams then
+  begin
+    TDProj2WinSetupProject.SignTitle := edtSignTitle.Text;
+    TDProj2WinSetupProject.SignURL := edtSignURL.Text;
+    TDProj2WinSetupProject.Save;
+  end;
+
+  edtSignTitle.TagString := edtSignTitle.Text;
+  edtSignURL.TagString := edtSignURL.Text;
+end;
+
+procedure TfrmMain.SaveWin32Settings(const SaveParams: Boolean);
+begin
+  if SaveParams then
+  begin
+    TDProj2WinSetupProject.ISTitle32 := edtWin32Title.Text;
+    TDProj2WinSetupProject.ISVersion32 := edtWin32Version.Text;
+    TDProj2WinSetupProject.ISGUID32 := edtWin32Guid.Text;
+    TDProj2WinSetupProject.Save;
+  end;
+
+  edtWin32Title.TagString := edtWin32Title.Text;
+  edtWin32Version.TagString := edtWin32Version.Text;
+  edtWin32Guid.TagString := edtWin32Guid.Text;
+end;
+
+procedure TfrmMain.SaveWin64Settings(const SaveParams: Boolean);
+begin
+  if SaveParams then
+  begin
+    TDProj2WinSetupProject.ISTitle64 := edtWin64Title.Text;
+    TDProj2WinSetupProject.ISVersion64 := edtWin64Version.Text;
+    TDProj2WinSetupProject.ISGUID64 := edtWin64Guid.Text;
+    TDProj2WinSetupProject.Save;
+  end;
+
+  edtWin64Title.TagString := edtWin64Title.Text;
+  edtWin64Version.TagString := edtWin64Version.Text;
+  edtWin64Guid.TagString := edtWin64Guid.Text;
 end;
 
 procedure TfrmMain.UpdateFileMenuOptionsVisibility;
