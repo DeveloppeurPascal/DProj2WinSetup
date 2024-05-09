@@ -17,7 +17,8 @@ uses
   Olf.RTL.FileBuffer in '..\lib-externes\librairies\src\Olf.RTL.FileBuffer.pas',
   Olf.Net.Socket.Messaging in '..\lib-externes\Socket-Messaging-Library\src\Olf.Net.Socket.Messaging.pas',
   ExeBulkSigningClientServerAPIConsts in '..\lib-externes\ExeBulkSigning\src\ExeBulkSigningClientServerAPIConsts.pas',
-  Olf.RTL.GenRandomID in '..\lib-externes\librairies\src\Olf.RTL.GenRandomID.pas';
+  Olf.RTL.GenRandomID in '..\lib-externes\librairies\src\Olf.RTL.GenRandomID.pas',
+  uDProj2WinSetupProject in 'uDProj2WinSetupProject.pas';
 
 {$R *.res}
 
