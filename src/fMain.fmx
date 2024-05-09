@@ -631,4 +631,23 @@ object frmMain: TfrmMain
     Left = 88
     Top = 216
   end
+  object lBlockScreen: TLayout
+    Align = Contents
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    object rBlockScreen: TRectangle
+      Align = Client
+      Fill.Color = claLightyellow
+      Opacity = 0.300000011920929000
+      Size.Width = 640.000000000000000000
+      Size.Height = 480.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+    end
+    object aniBlockScreen: TAniIndicator
+      Align = Center
+    end
+  end
 end

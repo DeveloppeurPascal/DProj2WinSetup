@@ -20,7 +20,8 @@ uses
   FMX.Edit,
   FMX.Menus,
   FMX.TabControl,
-  FMX.Layouts;
+  FMX.Layouts,
+  FMX.Objects;
 
 type
   TfrmMain = class(TForm)
@@ -73,6 +74,9 @@ type
     btnWin32GuidGenerate: TEditButton;
     btnWin64GuidGenerate: TEditButton;
     btnSendToExeBulkSigning: TButton;
+    lBlockScreen: TLayout;
+    rBlockScreen: TRectangle;
+    aniBlockScreen: TAniIndicator;
     procedure FormCreate(Sender: TObject);
     procedure OlfAboutDialog1URLClick(const AURL: string);
     procedure mnuToolsOptionsClick(Sender: TObject);
@@ -107,6 +111,7 @@ type
     function HasWin64SettingsChanged: Boolean;
     function HasProjectChanged: Boolean;
     procedure ReplaceCurrentGuidByANewOne(Const edt: TEdit);
+    procedure BlockScreen(Const AEnabled: Boolean);
   end;
 
 var
@@ -123,6 +128,23 @@ uses
   uConfig,
   fOptions,
   uDProj2WinSetupProject;
+
+procedure TfrmMain.BlockScreen(const AEnabled: Boolean);
+begin
+  if AEnabled then
+  begin
+    lBlockScreen.Visible := true;
+    lBlockScreen.BringToFront;
+    rBlockScreen.BringToFront;
+    aniBlockScreen.Enabled := true;
+    aniBlockScreen.BringToFront;
+  end
+  else
+  begin
+    aniBlockScreen.Enabled := false;
+    lBlockScreen.Visible := false;
+  end;
+end;
 
 procedure TfrmMain.btnProjectCancelClick(Sender: TObject);
 begin
@@ -204,6 +226,7 @@ end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
+  BlockScreen(false);
   InitAboutDialogBox;
   InitMainFormCaption;
   mnuHelpAbout.Text := '&About ' + OlfAboutDialog1.Titre;
