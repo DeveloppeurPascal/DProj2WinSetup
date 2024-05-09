@@ -107,7 +107,7 @@ object frmMain: TfrmMain
       object btnProjectOpen: TButton
         Align = Center
         Size.Width = 160.000000000000000000
-        Size.Height = 22.000000000000000000
+        Size.Height = 40.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         Text = 'Open a Delphi project'
@@ -156,6 +156,8 @@ object frmMain: TfrmMain
           StyleLookup = ''
           TabOrder = 0
           Text = 'Project'
+          ExplicitSize.cx = 57.000000000000000000
+          ExplicitSize.cy = 26.000000000000000000
           object lblSignTitle: TLabel
             Align = Top
             FocusControl = edtSignTitle
@@ -281,6 +283,8 @@ object frmMain: TfrmMain
           StyleLookup = ''
           TabOrder = 0
           Text = 'Setup Win32'
+          ExplicitSize.cx = 88.000000000000000000
+          ExplicitSize.cy = 26.000000000000000000
           object lblWin32Title: TLabel
             Align = Top
             FocusControl = edtWin32Title
@@ -445,6 +449,8 @@ object frmMain: TfrmMain
           StyleLookup = ''
           TabOrder = 0
           Text = 'Setup Win64'
+          ExplicitSize.cx = 88.000000000000000000
+          ExplicitSize.cy = 26.000000000000000000
           object edtWin64Title: TEdit
             Touch.InteractiveGestures = [LongTap, DoubleTap]
             Align = Top
