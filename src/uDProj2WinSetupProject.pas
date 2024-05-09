@@ -100,7 +100,7 @@ class function TDProj2WinSetupProject.
   (Const ADelphiProjectFileName: string): string;
 begin
   result := tpath.combine(tpath.GetDirectoryName(ADelphiProjectFileName),
-    tpath.GetFileNameWithoutExtension(ADelphiProjectFileName) + '.dproj2setup');
+    tpath.GetFileNameWithoutExtension(ADelphiProjectFileName) + '.dproj2winsetup');
 end;
 
 class function TDProj2WinSetupProject.GetISGUID32: string;
