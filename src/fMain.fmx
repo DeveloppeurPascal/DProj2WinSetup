@@ -134,7 +134,7 @@ object frmMain: TfrmMain
         Size.Width = 640.000000000000000000
         Size.Height = 454.000000000000000000
         Size.PlatformDefault = False
-        TabIndex = 2
+        TabIndex = 1
         TabOrder = 0
         TabPosition = PlatformDefault
         Sizes = (
@@ -274,7 +274,7 @@ object frmMain: TfrmMain
             item
             end>
           TextSettings.Trimming = None
-          IsSelected = False
+          IsSelected = True
           Size.Width = 88.000000000000000000
           Size.Height = 26.000000000000000000
           Size.PlatformDefault = False
@@ -348,6 +348,18 @@ object frmMain: TfrmMain
             Size.Width = 630.000000000000000000
             Size.Height = 22.000000000000000000
             Size.PlatformDefault = False
+            object btnWin32GuidGenerate: TEditButton
+              Touch.InteractiveGestures = [LongTap]
+              CanFocus = False
+              Cursor = crArrow
+              TextSettings.Trimming = None
+              Size.Width = 68.000000000000000000
+              Size.Height = 18.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              Text = 'Generate'
+              OnClick = btnWin32GuidGenerateClick
+            end
           end
           object edtWin32Version: TEdit
             Touch.InteractiveGestures = [LongTap, DoubleTap]
@@ -426,7 +438,7 @@ object frmMain: TfrmMain
             item
             end>
           TextSettings.Trimming = None
-          IsSelected = True
+          IsSelected = False
           Size.Width = 88.000000000000000000
           Size.Height = 26.000000000000000000
           Size.PlatformDefault = False
@@ -460,6 +472,18 @@ object frmMain: TfrmMain
             Size.Width = 630.000000000000000000
             Size.Height = 22.000000000000000000
             Size.PlatformDefault = False
+            object btnWin64GuidGenerate: TEditButton
+              Touch.InteractiveGestures = [LongTap]
+              CanFocus = False
+              Cursor = crArrow
+              TextSettings.Trimming = None
+              Size.Width = 68.000000000000000000
+              Size.Height = 18.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              Text = 'Generate'
+              OnClick = btnWin64GuidGenerateClick
+            end
           end
           object edtWin64Version: TEdit
             Touch.InteractiveGestures = [LongTap, DoubleTap]

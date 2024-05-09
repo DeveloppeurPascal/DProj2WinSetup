@@ -70,6 +70,8 @@ type
     GridPanelLayout3: TGridPanelLayout;
     btnWin64Save: TButton;
     btnWin64Cancel: TButton;
+    btnWin32GuidGenerate: TEditButton;
+    btnWin64GuidGenerate: TEditButton;
     procedure FormCreate(Sender: TObject);
     procedure OlfAboutDialog1URLClick(const AURL: string);
     procedure mnuToolsOptionsClick(Sender: TObject);
@@ -85,6 +87,8 @@ type
     procedure btnWin32SaveClick(Sender: TObject);
     procedure btnWin64CancelClick(Sender: TObject);
     procedure btnWin64SaveClick(Sender: TObject);
+    procedure btnWin64GuidGenerateClick(Sender: TObject);
+    procedure btnWin32GuidGenerateClick(Sender: TObject);
   private
   public
     procedure InitMainFormCaption;
@@ -100,6 +104,7 @@ type
     procedure SaveWin64Settings(Const SaveParams: Boolean);
     function HasWin64SettingsChanged: Boolean;
     function HasProjectChanged: Boolean;
+    procedure ReplaceCurrentGuidByANewOne(Const edt: TEdit);
   end;
 
 var
@@ -132,6 +137,11 @@ begin
   InitWin32Settings;
 end;
 
+procedure TfrmMain.btnWin32GuidGenerateClick(Sender: TObject);
+begin
+  ReplaceCurrentGuidByANewOne(edtWin32Guid);
+end;
+
 procedure TfrmMain.btnWin32SaveClick(Sender: TObject);
 begin
   SaveWin32Settings(true);
@@ -145,6 +155,11 @@ end;
 procedure TfrmMain.btnWin64SaveClick(Sender: TObject);
 begin
   SaveWin64Settings(true);
+end;
+
+procedure TfrmMain.btnWin64GuidGenerateClick(Sender: TObject);
+begin
+  ReplaceCurrentGuidByANewOne(edtWin64Guid);
 end;
 
 procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -427,6 +442,20 @@ end;
 procedure TfrmMain.OlfAboutDialog1URLClick(const AURL: string);
 begin
   url_Open_In_Browser(AURL);
+end;
+
+procedure TfrmMain.ReplaceCurrentGuidByANewOne(const edt: TEdit);
+begin
+  if edt.Text.IsEmpty then
+    edt.Text := TGUID.NewGuid.ToString
+  else
+    tdialogservice.MessageDialog('Do you want to replace current GUID ?',
+      TMsgDlgType.mtConfirmation, mbYesNo, TMsgDlgBtn.mbYes, 0,
+      procedure(Const AModalResult: TModalResult)
+      begin
+        if AModalResult = mryes then
+          edt.Text := TGUID.NewGuid.ToString;
+      end);
 end;
 
 procedure TfrmMain.SaveProjectSettings(const SaveParams: Boolean);
