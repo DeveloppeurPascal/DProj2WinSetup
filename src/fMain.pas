@@ -95,6 +95,8 @@ type
     procedure btnWin64GuidGenerateClick(Sender: TObject);
     procedure btnWin32GuidGenerateClick(Sender: TObject);
     procedure btnSendToExeBulkSigningClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; var KeyChar: WideChar;
+      Shift: TShiftState);
   private
   public
     procedure InitMainFormCaption;
@@ -234,6 +236,16 @@ begin
   UpdateFileMenuOptionsVisibility;
   tcScreens.TabPosition := TTabPosition.None;
   tcScreens.ActiveTab := tiHome;
+end;
+
+procedure TfrmMain.FormKeyDown(Sender: TObject; var Key: Word;
+var KeyChar: WideChar; Shift: TShiftState);
+begin
+  if lBlockScreen.Visible then
+  begin
+    Key := 0;
+    KeyChar := #0;
+  end;
 end;
 
 function TfrmMain.HasProjectChanged: Boolean;

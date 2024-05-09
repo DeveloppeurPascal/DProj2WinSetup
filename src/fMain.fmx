@@ -10,6 +10,7 @@ object frmMain: TfrmMain
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
   OnCloseQuery = FormCloseQuery
+  OnKeyDown = FormKeyDown
   DesignerMasterStyle = 0
   object OlfAboutDialog1: TOlfAboutDialog
     Titre = 'DProj2WinSetup'
@@ -636,7 +637,7 @@ object frmMain: TfrmMain
     Size.Width = 640.000000000000000000
     Size.Height = 480.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 5
+    TabOrder = 4
     object rBlockScreen: TRectangle
       Align = Client
       Fill.Color = claLightyellow
