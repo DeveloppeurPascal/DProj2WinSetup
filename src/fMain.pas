@@ -67,7 +67,8 @@ uses
   System.IOUtils,
   u_urlOpen,
   uConfig,
-  fOptions;
+  fOptions,
+  uDProj2WinSetupProject;
 
 procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
@@ -125,24 +126,41 @@ begin
 {$ELSE}
   caption := '';
 {$ENDIF}
+  if TDProj2WinSetupProject.IsOpened then
+  begin
+    caption := caption + tpath.GetFileNameWithoutExtension
+      (TDProj2WinSetupProject.DProj2WinSetupProjectFileName);
+
+    if TDProj2WinSetupProject.HasChanged then
+      caption := caption + ' (*) ';
+
+    caption := caption + ' - ';
+  end;
+
   caption := caption + OlfAboutDialog1.Titre + ' v' +
     OlfAboutDialog1.VersionNumero;
-  // TODO : ajouter nom du projet ouvert s'il y en a un (éventuellement son statut de modification)
 end;
 
 procedure TfrmMain.mnuFileCloseClick(Sender: TObject);
 begin
-  // TODO : à compléter
-  // si projet avec modifications en cours, proposer son enregistrement avant (ou le faire par défaut)
-  // TODO : recalculer le titre de la fenêtre
+  if TDProj2WinSetupProject.IsOpened then
+  begin
+    // TODO : tester si le projet a été modifié et proposer son enregistrement
+    TDProj2WinSetupProject.Close;
+  end;
+
+  InitMainFormCaption;
   UpdateFileMenuOptionsVisibility;
 end;
 
 procedure TfrmMain.mnuFileOpenClick(Sender: TObject);
 var
   DefaultPath: string;
-  ProjectFileName: string;
+  DelphiProjectFileName, DProj2WinSetupProjectFileName: string;
 begin
+  if TDProj2WinSetupProject.IsOpened then
+    mnuFileCloseClick(Sender);
+
   OpenDialog1.FileName := '';
 
   if OpenDialog1.InitialDir.IsEmpty then
@@ -163,21 +181,35 @@ begin
 
   if OpenDialog1.Execute then
   begin
-    ProjectFileName := OpenDialog1.FileName;
-    if not(tpath.GetExtension(ProjectFileName).ToLower = '.dproj') then
+    DelphiProjectFileName := OpenDialog1.FileName;
+    if not(tpath.GetExtension(DelphiProjectFileName).ToLower = '.dproj') then
       raise exception.Create
         ('This file is not a Delphi project options file !');
-    if not tfile.Exists(ProjectFileName) then
+
+    if not tfile.Exists(DelphiProjectFileName) then
       raise exception.Create('This project doesn''t exist !');
-    if tfile.Exists(tpath.GetFileNameWithoutExtension(ProjectFileName) +
-      '.dproj2setup') then
-      // TODO : open the dproj2setup file
+
+    // TODO : voir si nécessaire de conserver le dernier projet ou dossier ouvert pour le suivant
+    OpenDialog1.InitialDir := tpath.GetDirectoryName(DelphiProjectFileName);
+
+    DProj2WinSetupProjectFileName :=
+      TDProj2WinSetupProject.
+      GetDProj2WinSetupProjectFileNameFromDelphiProjectFileName
+      (DelphiProjectFileName);
+    if tfile.Exists(DProj2WinSetupProjectFileName) then
+      TDProj2WinSetupProject.LoadFromFile(DProj2WinSetupProjectFileName)
     else
-      // TODO : create a new dproj2setup project
-        ;
+      TDProj2WinSetupProject.CreateFromFile(DelphiProjectFileName);
   end;
 
-  // TODO : recalculer le titre de la fenêtre
+  if TDProj2WinSetupProject.IsOpened then
+  begin
+    InitMainFormCaption;
+    tcScreens.ActiveTab := tiProject;
+    // TODO : charger les paramètres du projet à l'écran
+  end
+  else
+    tcScreens.ActiveTab := tiHome;
   UpdateFileMenuOptionsVisibility;
 end;
 
@@ -188,8 +220,9 @@ end;
 
 procedure TfrmMain.mnuFileSaveClick(Sender: TObject);
 begin
-  // TODO : à compléter
-  // TODO : recalculer le titre de la fenêtre
+  if TDProj2WinSetupProject.IsOpened then
+    TDProj2WinSetupProject.Save;
+  InitMainFormCaption;
 end;
 
 procedure TfrmMain.mnuHelpAboutClick(Sender: TObject);
@@ -216,9 +249,8 @@ end;
 
 procedure TfrmMain.UpdateFileMenuOptionsVisibility;
 begin
-  // TODO : replace "False" by a test of current opened project
-  mnuFileSave.Enabled := false;
-  mnuFileClose.Enabled := false;
+  mnuFileSave.Enabled := TDProj2WinSetupProject.IsOpened;
+  mnuFileClose.Enabled := TDProj2WinSetupProject.IsOpened;
 end;
 
 initialization
