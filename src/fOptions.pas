@@ -84,7 +84,8 @@ uses
   FMX.DialogService,
   System.IOUtils,
   uConfig,
-  u_urlOpen;
+  u_urlOpen,
+  ExeBulkSigningClientLib;
 
 procedure TfrmOptions.btnCloseClick(Sender: TObject);
 begin
@@ -107,8 +108,20 @@ begin
 end;
 
 procedure TfrmOptions.btnEBSTestConnectionClick(Sender: TObject);
+var
+  EBSClient: TESBClient;
 begin
-  // TODO : à compléter
+  // TODO : à changer lorsque le ticket https://github.com/DeveloppeurPascal/ExeBulkSigning/issues/50 sera clôturé
+  EBSClient := TESBClient.Create(edtEBSServerIP.Text,
+    edtEBSServerPort.Text.ToInteger, edtEBSAuthKey.Text);
+  try
+    if EBSClient.isConnected then
+      showmessage('Ok')
+    else
+      showmessage('Can''t connect to the server !');
+  finally
+    EBSClient.free;
+  end;
 end;
 
 procedure TfrmOptions.btnISCancelClick(Sender: TObject);
