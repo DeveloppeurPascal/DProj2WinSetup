@@ -11,7 +11,13 @@ uses
   Olf.RTL.CryptDecrypt in '..\lib-externes\librairies\src\Olf.RTL.CryptDecrypt.pas',
   Olf.RTL.Params in '..\lib-externes\librairies\src\Olf.RTL.Params.pas',
   uConfig in 'uConfig.pas',
-  fOptions in 'fOptions.pas' {frmOptions};
+  fOptions in 'fOptions.pas' {frmOptions},
+  ExeBulkSigningClientLib in '..\lib-externes\ExeBulkSigning\src\ExeBulkSigningClientLib.pas',
+  ExeBulkSigningClientServerAPI in '..\lib-externes\ExeBulkSigning\src\ExeBulkSigningClientServerAPI.pas',
+  Olf.RTL.FileBuffer in '..\lib-externes\librairies\src\Olf.RTL.FileBuffer.pas',
+  Olf.Net.Socket.Messaging in '..\lib-externes\Socket-Messaging-Library\src\Olf.Net.Socket.Messaging.pas',
+  ExeBulkSigningClientServerAPIConsts in '..\lib-externes\ExeBulkSigning\src\ExeBulkSigningClientServerAPIConsts.pas',
+  Olf.RTL.GenRandomID in '..\lib-externes\librairies\src\Olf.RTL.GenRandomID.pas';
 
 {$R *.res}
 

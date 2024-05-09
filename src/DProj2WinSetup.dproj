@@ -349,6 +349,12 @@
             <Form>frmOptions</Form>
             <FormType>fmx</FormType>
         </DCCReference>
+        <DCCReference Include="..\lib-externes\ExeBulkSigning\src\ExeBulkSigningClientLib.pas"/>
+        <DCCReference Include="..\lib-externes\ExeBulkSigning\src\ExeBulkSigningClientServerAPI.pas"/>
+        <DCCReference Include="..\lib-externes\librairies\src\Olf.RTL.FileBuffer.pas"/>
+        <DCCReference Include="..\lib-externes\Socket-Messaging-Library\src\Olf.Net.Socket.Messaging.pas"/>
+        <DCCReference Include="..\lib-externes\ExeBulkSigning\src\ExeBulkSigningClientServerAPIConsts.pas"/>
+        <DCCReference Include="..\lib-externes\librairies\src\Olf.RTL.GenRandomID.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
