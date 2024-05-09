@@ -27,8 +27,8 @@ object frmMain: TfrmMain
     Top = 88
   end
   object MainMenu1: TMainMenu
-    Left = 96
-    Top = 176
+    Left = 88
+    Top = 152
     object mnuFile: TMenuItem
       Text = '&File'
       object mnuFileOpen: TMenuItem
@@ -76,5 +76,61 @@ object frmMain: TfrmMain
         OnClick = mnuHelpAboutClick
       end
     end
+  end
+  object tcScreens: TTabControl
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 2
+    TabPosition = Bottom
+    Sizes = (
+      640s
+      454s
+      640s
+      454s)
+    object tiHome: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.Trimming = None
+      IsSelected = True
+      Size.Width = 60.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'tiHome'
+      object btnProjectOpen: TButton
+        Align = Center
+        Size.Width = 160.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Open a Delphi project'
+        TextSettings.Trimming = None
+        OnClick = mnuFileOpenClick
+      end
+    end
+    object tiProject: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.Trimming = None
+      IsSelected = False
+      Size.Width = 64.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'tiProject'
+    end
+  end
+  object OpenDialog1: TOpenDialog
+    Filter = 'Delphi project (*.dproj)|*.dproj'
+    Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
+    Left = 88
+    Top = 216
   end
 end

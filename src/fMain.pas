@@ -18,7 +18,8 @@ uses
   FMX.StdCtrls,
   FMX.Controls.Presentation,
   FMX.Edit,
-  FMX.Menus;
+  FMX.Menus,
+  FMX.TabControl;
 
 type
   TfrmMain = class(TForm)
@@ -34,6 +35,11 @@ type
     mnuToolsOptions: TMenuItem;
     mnuHelpAbout: TMenuItem;
     mnuFileQuit: TMenuItem;
+    tcScreens: TTabControl;
+    tiHome: TTabItem;
+    tiProject: TTabItem;
+    btnProjectOpen: TButton;
+    OpenDialog1: TOpenDialog;
     procedure FormCreate(Sender: TObject);
     procedure OlfAboutDialog1URLClick(const AURL: string);
     procedure mnuToolsOptionsClick(Sender: TObject);
@@ -58,6 +64,7 @@ implementation
 {$R *.fmx}
 
 uses
+  System.IOUtils,
   u_urlOpen,
   uConfig,
   fOptions;
@@ -75,6 +82,8 @@ begin
   mnuHelpAbout.Text := '&About ' + OlfAboutDialog1.Titre;
   // TODO : traduire texte
   UpdateFileMenuOptionsVisibility;
+  tcScreens.TabPosition := TTabPosition.None;
+  tcScreens.ActiveTab := tiHome;
 end;
 
 procedure TfrmMain.InitAboutDialogBox;
@@ -130,9 +139,44 @@ begin
 end;
 
 procedure TfrmMain.mnuFileOpenClick(Sender: TObject);
+var
+  DefaultPath: string;
+  ProjectFileName: string;
 begin
-  // TODO : à compléter
-  // Open a DPROJ and/or DPROJ2Setup file
+  OpenDialog1.FileName := '';
+
+  if OpenDialog1.InitialDir.IsEmpty then
+  begin
+    // TODO : utiliser le chemin par défaut préféré de l'utilisateur
+    DefaultPath := tpath.combine([tpath.GetDocumentsPath, 'Embarcadero',
+      'Studio', 'Projects']);
+    if not TDirectory.Exists(DefaultPath) then
+      DefaultPath := tpath.combine([tpath.GetDocumentsPath, 'Embarcadero',
+        'Studio', 'Projets']);
+    if not TDirectory.Exists(DefaultPath) then
+      DefaultPath := tpath.combine([tpath.GetDocumentsPath, 'Embarcadero',
+        'Studio']);
+    if not TDirectory.Exists(DefaultPath) then
+      DefaultPath := tpath.GetDocumentsPath;
+    OpenDialog1.InitialDir := DefaultPath;
+  end;
+
+  if OpenDialog1.Execute then
+  begin
+    ProjectFileName := OpenDialog1.FileName;
+    if not(tpath.GetExtension(ProjectFileName).ToLower = '.dproj') then
+      raise exception.Create
+        ('This file is not a Delphi project options file !');
+    if not tfile.Exists(ProjectFileName) then
+      raise exception.Create('This project doesn''t exist !');
+    if tfile.Exists(tpath.GetFileNameWithoutExtension(ProjectFileName) +
+      '.dproj2setup') then
+      // TODO : open the dproj2setup file
+    else
+      // TODO : create a new dproj2setup project
+        ;
+  end;
+
   // TODO : recalculer le titre de la fenêtre
   UpdateFileMenuOptionsVisibility;
 end;
