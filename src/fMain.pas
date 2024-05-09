@@ -28,7 +28,7 @@ type
     OlfAboutDialog1: TOlfAboutDialog;
     MainMenu1: TMainMenu;
     mnuFile: TMenuItem;
-    mnoTools: TMenuItem;
+    mnuTools: TMenuItem;
     mnuFileOpen: TMenuItem;
     mnuFileSave: TMenuItem;
     mnuFileClose: TMenuItem;
@@ -95,8 +95,6 @@ type
     procedure btnWin64GuidGenerateClick(Sender: TObject);
     procedure btnWin32GuidGenerateClick(Sender: TObject);
     procedure btnSendToExeBulkSigningClick(Sender: TObject);
-    procedure FormKeyDown(Sender: TObject; var Key: Word; var KeyChar: WideChar;
-      Shift: TShiftState);
   private
   public
     procedure InitMainFormCaption;
@@ -114,6 +112,7 @@ type
     function HasProjectChanged: Boolean;
     procedure ReplaceCurrentGuidByANewOne(Const edt: TEdit);
     procedure BlockScreen(Const AEnabled: Boolean);
+    procedure SignProjectExecutables(onSuccess: TProc; onError: TProc = nil);
   end;
 
 var
@@ -129,7 +128,7 @@ uses
   u_urlOpen,
   uConfig,
   fOptions,
-  uDProj2WinSetupProject;
+  uDProj2WinSetupProject, ExeBulkSigningClientLib;
 
 procedure TfrmMain.BlockScreen(const AEnabled: Boolean);
 begin
@@ -140,11 +139,13 @@ begin
     rBlockScreen.BringToFront;
     aniBlockScreen.Enabled := true;
     aniBlockScreen.BringToFront;
+    tcScreens.Enabled := false;
   end
   else
   begin
     aniBlockScreen.Enabled := false;
     lBlockScreen.Visible := false;
+    tcScreens.Enabled := true;
   end;
 end;
 
@@ -160,7 +161,20 @@ end;
 
 procedure TfrmMain.btnSendToExeBulkSigningClick(Sender: TObject);
 begin
-  // TODO : à compléter
+  BlockScreen(true);
+  try
+    SignProjectExecutables(
+      procedure
+      begin
+        BlockScreen(false);
+      end,
+      procedure
+      begin
+        BlockScreen(false);
+      end);
+  except
+    BlockScreen(false);
+  end;
 end;
 
 procedure TfrmMain.btnWin32CancelClick(Sender: TObject);
@@ -236,16 +250,6 @@ begin
   UpdateFileMenuOptionsVisibility;
   tcScreens.TabPosition := TTabPosition.None;
   tcScreens.ActiveTab := tiHome;
-end;
-
-procedure TfrmMain.FormKeyDown(Sender: TObject; var Key: Word;
-var KeyChar: WideChar; Shift: TShiftState);
-begin
-  if lBlockScreen.Visible then
-  begin
-    Key := 0;
-    KeyChar := #0;
-  end;
 end;
 
 function TfrmMain.HasProjectChanged: Boolean;
@@ -356,6 +360,9 @@ end;
 
 procedure TfrmMain.mnuFileCloseClick(Sender: TObject);
 begin
+  if lBlockScreen.Visible then
+    exit;
+
   if TDProj2WinSetupProject.IsOpened and HasProjectChanged then
     // TODO : traduire text
     tdialogservice.MessageDialog('Do you want to save pending changes ?',
@@ -390,6 +397,9 @@ var
   DefaultPath: string;
   DelphiProjectFileName, DProj2WinSetupProjectFileName: string;
 begin
+  if lBlockScreen.Visible then
+    exit;
+
   if TDProj2WinSetupProject.IsOpened then
     mnuFileCloseClick(Sender);
 
@@ -450,11 +460,17 @@ end;
 
 procedure TfrmMain.mnuFileQuitClick(Sender: TObject);
 begin
+  if lBlockScreen.Visible then
+    exit;
+
   close;
 end;
 
 procedure TfrmMain.mnuFileSaveClick(Sender: TObject);
 begin
+  if lBlockScreen.Visible then
+    exit;
+
   if TDProj2WinSetupProject.IsOpened and HasProjectChanged then
   begin
     SaveProjectSettings(true);
@@ -466,6 +482,9 @@ end;
 
 procedure TfrmMain.mnuHelpAboutClick(Sender: TObject);
 begin
+  if lBlockScreen.Visible then
+    exit;
+
   OlfAboutDialog1.Execute;
 end;
 
@@ -473,6 +492,9 @@ procedure TfrmMain.mnuToolsOptionsClick(Sender: TObject);
 var
   frm: TfrmOptions;
 begin
+  if lBlockScreen.Visible then
+    exit;
+
   frm := TfrmOptions.Create(self);
   try
     frm.ShowModal;
@@ -541,6 +563,55 @@ begin
   edtWin64Title.TagString := edtWin64Title.Text;
   edtWin64Version.TagString := edtWin64Version.Text;
   edtWin64Guid.TagString := edtWin64Guid.Text;
+end;
+
+procedure TfrmMain.SignProjectExecutables(onSuccess, onError: TProc);
+begin
+  try
+    tthread.CreateAnonymousThread(
+      procedure
+      var
+        EBSClient: TESBClient;
+        ProjectFolder, ExeFileName: string;
+      begin
+        try
+          EBSClient := TESBClient.Create(TConfig.ExeBulkSigningServerIP,
+            TConfig.ExeBulkSigningServerPort, TConfig.ExeBulkSigningAuthKey);
+          try
+            // TODO : detect project executables depending on DPROJ settings
+            ProjectFolder := tpath.GetDirectoryName
+              (TDProj2WinSetupProject.DelphiProjectFileName);
+
+            ExeFileName := tpath.combine(ProjectFolder, 'Win32', 'RELEASE',
+              tpath.GetFileNameWithoutExtension
+              (TDProj2WinSetupProject.DelphiProjectFileName) + '.exe');
+            if tfile.Exists(ExeFileName) then
+              EBSClient.SendFileToServer(TDProj2WinSetupProject.SignTitle,
+                TDProj2WinSetupProject.SignURL, ExeFileName);
+
+            ExeFileName := tpath.combine(ProjectFolder, 'Win64', 'RELEASE',
+              tpath.GetFileNameWithoutExtension
+              (TDProj2WinSetupProject.DelphiProjectFileName) + '.exe');
+            if tfile.Exists(ExeFileName) then
+              EBSClient.SendFileToServer(TDProj2WinSetupProject.SignTitle,
+                TDProj2WinSetupProject.SignURL, ExeFileName);
+
+            while (EBSClient.HasWaitingFiles > 0) do
+              sleep(1000);
+          finally
+            EBSClient.Free;
+          end;
+          if assigned(onSuccess) then
+            onSuccess;
+        except
+          if assigned(onError) then
+            onError;
+        end;
+      end).start;
+  except
+    if assigned(onError) then
+      onError;
+  end;
 end;
 
 procedure TfrmMain.UpdateFileMenuOptionsVisibility;

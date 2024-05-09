@@ -10,7 +10,6 @@ object frmMain: TfrmMain
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
   OnCloseQuery = FormCloseQuery
-  OnKeyDown = FormKeyDown
   DesignerMasterStyle = 0
   object OlfAboutDialog1: TOlfAboutDialog
     Titre = 'DProj2WinSetup'
@@ -61,7 +60,7 @@ object frmMain: TfrmMain
         OnClick = mnuFileQuitClick
       end
     end
-    object mnoTools: TMenuItem
+    object mnuTools: TMenuItem
       Text = '&Tools'
       object mnuToolsOptions: TMenuItem
         Locked = True
