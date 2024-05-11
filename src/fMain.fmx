@@ -2,7 +2,7 @@ object frmMain: TfrmMain
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 480
+  ClientHeight = 624
   ClientWidth = 640
   Position = ScreenCenter
   FormFactor.Width = 320
@@ -80,16 +80,16 @@ object frmMain: TfrmMain
   object tcScreens: TTabControl
     Align = Client
     Size.Width = 640.000000000000000000
-    Size.Height = 480.000000000000000000
+    Size.Height = 624.000000000000000000
     Size.PlatformDefault = False
     TabIndex = 1
     TabOrder = 2
     TabPosition = Bottom
     Sizes = (
       640s
-      454s
+      598s
       640s
-      454s)
+      598s)
     object tiHome: TTabItem
       CustomIcon = <
         item
@@ -132,18 +132,18 @@ object frmMain: TfrmMain
       object tcProject: TTabControl
         Align = Client
         Size.Width = 640.000000000000000000
-        Size.Height = 454.000000000000000000
+        Size.Height = 598.000000000000000000
         Size.PlatformDefault = False
-        TabIndex = 2
+        TabIndex = 1
         TabOrder = 0
         TabPosition = PlatformDefault
         Sizes = (
           640s
-          428s
+          572s
           640s
-          428s
+          572s
           640s
-          428s)
+          572s)
         object tiProjectOptions: TTabItem
           CustomIcon = <
             item
@@ -292,7 +292,7 @@ object frmMain: TfrmMain
             item
             end>
           TextSettings.Trimming = None
-          IsSelected = False
+          IsSelected = True
           Size.Width = 88.000000000000000000
           Size.Height = 26.000000000000000000
           Size.PlatformDefault = False
@@ -312,7 +312,7 @@ object frmMain: TfrmMain
             Size.Width = 630.000000000000000000
             Size.Height = 17.000000000000000000
             Size.PlatformDefault = False
-            Text = 'Title used in the Windows 32 setup program'
+            Text = 'Title (MyAppName)'
             TabOrder = 0
           end
           object lblWin32Version: TLabel
@@ -326,7 +326,7 @@ object frmMain: TfrmMain
             Size.Width = 630.000000000000000000
             Size.Height = 17.000000000000000000
             Size.PlatformDefault = False
-            Text = 'Windows 32 project version'
+            Text = 'Version (MyAppVersion)'
             TabOrder = 2
           end
           object lblWin32Guid: TLabel
@@ -336,12 +336,12 @@ object frmMain: TfrmMain
             Margins.Top = 5.000000000000000000
             Margins.Right = 5.000000000000000000
             Position.X = 5.000000000000000000
-            Position.Y = 103.000000000000000000
+            Position.Y = 201.000000000000000000
             Size.Width = 630.000000000000000000
             Size.Height = 17.000000000000000000
             Size.PlatformDefault = False
-            Text = 'GUID used in the Windows 32 setup program'
-            TabOrder = 4
+            Text = 'GUID (AppId)'
+            TabOrder = 8
           end
           object edtWin32Title: TEdit
             Touch.InteractiveGestures = [LongTap, DoubleTap]
@@ -359,9 +359,9 @@ object frmMain: TfrmMain
           object edtWin32Guid: TEdit
             Touch.InteractiveGestures = [LongTap, DoubleTap]
             Align = Top
-            TabOrder = 5
+            TabOrder = 9
             Position.X = 5.000000000000000000
-            Position.Y = 120.000000000000000000
+            Position.Y = 218.000000000000000000
             Margins.Left = 5.000000000000000000
             Margins.Right = 5.000000000000000000
             Margins.Bottom = 5.000000000000000000
@@ -396,11 +396,11 @@ object frmMain: TfrmMain
           end
           object GridPanelLayout2: TGridPanelLayout
             Align = Top
-            Position.Y = 147.000000000000000000
+            Position.Y = 245.000000000000000000
             Size.Width = 640.000000000000000000
             Size.Height = 50.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 6
+            TabOrder = 10
             ColumnCollection = <
               item
                 Value = 50.000000000000000000
@@ -459,11 +459,11 @@ object frmMain: TfrmMain
             Margins.Right = 5.000000000000000000
             Margins.Bottom = 5.000000000000000000
             Position.X = 5.000000000000000000
-            Position.Y = 302.000000000000000000
+            Position.Y = 400.000000000000000000
             Size.Width = 630.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 7
+            TabOrder = 13
             Text = 'Sign SetupWin32.exe file'
             TextSettings.Trimming = None
             OnClick = btnSignInnoSetupProgramWin32Click
@@ -475,11 +475,11 @@ object frmMain: TfrmMain
             Margins.Right = 5.000000000000000000
             Margins.Bottom = 5.000000000000000000
             Position.X = 5.000000000000000000
-            Position.Y = 252.000000000000000000
+            Position.Y = 350.000000000000000000
             Size.Width = 630.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 8
+            TabOrder = 12
             Text = 'Compile Inno Setup script'
             TextSettings.Trimming = None
             OnClick = btnCompileISSWin32Click
@@ -491,14 +491,70 @@ object frmMain: TfrmMain
             Margins.Right = 5.000000000000000000
             Margins.Bottom = 5.000000000000000000
             Position.X = 5.000000000000000000
-            Position.Y = 202.000000000000000000
+            Position.Y = 300.000000000000000000
             Size.Width = 630.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 9
+            TabOrder = 11
             Text = 'Generate Inno Setup Script'
             TextSettings.Trimming = None
             OnClick = btnGenerateISSWin32Click
+          end
+          object edtWin32Publisher: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Top
+            TabOrder = 5
+            Text = 'B'
+            Position.X = 5.000000000000000000
+            Position.Y = 120.000000000000000000
+            Margins.Left = 5.000000000000000000
+            Margins.Right = 5.000000000000000000
+            Margins.Bottom = 5.000000000000000000
+            Size.Width = 630.000000000000000000
+            Size.Height = 22.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object edtWin32URL: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Top
+            TabOrder = 7
+            Text = 'B'
+            Position.X = 5.000000000000000000
+            Position.Y = 169.000000000000000000
+            Margins.Left = 5.000000000000000000
+            Margins.Right = 5.000000000000000000
+            Margins.Bottom = 5.000000000000000000
+            Size.Width = 630.000000000000000000
+            Size.Height = 22.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object lblWin32Publisher: TLabel
+            Align = Top
+            FocusControl = edtWin32Publisher
+            Margins.Left = 5.000000000000000000
+            Margins.Top = 5.000000000000000000
+            Margins.Right = 5.000000000000000000
+            Position.X = 5.000000000000000000
+            Position.Y = 103.000000000000000000
+            Size.Width = 630.000000000000000000
+            Size.Height = 17.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Publisher (MyAppPublisher)'
+            TabOrder = 4
+          end
+          object lblWin32URL: TLabel
+            Align = Top
+            FocusControl = edtWin32URL
+            Margins.Left = 5.000000000000000000
+            Margins.Top = 5.000000000000000000
+            Margins.Right = 5.000000000000000000
+            Position.X = 5.000000000000000000
+            Position.Y = 152.000000000000000000
+            Size.Width = 630.000000000000000000
+            Size.Height = 17.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'URL (MyAppURL)'
+            TabOrder = 6
           end
         end
         object tiSetupWin64: TTabItem
@@ -506,7 +562,7 @@ object frmMain: TfrmMain
             item
             end>
           TextSettings.Trimming = None
-          IsSelected = True
+          IsSelected = False
           Size.Width = 88.000000000000000000
           Size.Height = 26.000000000000000000
           Size.PlatformDefault = False
@@ -532,10 +588,10 @@ object frmMain: TfrmMain
           object edtWin64Guid: TEdit
             Touch.InteractiveGestures = [LongTap, DoubleTap]
             Align = Top
-            TabOrder = 5
+            TabOrder = 9
             Text = 'B'
             Position.X = 5.000000000000000000
-            Position.Y = 120.000000000000000000
+            Position.Y = 218.000000000000000000
             Margins.Left = 5.000000000000000000
             Margins.Right = 5.000000000000000000
             Margins.Bottom = 5.000000000000000000
@@ -580,7 +636,7 @@ object frmMain: TfrmMain
             Size.Width = 630.000000000000000000
             Size.Height = 17.000000000000000000
             Size.PlatformDefault = False
-            Text = 'Title used in the Windows 64 setup program'
+            Text = 'Title (MyAppName)'
             TabOrder = 0
           end
           object lblWin64Version: TLabel
@@ -594,7 +650,7 @@ object frmMain: TfrmMain
             Size.Width = 630.000000000000000000
             Size.Height = 17.000000000000000000
             Size.PlatformDefault = False
-            Text = 'Windows 64 project version'
+            Text = 'Version (MyAppVersion)'
             TabOrder = 2
           end
           object lblWin64Guid: TLabel
@@ -604,20 +660,20 @@ object frmMain: TfrmMain
             Margins.Top = 5.000000000000000000
             Margins.Right = 5.000000000000000000
             Position.X = 5.000000000000000000
-            Position.Y = 103.000000000000000000
+            Position.Y = 201.000000000000000000
             Size.Width = 630.000000000000000000
             Size.Height = 17.000000000000000000
             Size.PlatformDefault = False
-            Text = 'GUID used in the Windows 64 setup program'
-            TabOrder = 4
+            Text = 'GUID (AppId)'
+            TabOrder = 8
           end
           object GridPanelLayout3: TGridPanelLayout
             Align = Top
-            Position.Y = 147.000000000000000000
+            Position.Y = 245.000000000000000000
             Size.Width = 640.000000000000000000
             Size.Height = 50.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 6
+            TabOrder = 10
             ColumnCollection = <
               item
                 Value = 50.000000000000000000
@@ -676,11 +732,11 @@ object frmMain: TfrmMain
             Margins.Right = 5.000000000000000000
             Margins.Bottom = 5.000000000000000000
             Position.X = 5.000000000000000000
-            Position.Y = 252.000000000000000000
+            Position.Y = 350.000000000000000000
             Size.Width = 630.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 8
+            TabOrder = 12
             Text = 'Compile Inno Setup script'
             TextSettings.Trimming = None
             OnClick = btnCompileISSWin64Click
@@ -692,11 +748,11 @@ object frmMain: TfrmMain
             Margins.Right = 5.000000000000000000
             Margins.Bottom = 5.000000000000000000
             Position.X = 5.000000000000000000
-            Position.Y = 202.000000000000000000
+            Position.Y = 300.000000000000000000
             Size.Width = 630.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 9
+            TabOrder = 11
             Text = 'Generate Inno Setup Script'
             TextSettings.Trimming = None
             OnClick = btnGenerateISSWin64Click
@@ -708,14 +764,70 @@ object frmMain: TfrmMain
             Margins.Right = 5.000000000000000000
             Margins.Bottom = 5.000000000000000000
             Position.X = 5.000000000000000000
-            Position.Y = 302.000000000000000000
+            Position.Y = 400.000000000000000000
             Size.Width = 630.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 7
+            TabOrder = 13
             Text = 'Sign SetupWin64.exe file'
             TextSettings.Trimming = None
             OnClick = btnSignInnoSetupProgram64Click
+          end
+          object lblWin64Publisher: TLabel
+            Align = Top
+            FocusControl = edtWin64Publisher
+            Margins.Left = 5.000000000000000000
+            Margins.Top = 5.000000000000000000
+            Margins.Right = 5.000000000000000000
+            Position.X = 5.000000000000000000
+            Position.Y = 103.000000000000000000
+            Size.Width = 630.000000000000000000
+            Size.Height = 17.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'Publisher (MyAppPublisher)'
+            TabOrder = 4
+          end
+          object edtWin64Publisher: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Top
+            TabOrder = 5
+            Text = 'B'
+            Position.X = 5.000000000000000000
+            Position.Y = 120.000000000000000000
+            Margins.Left = 5.000000000000000000
+            Margins.Right = 5.000000000000000000
+            Margins.Bottom = 5.000000000000000000
+            Size.Width = 630.000000000000000000
+            Size.Height = 22.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object lblWin64URL: TLabel
+            Align = Top
+            FocusControl = edtWin64URL
+            Margins.Left = 5.000000000000000000
+            Margins.Top = 5.000000000000000000
+            Margins.Right = 5.000000000000000000
+            Position.X = 5.000000000000000000
+            Position.Y = 152.000000000000000000
+            Size.Width = 630.000000000000000000
+            Size.Height = 17.000000000000000000
+            Size.PlatformDefault = False
+            Text = 'URL (MyAppURL)'
+            TabOrder = 6
+          end
+          object edtWin64URL: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Top
+            TabOrder = 7
+            Text = 'B'
+            Position.X = 5.000000000000000000
+            Position.Y = 169.000000000000000000
+            Margins.Left = 5.000000000000000000
+            Margins.Right = 5.000000000000000000
+            Margins.Bottom = 5.000000000000000000
+            Size.Width = 630.000000000000000000
+            Size.Height = 22.000000000000000000
+            Size.PlatformDefault = False
           end
         end
       end

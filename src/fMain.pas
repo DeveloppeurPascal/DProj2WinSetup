@@ -83,6 +83,14 @@ type
     btnCompileISSWin64: TButton;
     btnGenerateISSWin64: TButton;
     btnSignInnoSetupProgram64: TButton;
+    lblWin64Publisher: TLabel;
+    edtWin64Publisher: TEdit;
+    lblWin64URL: TLabel;
+    edtWin64URL: TEdit;
+    edtWin32Publisher: TEdit;
+    edtWin32URL: TEdit;
+    lblWin32Publisher: TLabel;
+    lblWin32URL: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure OlfAboutDialog1URLClick(const AURL: string);
     procedure mnuToolsOptionsClick(Sender: TObject);
@@ -492,14 +500,18 @@ function TfrmMain.HasWin32SettingsChanged: Boolean;
 begin
   result := (edtWin32Title.TagString <> edtWin32Title.Text) or
     (edtWin32Version.TagString <> edtWin32Version.Text) or
-    (edtWin32Guid.TagString <> edtWin32Guid.Text);
+    (edtWin32Guid.TagString <> edtWin32Guid.Text) or
+    (edtWin32Publisher.TagString <> edtWin32Publisher.Text) or
+    (edtWin32URL.TagString <> edtWin32URL.Text);
 end;
 
 function TfrmMain.HasWin64SettingsChanged: Boolean;
 begin
   result := (edtWin64Title.TagString <> edtWin64Title.Text) or
     (edtWin64Version.TagString <> edtWin64Version.Text) or
-    (edtWin64Guid.TagString <> edtWin64Guid.Text);
+    (edtWin64Guid.TagString <> edtWin64Guid.Text) or
+    (edtWin64Publisher.TagString <> edtWin64Publisher.Text) or
+    (edtWin64URL.TagString <> edtWin64URL.Text);
 end;
 
 procedure TfrmMain.InitAboutDialogBox;
@@ -569,6 +581,8 @@ begin
   edtWin32Title.Text := TDProj2WinSetupProject.ISTitle32;
   edtWin32Version.Text := TDProj2WinSetupProject.ISVersion32;
   edtWin32Guid.Text := TDProj2WinSetupProject.ISGUID32;
+  edtWin32Publisher.Text := TDProj2WinSetupProject.ISPublisher32;
+  edtWin32URL.Text := TDProj2WinSetupProject.ISURL32;
 
   SaveWin32Settings(false);
 end;
@@ -578,6 +592,8 @@ begin
   edtWin64Title.Text := TDProj2WinSetupProject.ISTitle64;
   edtWin64Version.Text := TDProj2WinSetupProject.ISVersion64;
   edtWin64Guid.Text := TDProj2WinSetupProject.ISGUID64;
+  edtWin64Publisher.Text := TDProj2WinSetupProject.ISPublisher64;
+  edtWin64URL.Text := TDProj2WinSetupProject.ISURL64;
 
   SaveWin64Settings(false);
 end;
@@ -766,12 +782,16 @@ begin
     TDProj2WinSetupProject.ISTitle32 := edtWin32Title.Text;
     TDProj2WinSetupProject.ISVersion32 := edtWin32Version.Text;
     TDProj2WinSetupProject.ISGUID32 := edtWin32Guid.Text;
+    TDProj2WinSetupProject.ISPublisher32 := edtWin32Publisher.Text;
+    TDProj2WinSetupProject.ISURL32 := edtWin32URL.Text;
     TDProj2WinSetupProject.Save;
   end;
 
   edtWin32Title.TagString := edtWin32Title.Text;
   edtWin32Version.TagString := edtWin32Version.Text;
   edtWin32Guid.TagString := edtWin32Guid.Text;
+  edtWin32Publisher.TagString := edtWin32Publisher.Text;
+  edtWin32URL.TagString := edtWin32URL.Text;
 end;
 
 procedure TfrmMain.SaveWin64Settings(const SaveParams: Boolean);
@@ -781,12 +801,16 @@ begin
     TDProj2WinSetupProject.ISTitle64 := edtWin64Title.Text;
     TDProj2WinSetupProject.ISVersion64 := edtWin64Version.Text;
     TDProj2WinSetupProject.ISGUID64 := edtWin64Guid.Text;
+    TDProj2WinSetupProject.ISPublisher64 := edtWin64Publisher.Text;
+    TDProj2WinSetupProject.ISURL64 := edtWin64URL.Text;
     TDProj2WinSetupProject.Save;
   end;
 
   edtWin64Title.TagString := edtWin64Title.Text;
   edtWin64Version.TagString := edtWin64Version.Text;
   edtWin64Guid.TagString := edtWin64Guid.Text;
+  edtWin64Publisher.TagString := edtWin64Publisher.Text;
+  edtWin64URL.TagString := edtWin64URL.Text;
 end;
 
 procedure TfrmMain.SignProjectExecutables(Const onSuccess, onError: TProc);
