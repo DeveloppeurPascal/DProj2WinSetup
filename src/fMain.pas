@@ -91,6 +91,7 @@ type
     edtWin32URL: TEdit;
     lblWin32Publisher: TLabel;
     lblWin32URL: TLabel;
+    btnSignEXEAndGenerateSetup: TButton;
     procedure FormCreate(Sender: TObject);
     procedure OlfAboutDialog1URLClick(const AURL: string);
     procedure mnuToolsOptionsClick(Sender: TObject);
