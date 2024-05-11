@@ -270,7 +270,7 @@ end;
 
 procedure TfrmOptions.InitISSettings;
 begin
-  edtISPath.Text := tconfig.InnoSetupPath;
+  edtISPath.Text := tconfig.InnoSetupCompilerPath;
 
   SaveISSettings(false);
 end;
@@ -294,7 +294,7 @@ procedure TfrmOptions.SaveISSettings(const SaveParams: Boolean);
 begin
   if SaveParams then
   begin
-    tconfig.InnoSetupPath := edtISPath.Text;
+    tconfig.InnoSetupCompilerPath := edtISPath.Text;
     tconfig.Save;
   end;
 

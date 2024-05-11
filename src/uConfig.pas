@@ -11,8 +11,8 @@ type
     class function GetExeBulkSigningServerPort: word; static;
     class function GetExeBulkSigningAuthKey: string; static;
     class procedure SetExeBulkSigningAuthKey(const Value: string); static;
-    class procedure SetInnoSetupPath(const Value: string); static;
-    class function GetInnoSetupPath: string; static;
+    class procedure SetInnoSetupCompilerPath(const Value: string); static;
+    class function GetInnoSetupCompilerPath: string; static;
   protected
   public
     class property ExeBulkSigningServerIP: string read GetExeBulkSigningServerIP
@@ -21,8 +21,8 @@ type
       read GetExeBulkSigningServerPort write SetExeBulkSigningServerPort;
     class property ExeBulkSigningAuthKey: string read GetExeBulkSigningAuthKey
       write SetExeBulkSigningAuthKey;
-    class property InnoSetupPath: string read GetInnoSetupPath
-      write SetInnoSetupPath;
+    class property InnoSetupCompilerPath: string read GetInnoSetupCompilerPath
+      write SetInnoSetupCompilerPath;
     class procedure Save;
     class procedure Cancel;
   end;
@@ -107,9 +107,9 @@ begin
   result := ConfigFile.getValue('ESBServerPort', 8080);
 end;
 
-class function TConfig.GetInnoSetupPath: string;
+class function TConfig.GetInnoSetupCompilerPath: string;
 begin
-  result := ConfigFile.getValue('ISPath', '');
+  result := ConfigFile.getValue('ISCCPath', '');
 end;
 
 class procedure TConfig.Save;
@@ -132,9 +132,9 @@ begin
   ConfigFile.setValue('ESBServerPort', Value);
 end;
 
-class procedure TConfig.SetInnoSetupPath(const Value: string);
+class procedure TConfig.SetInnoSetupCompilerPath(const Value: string);
 begin
-  ConfigFile.setValue('ISPath', Value);
+  ConfigFile.setValue('ISCCPath', Value);
 end;
 
 initialization
