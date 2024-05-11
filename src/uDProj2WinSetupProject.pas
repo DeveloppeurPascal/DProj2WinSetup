@@ -23,6 +23,14 @@ type
     class function GetISVersion64: string; static;
     class function GetSignTitle: string; static;
     class function GetSignURL: string; static;
+    class function GetISPublisher32: string; static;
+    class function GetISPublisher64: string; static;
+    class function GetISURL32: string; static;
+    class function GetISURL64: string; static;
+    class procedure SetISPublisher32(const Value: string); static;
+    class procedure SetISPublisher64(const Value: string); static;
+    class procedure SetISURL32(const Value: string); static;
+    class procedure SetISURL64(const Value: string); static;
   protected
   public
     class property DProj2WinSetupProjectFileName: string
@@ -33,9 +41,15 @@ type
     class property ISTitle32: string read GetISTitle32 write SetISTitle32;
     class property ISVersion32: string read GetISVersion32 write SetISVersion32;
     class property ISGUID32: string read GetISGUID32 write SetISGUID32;
+    class property ISPublisher32: string read GetISPublisher32
+      write SetISPublisher32;
+    class property ISURL32: string read GetISURL32 write SetISURL32;
     class property ISTitle64: string read GetISTitle64 write SetISTitle64;
     class property ISVersion64: string read GetISVersion64 write SetISVersion64;
     class property ISGUID64: string read GetISGUID64 write SetISGUID64;
+    class property ISPublisher64: string read GetISPublisher64
+      write SetISPublisher64;
+    class property ISURL64: string read GetISURL64 write SetISURL64;
     class procedure CreateFromFile(Const ADelphiProjectFileName: string);
     class procedure LoadFromFile(Const ADProj2WinSetupProjectFileName: string);
     class procedure Save;
@@ -115,6 +129,16 @@ begin
   result := ProjectFile.getValue('ISGuid64', '');
 end;
 
+class function TDProj2WinSetupProject.GetISPublisher32: string;
+begin
+  result := ProjectFile.getValue('ISPublisher32', '');
+end;
+
+class function TDProj2WinSetupProject.GetISPublisher64: string;
+begin
+  result := ProjectFile.getValue('ISPublisher64', '');
+end;
+
 class function TDProj2WinSetupProject.GetISSProjectFilePath
   (const OperatingSystem: string): string;
 begin
@@ -131,6 +155,16 @@ end;
 class function TDProj2WinSetupProject.GetISTitle64: string;
 begin
   result := ProjectFile.getValue('ISTitle64', '');
+end;
+
+class function TDProj2WinSetupProject.GetISURL32: string;
+begin
+  result := ProjectFile.getValue('ISURL32', '');
+end;
+
+class function TDProj2WinSetupProject.GetISURL64: string;
+begin
+  result := ProjectFile.getValue('ISURL64', '');
 end;
 
 class function TDProj2WinSetupProject.GetISVersion32: string;
@@ -191,6 +225,16 @@ begin
   ProjectFile.setValue('ISGuid64', Value);
 end;
 
+class procedure TDProj2WinSetupProject.SetISPublisher32(const Value: string);
+begin
+  ProjectFile.setValue('ISPublisher32', Value);
+end;
+
+class procedure TDProj2WinSetupProject.SetISPublisher64(const Value: string);
+begin
+  ProjectFile.setValue('ISPublisher64', Value);
+end;
+
 class procedure TDProj2WinSetupProject.SetISTitle32(const Value: string);
 begin
   ProjectFile.setValue('ISTitle32', Value);
@@ -199,6 +243,16 @@ end;
 class procedure TDProj2WinSetupProject.SetISTitle64(const Value: string);
 begin
   ProjectFile.setValue('ISTitle64', Value);
+end;
+
+class procedure TDProj2WinSetupProject.SetISURL32(const Value: string);
+begin
+  ProjectFile.setValue('ISURL32', Value);
+end;
+
+class procedure TDProj2WinSetupProject.SetISURL64(const Value: string);
+begin
+  ProjectFile.setValue('ISURL64', Value);
 end;
 
 class procedure TDProj2WinSetupProject.SetISVersion32(const Value: string);
