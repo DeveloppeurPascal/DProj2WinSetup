@@ -62,11 +62,6 @@ type
     procedure btnEBSSaveClick(Sender: TObject);
     procedure btnEBSCancelClick(Sender: TObject);
   private
-    /// <summary>
-    /// Search default path for the Inno Setup Command-Line Compiler (ISCC.exe)
-    /// </summary>
-    procedure InitISCCDefaultPath;
-
     procedure InitEBSSettings;
     procedure SaveEBSSettings(Const SaveParams: Boolean);
     function HasEBSSettingsChanged: Boolean;
@@ -203,7 +198,7 @@ begin
   InitEBSSettings;
 
   // Inno Setup Settings
-  InitISCCDefaultPath;
+  edtISPath.TextPrompt := tconfig.InnoSetupCompilerPathByDefault;
   InitISSettings;
 end;
 
@@ -226,46 +221,6 @@ begin
   edtEBSAuthKey.Text := tconfig.ExeBulkSigningAuthKey;
 
   SaveEBSSettings(false);
-end;
-
-procedure TfrmOptions.InitISCCDefaultPath;
-var
-  i: integer;
-  ISCCCurrentPath: string;
-begin
-  if tdirectory.Exists('C:\Program Files (Arm)') then
-    for i := 9 downto 1 do
-    begin
-      ISCCCurrentPath := 'C:\Program Files (Arm)\Inno Setup ' + i.ToString +
-        '\ISCC.exe';
-      if tfile.Exists(ISCCCurrentPath) then
-        break;
-    end;
-
-  if (not tfile.Exists(ISCCCurrentPath)) and
-    tdirectory.Exists('C:\Program Files') then
-    for i := 9 downto 1 do
-    begin
-      ISCCCurrentPath := 'C:\Program Files\Inno Setup ' + i.ToString +
-        '\ISCC.exe';
-      if tfile.Exists(ISCCCurrentPath) then
-        break;
-    end;
-
-  if (not tfile.Exists(ISCCCurrentPath)) and
-    tdirectory.Exists('C:\Program Files (x86)') then
-    for i := 9 downto 1 do
-    begin
-      ISCCCurrentPath := 'C:\Program Files (x86)\Inno Setup ' + i.ToString +
-        '\ISCC.exe';
-      if tfile.Exists(ISCCCurrentPath) then
-        break;
-    end;
-
-  if tfile.Exists(ISCCCurrentPath) then
-    edtISPath.TextPrompt := ISCCCurrentPath
-  else
-    edtISPath.TextPrompt := '';
 end;
 
 procedure TfrmOptions.InitISSettings;
