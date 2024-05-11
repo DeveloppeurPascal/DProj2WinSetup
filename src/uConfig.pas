@@ -13,6 +13,7 @@ type
     class procedure SetExeBulkSigningAuthKey(const Value: string); static;
     class procedure SetInnoSetupCompilerPath(const Value: string); static;
     class function GetInnoSetupCompilerPath: string; static;
+    class function GetInnoSetupCompilerPathByDefault: string; static;
   protected
   public
     class property ExeBulkSigningServerIP: string read GetExeBulkSigningServerIP
@@ -23,6 +24,8 @@ type
       write SetExeBulkSigningAuthKey;
     class property InnoSetupCompilerPath: string read GetInnoSetupCompilerPath
       write SetInnoSetupCompilerPath;
+    class property InnoSetupCompilerPathByDefault: string
+      read GetInnoSetupCompilerPathByDefault;
     class procedure Save;
     class procedure Cancel;
   end;
@@ -31,7 +34,9 @@ implementation
 
 uses
   System.Classes,
+  System.IOUtils,
   System.Types,
+  System.SysUtils,
   Olf.RTL.CryptDecrypt,
   Olf.RTL.Params;
 
@@ -110,6 +115,46 @@ end;
 class function TConfig.GetInnoSetupCompilerPath: string;
 begin
   result := ConfigFile.getValue('ISCCPath', '');
+end;
+
+class function TConfig.GetInnoSetupCompilerPathByDefault: string;
+var
+  i: integer;
+  ISCCCurrentPath: string;
+begin
+  if tdirectory.Exists('C:\Program Files (Arm)') then
+    for i := 9 downto 1 do
+    begin
+      ISCCCurrentPath := 'C:\Program Files (Arm)\Inno Setup ' + i.ToString +
+        '\ISCC.exe';
+      if tfile.Exists(ISCCCurrentPath) then
+        break;
+    end;
+
+  if (not tfile.Exists(ISCCCurrentPath)) and
+    tdirectory.Exists('C:\Program Files') then
+    for i := 9 downto 1 do
+    begin
+      ISCCCurrentPath := 'C:\Program Files\Inno Setup ' + i.ToString +
+        '\ISCC.exe';
+      if tfile.Exists(ISCCCurrentPath) then
+        break;
+    end;
+
+  if (not tfile.Exists(ISCCCurrentPath)) and
+    tdirectory.Exists('C:\Program Files (x86)') then
+    for i := 9 downto 1 do
+    begin
+      ISCCCurrentPath := 'C:\Program Files (x86)\Inno Setup ' + i.ToString +
+        '\ISCC.exe';
+      if tfile.Exists(ISCCCurrentPath) then
+        break;
+    end;
+
+  if tfile.Exists(ISCCCurrentPath) then
+    result := ISCCCurrentPath
+  else
+    result := '';
 end;
 
 class procedure TConfig.Save;
