@@ -446,8 +446,9 @@ begin
           // "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /O+ "/OC:\DossierDeDestination" "/FNomDuSetupEXESansExtension" /Q "C:\CheminVersScriptInnoSetupACompiler.iss"
           InnoSetupCompileCmd := '"' + ISCCPath + '" /O+ "/O' +
             tpath.GetDirectoryName(SetupFilePath) + '" /F' +
-            tpath.GetFileNameWithoutExtension(SetupFilePath) + ' /Q "' +
+            tpath.GetFileNameWithoutExtension(SetupFilePath) + ' "' +
             ISSFilePath + '"';
+          // /Q (quiet) a été retiré au cas où l'absence de sortie de ISCC perturbe DosCommand entrainant un plantage (cf https://github.com/DeveloppeurPascal/DProj2WinSetup/issues/39 )
 
           DosCommand := TDosCommand.Create(nil);
           try
