@@ -61,6 +61,8 @@ type
     class function IsOpened: boolean;
     class function GetISSProjectFilePath(Const OperatingSystem: string): string;
     class function GetSetupFilePath(Const OperatingSystem: string): string;
+    class function GetProjectExecutableFileName(const OperatingSystem
+      : string): string;
   end;
 
 implementation
@@ -177,11 +179,19 @@ begin
   result := ProjectFile.getValue('ISVersion64', '');
 end;
 
+class function TDProj2WinSetupProject.GetProjectExecutableFileName
+  (const OperatingSystem: string): string;
+begin
+  // TODO : get the executable filename from the DROJ file for 'Win32' or 'Win64'
+  result := tpath.GetFileNameWithoutExtension(DelphiProjectFileName) + '.exe';
+end;
+
 class function TDProj2WinSetupProject.GetSetupFilePath(const OperatingSystem
   : string): string;
 begin
-  tpath.combine(tpath.GetTempPath, tpath.GetFileNameWithoutExtension
-    (DelphiProjectFileName) + '-' + OperatingSystem + '-setup.exe');
+  result := tpath.combine(tpath.GetTempPath,
+    tpath.GetFileNameWithoutExtension(DelphiProjectFileName) + '-' +
+    OperatingSystem + '-setup.exe');
 end;
 
 class function TDProj2WinSetupProject.GetSignTitle: string;
