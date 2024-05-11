@@ -147,7 +147,9 @@ uses
   u_urlOpen,
   uConfig,
   fOptions,
-  uDProj2WinSetupProject, ExeBulkSigningClientLib;
+  uDProj2WinSetupProject,
+  ExeBulkSigningClientLib,
+  DosCommand;
 
 procedure TfrmMain.BlockScreen(const AEnabled: Boolean);
 begin
@@ -335,11 +337,62 @@ begin
   try
     tthread.CreateAnonymousThread(
       procedure
+      var
+        ISSFilePath, SetupFilePath, ISCCPath: string;
+        InnoSetupCompileCmd: string;
+        DosCommand: TDosCommand;
       begin
         try
-          // TODO : à compléter
-          if assigned(onSuccess) then
-            onSuccess;
+          ISSFilePath := TDProj2WinSetupProject.GetISSProjectFilePath
+            (OperatingSystem);
+          if not tfile.Exists(ISSFilePath) then
+            raise exception.Create('Inno Setup Script file for ' +
+              OperatingSystem + ' doesn''t exist !');
+
+          SetupFilePath := TDProj2WinSetupProject.GetSetupFilePath
+            (OperatingSystem);
+          if tfile.Exists(SetupFilePath) then
+            tfile.delete(SetupFilePath);
+
+          if not tconfig.InnoSetupCompilerPath.IsEmpty then
+            ISCCPath := tconfig.InnoSetupCompilerPath
+          else if not tconfig.InnoSetupCompilerPathByDefault.IsEmpty then
+            ISCCPath := tconfig.InnoSetupCompilerPathByDefault
+          else
+            raise exception.Create
+              ('Please define where ISCC.exe is located in the menu Tools/Options/Inno Setup');
+
+          // Exemple de commande pour compiler un script Inno Setup en ligne de commande :
+          // "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /O+ "/OC:\DossierDeDestination" "/FNomDuSetupEXESansExtension" /Q "C:\CheminVersScriptInnoSetupACompiler.iss"
+          InnoSetupCompileCmd := '"' + ISCCPath + '" /O+ "/O' +
+            tpath.GetDirectoryName(SetupFilePath) + '" /F' +
+            tpath.GetFileNameWithoutExtension(SetupFilePath) + ' /Q "' +
+            ISSFilePath + '"';
+
+          DosCommand := TDosCommand.Create(nil);
+          try
+            DosCommand.CommandLine := InnoSetupCompileCmd;
+            DosCommand.InputToOutput := false;
+            DosCommand.Execute;
+
+            while DosCommand.IsRunning and
+              (DosCommand.EndStatus = TEndStatus.esStill_Active) do
+              sleep(100);
+          finally
+            DosCommand.Free;
+          end;
+
+          if tfile.Exists(SetupFilePath) then
+          begin
+{$IFDEF RELEASE}
+            if tfile.Exists(ISSFilePath) then
+              tfile.delete(ISSFilePath);
+{$ENDIF}
+            if assigned(onSuccess) then
+              onSuccess;
+          end
+          else if assigned(onError) then
+            onError;
         except
           if assigned(onError) then
             onError;
@@ -746,8 +799,8 @@ begin
         ProjectFolder, ExeFileName: string;
       begin
         try
-          EBSClient := TESBClient.Create(TConfig.ExeBulkSigningServerIP,
-            TConfig.ExeBulkSigningServerPort, TConfig.ExeBulkSigningAuthKey);
+          EBSClient := TESBClient.Create(tconfig.ExeBulkSigningServerIP,
+            tconfig.ExeBulkSigningServerPort, tconfig.ExeBulkSigningAuthKey);
           try
             // TODO : detect project executables depending on DPROJ settings
             ProjectFolder := tpath.GetDirectoryName
@@ -796,8 +849,8 @@ begin
         SetupFilePath, SignedSetupFilePath, FinalSetupFilePath: string;
       begin
         try
-          EBSClient := TESBClient.Create(TConfig.ExeBulkSigningServerIP,
-            TConfig.ExeBulkSigningServerPort, TConfig.ExeBulkSigningAuthKey);
+          EBSClient := TESBClient.Create(tconfig.ExeBulkSigningServerIP,
+            tconfig.ExeBulkSigningServerPort, tconfig.ExeBulkSigningAuthKey);
           try
             SetupFilePath := TDProj2WinSetupProject.GetSetupFilePath
               (OperatingSystem);
@@ -821,9 +874,12 @@ begin
               (TDProj2WinSetupProject.DelphiProjectFileName),
               tpath.GetFileNameWithoutExtension(SignedSetupFilePath) + '.exe');
             if tfile.Exists(FinalSetupFilePath) then
-              tfile.Delete(FinalSetupFilePath);
+              tfile.delete(FinalSetupFilePath);
             tfile.Move(SignedSetupFilePath, FinalSetupFilePath);
-            tfile.Delete(tpath.GetDirectoryName(SetupFilePath));
+{$IFDEF RELEASE}
+            if tfile.Exists(SetupFilePath) then
+              tfile.delete(SetupFilePath);
+{$ENDIF}
             if assigned(onSuccess) then
               onSuccess;
           end
