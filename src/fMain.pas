@@ -118,6 +118,8 @@ type
     procedure btnSignInnoSetupProgram64Click(Sender: TObject);
     procedure btnSignEXEAndGenerateSetupClick(Sender: TObject);
   private
+  protected
+    procedure DoEditChange(Sender: TObject);
   public
     procedure InitMainFormCaption;
     procedure InitAboutDialogBox;
@@ -494,6 +496,11 @@ begin
   end;
 end;
 
+procedure TfrmMain.DoEditChange(Sender: TObject);
+begin
+  InitMainFormCaption;
+end;
+
 procedure TfrmMain.btnWin64GuidGenerateClick(Sender: TObject);
 begin
   ReplaceCurrentGuidByANewOne(edtWin64Guid);
@@ -533,16 +540,26 @@ begin
 end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
+var
+  i: integer;
 begin
   BlockScreen(false);
   InitAboutDialogBox;
   InitMainFormCaption;
+
   mnuHelpAbout.Text := '&About ' + OlfAboutDialog1.Titre;
   // TODO : traduire texte
+
   UpdateFileMenuOptionsVisibility;
+
   tcScreens.TabPosition := TTabPosition.None;
   tcScreens.ActiveTab := tiHome;
+
   btnProjectOpen.SetFocus;
+
+  for i := 0 to ComponentCount - 1 do
+    if (components[i] is TEdit) then
+      (components[i] as TEdit).OnChange := DoEditChange;
 end;
 
 procedure TfrmMain.GenerateISSProject(const OperatingSystem: string;
@@ -1005,6 +1022,8 @@ begin
 
   edtSignTitle.TagString := edtSignTitle.Text;
   edtSignURL.TagString := edtSignURL.Text;
+
+  InitMainFormCaption;
 end;
 
 procedure TfrmMain.SaveWin32Settings(const SaveParams: Boolean);
@@ -1024,6 +1043,8 @@ begin
   edtWin32Guid.TagString := edtWin32Guid.Text;
   edtWin32Publisher.TagString := edtWin32Publisher.Text;
   edtWin32URL.TagString := edtWin32URL.Text;
+
+  InitMainFormCaption;
 end;
 
 procedure TfrmMain.SaveWin64Settings(const SaveParams: Boolean);
@@ -1043,6 +1064,8 @@ begin
   edtWin64Guid.TagString := edtWin64Guid.Text;
   edtWin64Publisher.TagString := edtWin64Publisher.Text;
   edtWin64URL.TagString := edtWin64URL.Text;
+
+  InitMainFormCaption;
 end;
 
 procedure TfrmMain.SignProjectExecutables(Const onSuccess, onError: TProc);
