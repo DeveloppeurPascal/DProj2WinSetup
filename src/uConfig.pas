@@ -5,6 +5,7 @@ interface
 type
   TConfig = class
   private
+    class var FInnoSetupCompilerPathByDefault: string;
     class function GetExeBulkSigningServerIP: string; static;
     class procedure SetExeBulkSigningServerIP(const Value: string); static;
     class procedure SetExeBulkSigningServerPort(const Value: word); static;
@@ -45,6 +46,8 @@ var
 
 procedure initConfig;
 begin
+  TConfig.FInnoSetupCompilerPathByDefault := '';
+
   ConfigFile := TParamsFile.Create;
   ConfigFile.InitDefaultFileNameV2('OlfSoftware', 'DProj2WinSetup', false);
 {$IFDEF RELEASE }
@@ -122,39 +125,41 @@ var
   i: integer;
   ISCCCurrentPath: string;
 begin
-  if tdirectory.Exists('C:\Program Files (Arm)') then
-    for i := 9 downto 1 do
-    begin
-      ISCCCurrentPath := 'C:\Program Files (Arm)\Inno Setup ' + i.ToString +
-        '\ISCC.exe';
-      if tfile.Exists(ISCCCurrentPath) then
-        break;
-    end;
+  if FInnoSetupCompilerPathByDefault.IsEmpty then
+  begin
+    if tdirectory.Exists('C:\Program Files (Arm)') then
+      for i := 9 downto 1 do
+      begin
+        ISCCCurrentPath := 'C:\Program Files (Arm)\Inno Setup ' + i.ToString +
+          '\ISCC.exe';
+        if tfile.Exists(ISCCCurrentPath) then
+          break;
+      end;
 
-  if (not tfile.Exists(ISCCCurrentPath)) and
-    tdirectory.Exists('C:\Program Files') then
-    for i := 9 downto 1 do
-    begin
-      ISCCCurrentPath := 'C:\Program Files\Inno Setup ' + i.ToString +
-        '\ISCC.exe';
-      if tfile.Exists(ISCCCurrentPath) then
-        break;
-    end;
+    if (not tfile.Exists(ISCCCurrentPath)) and
+      tdirectory.Exists('C:\Program Files') then
+      for i := 9 downto 1 do
+      begin
+        ISCCCurrentPath := 'C:\Program Files\Inno Setup ' + i.ToString +
+          '\ISCC.exe';
+        if tfile.Exists(ISCCCurrentPath) then
+          break;
+      end;
 
-  if (not tfile.Exists(ISCCCurrentPath)) and
-    tdirectory.Exists('C:\Program Files (x86)') then
-    for i := 9 downto 1 do
-    begin
-      ISCCCurrentPath := 'C:\Program Files (x86)\Inno Setup ' + i.ToString +
-        '\ISCC.exe';
-      if tfile.Exists(ISCCCurrentPath) then
-        break;
-    end;
+    if (not tfile.Exists(ISCCCurrentPath)) and
+      tdirectory.Exists('C:\Program Files (x86)') then
+      for i := 9 downto 1 do
+      begin
+        ISCCCurrentPath := 'C:\Program Files (x86)\Inno Setup ' + i.ToString +
+          '\ISCC.exe';
+        if tfile.Exists(ISCCCurrentPath) then
+          break;
+      end;
 
-  if tfile.Exists(ISCCCurrentPath) then
-    result := ISCCCurrentPath
-  else
-    result := '';
+    if tfile.Exists(ISCCCurrentPath) then
+      FInnoSetupCompilerPathByDefault := ISCCCurrentPath;
+  end;
+  result := FInnoSetupCompilerPathByDefault;
 end;
 
 class procedure TConfig.Save;
