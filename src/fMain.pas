@@ -77,6 +77,12 @@ type
     lBlockScreen: TLayout;
     rBlockScreen: TRectangle;
     aniBlockScreen: TAniIndicator;
+    btnSignInnoSetupProgramWin32: TButton;
+    btnCompileISSWin32: TButton;
+    btnGenerateISSWin32: TButton;
+    btnCompileISSWin64: TButton;
+    btnGenerateISSWin64: TButton;
+    btnSignInnoSetupProgram64: TButton;
     procedure FormCreate(Sender: TObject);
     procedure OlfAboutDialog1URLClick(const AURL: string);
     procedure mnuToolsOptionsClick(Sender: TObject);
@@ -95,6 +101,12 @@ type
     procedure btnWin64GuidGenerateClick(Sender: TObject);
     procedure btnWin32GuidGenerateClick(Sender: TObject);
     procedure btnSendToExeBulkSigningClick(Sender: TObject);
+    procedure btnGenerateISSWin32Click(Sender: TObject);
+    procedure btnGenerateISSWin64Click(Sender: TObject);
+    procedure btnCompileISSWin64Click(Sender: TObject);
+    procedure btnCompileISSWin32Click(Sender: TObject);
+    procedure btnSignInnoSetupProgramWin32Click(Sender: TObject);
+    procedure btnSignInnoSetupProgram64Click(Sender: TObject);
   private
   public
     procedure InitMainFormCaption;
@@ -112,7 +124,14 @@ type
     function HasProjectChanged: Boolean;
     procedure ReplaceCurrentGuidByANewOne(Const edt: TEdit);
     procedure BlockScreen(Const AEnabled: Boolean);
-    procedure SignProjectExecutables(onSuccess: TProc; onError: TProc = nil);
+    procedure SignProjectExecutables(Const onSuccess: TProc;
+      Const onError: TProc = nil);
+    procedure GenerateISSProject(Const OperatingSystem: string;
+      Const onSuccess: TProc; Const onError: TProc = nil);
+    procedure CompileISSProject(Const OperatingSystem: string;
+      Const onSuccess: TProc; Const onError: TProc = nil);
+    procedure SignSetupExecutables(Const OperatingSystem: string;
+      Const onSuccess: TProc; Const onError: TProc = nil);
   end;
 
 var
@@ -149,6 +168,78 @@ begin
   end;
 end;
 
+procedure TfrmMain.btnCompileISSWin32Click(Sender: TObject);
+begin
+  BlockScreen(true);
+  try
+    CompileISSProject('Win32',
+      procedure
+      begin
+        BlockScreen(false);
+      end,
+      procedure
+      begin
+        BlockScreen(false);
+      end);
+  except
+    BlockScreen(false);
+  end;
+end;
+
+procedure TfrmMain.btnCompileISSWin64Click(Sender: TObject);
+begin
+  BlockScreen(true);
+  try
+    CompileISSProject('Win64',
+      procedure
+      begin
+        BlockScreen(false);
+      end,
+      procedure
+      begin
+        BlockScreen(false);
+      end);
+  except
+    BlockScreen(false);
+  end;
+end;
+
+procedure TfrmMain.btnGenerateISSWin32Click(Sender: TObject);
+begin
+  BlockScreen(true);
+  try
+    GenerateISSProject('Win32',
+      procedure
+      begin
+        BlockScreen(false);
+      end,
+      procedure
+      begin
+        BlockScreen(false);
+      end);
+  except
+    BlockScreen(false);
+  end;
+end;
+
+procedure TfrmMain.btnGenerateISSWin64Click(Sender: TObject);
+begin
+  BlockScreen(true);
+  try
+    GenerateISSProject('Win64',
+      procedure
+      begin
+        BlockScreen(false);
+      end,
+      procedure
+      begin
+        BlockScreen(false);
+      end);
+  except
+    BlockScreen(false);
+  end;
+end;
+
 procedure TfrmMain.btnProjectCancelClick(Sender: TObject);
 begin
   InitProjectSettings;
@@ -164,6 +255,42 @@ begin
   BlockScreen(true);
   try
     SignProjectExecutables(
+      procedure
+      begin
+        BlockScreen(false);
+      end,
+      procedure
+      begin
+        BlockScreen(false);
+      end);
+  except
+    BlockScreen(false);
+  end;
+end;
+
+procedure TfrmMain.btnSignInnoSetupProgram64Click(Sender: TObject);
+begin
+  BlockScreen(true);
+  try
+    SignSetupExecutables('Win32',
+      procedure
+      begin
+        BlockScreen(false);
+      end,
+      procedure
+      begin
+        BlockScreen(false);
+      end);
+  except
+    BlockScreen(false);
+  end;
+end;
+
+procedure TfrmMain.btnSignInnoSetupProgramWin32Click(Sender: TObject);
+begin
+  BlockScreen(true);
+  try
+    SignSetupExecutables('Win32',
       procedure
       begin
         BlockScreen(false);
@@ -200,6 +327,12 @@ end;
 procedure TfrmMain.btnWin64SaveClick(Sender: TObject);
 begin
   SaveWin64Settings(true);
+end;
+
+procedure TfrmMain.CompileISSProject(const OperatingSystem: string;
+const onSuccess, onError: TProc);
+begin
+  // TODO : à compléter
 end;
 
 procedure TfrmMain.btnWin64GuidGenerateClick(Sender: TObject);
@@ -250,6 +383,12 @@ begin
   UpdateFileMenuOptionsVisibility;
   tcScreens.TabPosition := TTabPosition.None;
   tcScreens.ActiveTab := tiHome;
+end;
+
+procedure TfrmMain.GenerateISSProject(const OperatingSystem: string;
+const onSuccess, onError: TProc);
+begin
+  // TODO : à compléter
 end;
 
 function TfrmMain.HasProjectChanged: Boolean;
@@ -565,7 +704,7 @@ begin
   edtWin64Guid.TagString := edtWin64Guid.Text;
 end;
 
-procedure TfrmMain.SignProjectExecutables(onSuccess, onError: TProc);
+procedure TfrmMain.SignProjectExecutables(Const onSuccess, onError: TProc);
 begin
   try
     tthread.CreateAnonymousThread(
@@ -612,6 +751,12 @@ begin
     if assigned(onError) then
       onError;
   end;
+end;
+
+procedure TfrmMain.SignSetupExecutables(const OperatingSystem: string;
+const onSuccess, onError: TProc);
+begin
+  // TODO : à compléter
 end;
 
 procedure TfrmMain.UpdateFileMenuOptionsVisibility;
