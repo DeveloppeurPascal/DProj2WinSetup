@@ -332,7 +332,23 @@ end;
 procedure TfrmMain.CompileISSProject(const OperatingSystem: string;
 const onSuccess, onError: TProc);
 begin
-  // TODO : à compléter
+  try
+    tthread.CreateAnonymousThread(
+      procedure
+      begin
+        try
+          // TODO : à compléter
+          if assigned(onSuccess) then
+            onSuccess;
+        except
+          if assigned(onError) then
+            onError;
+        end;
+      end).start;
+  except
+    if assigned(onError) then
+      onError;
+  end;
 end;
 
 procedure TfrmMain.btnWin64GuidGenerateClick(Sender: TObject);
@@ -388,7 +404,23 @@ end;
 procedure TfrmMain.GenerateISSProject(const OperatingSystem: string;
 const onSuccess, onError: TProc);
 begin
-  // TODO : à compléter
+  try
+    tthread.CreateAnonymousThread(
+      procedure
+      begin
+        try
+          // TODO : à compléter
+          if assigned(onSuccess) then
+            onSuccess;
+        except
+          if assigned(onError) then
+            onError;
+        end;
+      end).start;
+  except
+    if assigned(onError) then
+      onError;
+  end;
 end;
 
 function TfrmMain.HasProjectChanged: Boolean;
@@ -756,7 +788,56 @@ end;
 procedure TfrmMain.SignSetupExecutables(const OperatingSystem: string;
 const onSuccess, onError: TProc);
 begin
-  // TODO : à compléter
+  try
+    tthread.CreateAnonymousThread(
+      procedure
+      var
+        EBSClient: TESBClient;
+        SetupFilePath, SignedSetupFilePath, FinalSetupFilePath: string;
+      begin
+        try
+          EBSClient := TESBClient.Create(TConfig.ExeBulkSigningServerIP,
+            TConfig.ExeBulkSigningServerPort, TConfig.ExeBulkSigningAuthKey);
+          try
+            SetupFilePath := TDProj2WinSetupProject.GetSetupFilePath
+              (OperatingSystem);
+            if tfile.Exists(SetupFilePath) then
+              EBSClient.SendFileToServer(TDProj2WinSetupProject.SignTitle + ' ('
+                + OperatingSystem + ' setup)', TDProj2WinSetupProject.SignURL,
+                SetupFilePath);
+
+            while (EBSClient.HasWaitingFiles > 0) do
+              sleep(1000);
+          finally
+            EBSClient.Free;
+          end;
+          SignedSetupFilePath :=
+            tpath.combine(tpath.GetDirectoryName(SetupFilePath),
+            tpath.GetFileNameWithoutExtension(SetupFilePath) + '-signed.exe');
+          if tfile.Exists(SignedSetupFilePath) then
+          begin
+            FinalSetupFilePath :=
+              tpath.combine(tpath.GetDirectoryName
+              (TDProj2WinSetupProject.DelphiProjectFileName),
+              tpath.GetFileNameWithoutExtension(SignedSetupFilePath) + '.exe');
+            if tfile.Exists(FinalSetupFilePath) then
+              tfile.Delete(FinalSetupFilePath);
+            tfile.Move(SignedSetupFilePath, FinalSetupFilePath);
+            tfile.Delete(tpath.GetDirectoryName(SetupFilePath));
+            if assigned(onSuccess) then
+              onSuccess;
+          end
+          else if assigned(onError) then
+            onError;
+        except
+          if assigned(onError) then
+            onError;
+        end;
+      end).start;
+  except
+    if assigned(onError) then
+      onError;
+  end;
 end;
 
 procedure TfrmMain.UpdateFileMenuOptionsVisibility;
