@@ -1,7 +1,6 @@
 object frmMain: TfrmMain
   Left = 0
   Top = 0
-  ActiveControl = btnProjectOpen
   Caption = 'Form1'
   ClientHeight = 624
   ClientWidth = 640
@@ -83,7 +82,7 @@ object frmMain: TfrmMain
     Size.Width = 640.000000000000000000
     Size.Height = 624.000000000000000000
     Size.PlatformDefault = False
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 2
     TabPosition = Bottom
     Sizes = (
@@ -96,7 +95,7 @@ object frmMain: TfrmMain
         item
         end>
       TextSettings.Trimming = None
-      IsSelected = True
+      IsSelected = False
       Size.Width = 60.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -121,7 +120,7 @@ object frmMain: TfrmMain
         item
         end>
       TextSettings.Trimming = None
-      IsSelected = False
+      IsSelected = True
       Size.Width = 64.000000000000000000
       Size.Height = 26.000000000000000000
       Size.PlatformDefault = False
@@ -301,6 +300,7 @@ object frmMain: TfrmMain
             TabOrder = 6
             Text = 'Sign all and generate install programs'
             TextSettings.Trimming = None
+            OnClick = btnSignEXEAndGenerateSetupClick
           end
         end
         object tiSetupWin32: TTabItem

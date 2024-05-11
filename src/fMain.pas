@@ -116,6 +116,7 @@ type
     procedure btnCompileISSWin32Click(Sender: TObject);
     procedure btnSignInnoSetupProgramWin32Click(Sender: TObject);
     procedure btnSignInnoSetupProgram64Click(Sender: TObject);
+    procedure btnSignEXEAndGenerateSetupClick(Sender: TObject);
   private
   public
     procedure InitMainFormCaption;
@@ -279,6 +280,73 @@ begin
   end;
 end;
 
+procedure TfrmMain.btnSignEXEAndGenerateSetupClick(Sender: TObject);
+begin
+  BlockScreen(true);
+  try
+    SignProjectExecutables(
+      procedure
+      begin
+        GenerateISSProject('Win32',
+          procedure
+          begin
+            GenerateISSProject('Win64',
+              procedure
+              begin
+                CompileISSProject('Win32',
+                  procedure
+                  begin
+                    CompileISSProject('Win64',
+                      procedure
+                      begin
+                        SignSetupExecutables('Win32',
+                          procedure
+                          begin
+                            SignSetupExecutables('Win64',
+                              procedure
+                              begin
+                                ShowMessage('Opération terminée');
+                                BlockScreen(false);
+                              end,
+                              procedure
+                              begin
+                                BlockScreen(false);
+                              end);
+                          end,
+                          procedure
+                          begin
+                            BlockScreen(false);
+                          end);
+                      end,
+                      procedure
+                      begin
+                        BlockScreen(false);
+                      end);
+                  end,
+                  procedure
+                  begin
+                    BlockScreen(false);
+                  end);
+              end,
+              procedure
+              begin
+                BlockScreen(false);
+              end);
+          end,
+          procedure
+          begin
+            BlockScreen(false);
+          end);
+      end,
+      procedure
+      begin
+        BlockScreen(false);
+      end);
+  except
+    BlockScreen(false);
+  end;
+end;
+
 procedure TfrmMain.btnSignInnoSetupProgram64Click(Sender: TObject);
 begin
   BlockScreen(true);
@@ -343,6 +411,7 @@ end;
 procedure TfrmMain.CompileISSProject(const OperatingSystem: string;
 const onSuccess, onError: TProc);
 begin
+  // TODO : tester si plateforme XXX présente dans le projet
   try
     tthread.CreateAnonymousThread(
       procedure
@@ -398,13 +467,25 @@ begin
               tfile.delete(ISSFilePath);
 {$ENDIF}
             if assigned(onSuccess) then
-              onSuccess;
+              tthread.queue(nil,
+                procedure
+                begin
+                  onSuccess;
+                end);
           end
           else if assigned(onError) then
-            onError;
+            tthread.queue(nil,
+              procedure
+              begin
+                onError;
+              end);
         except
           if assigned(onError) then
-            onError;
+            tthread.queue(nil,
+              procedure
+              begin
+                onError;
+              end);
         end;
       end).start;
   except
@@ -461,17 +542,20 @@ begin
   UpdateFileMenuOptionsVisibility;
   tcScreens.TabPosition := TTabPosition.None;
   tcScreens.ActiveTab := tiHome;
+  btnProjectOpen.SetFocus;
 end;
 
 procedure TfrmMain.GenerateISSProject(const OperatingSystem: string;
 const onSuccess, onError: TProc);
 begin
+  // TODO : tester si plateforme XXX présente dans le projet
   try
     tthread.CreateAnonymousThread(
       procedure
       var
         ISScript: string;
         s: string;
+        Publisher: string;
       begin
         try
           ISScript :=
@@ -501,13 +585,14 @@ begin
           ISScript := ISScript + '#define MyAppVersion "' + s + '"' +
             sLineBreak;
           if (OperatingSystem = 'Win32') then
-            s := TDProj2WinSetupProject.ISPublisher32
+            Publisher := TDProj2WinSetupProject.ISPublisher32
           else if (OperatingSystem = 'Win64') then
-            s := TDProj2WinSetupProject.ISPublisher64
+            Publisher := TDProj2WinSetupProject.ISPublisher64
           else
-            s := '';
-          ISScript := ISScript + '#define MyAppPublisher "' + s + '"' +
-            sLineBreak;
+            Publisher := '';
+          if not Publisher.IsEmpty then
+            ISScript := ISScript + '#define MyAppPublisher "' + Publisher + '"'
+              + sLineBreak;
           if (OperatingSystem = 'Win32') and not TDProj2WinSetupProject.ISURL32.IsEmpty
           then
             s := TDProj2WinSetupProject.ISURL32
@@ -532,13 +617,21 @@ begin
           ISScript := ISScript + 'AppId={' + s + sLineBreak;
           ISScript := ISScript + 'AppName={#MyAppName}' + sLineBreak;
           ISScript := ISScript + 'AppVersion={#MyAppVersion}' + sLineBreak;
-          ISScript := ISScript + 'AppPublisher={#MyAppPublisher}' + sLineBreak;
-          ISScript := ISScript + 'AppPublisherURL={#MyAppURL}' + sLineBreak;
+          if not Publisher.IsEmpty then
+          begin
+            ISScript := ISScript + 'AppPublisher={#MyAppPublisher}' +
+              sLineBreak;
+            ISScript := ISScript + 'AppPublisherURL={#MyAppURL}' + sLineBreak;
+          end;
           ISScript := ISScript + 'AppSupportURL={#MyAppURL}' + sLineBreak;
           ISScript := ISScript + 'AppUpdatesURL={#MyAppURL}' + sLineBreak;
-          ISScript := ISScript +
-            'DefaultDirName={autopf}\{#MyAppPublisher}\{#MyAppName}' +
-            sLineBreak;
+          if Publisher.IsEmpty then
+            ISScript := ISScript + 'DefaultDirName={autopf}\{#MyAppName}' +
+              sLineBreak
+          else
+            ISScript := ISScript +
+              'DefaultDirName={autopf}\{#MyAppPublisher}\{#MyAppName}' +
+              sLineBreak;
           ISScript := ISScript + 'DisableProgramGroupPage=yes' + sLineBreak;
           ISScript := ISScript + 'PrivilegesRequired=lowest' + sLineBreak;
           ISScript := ISScript + 'PrivilegesRequiredOverridesAllowed=dialog' +
@@ -603,10 +696,18 @@ begin
             (OperatingSystem), ISScript, TEncoding.UTF8);
 
           if assigned(onSuccess) then
-            onSuccess;
+            tthread.queue(nil,
+              procedure
+              begin
+                onSuccess;
+              end);
         except
           if assigned(onError) then
-            onError;
+            tthread.queue(nil,
+              procedure
+              begin
+                onError;
+              end);
         end;
       end).start;
   except
@@ -961,6 +1062,7 @@ begin
             ProjectFolder := tpath.GetDirectoryName
               (TDProj2WinSetupProject.DelphiProjectFileName);
 
+            // TODO : tester si plateforme XXX présente dans le projet
             ExeFileName := tpath.combine(ProjectFolder, 'Win32', 'RELEASE',
               tpath.GetFileNameWithoutExtension
               (TDProj2WinSetupProject.DelphiProjectFileName) + '.exe');
@@ -981,10 +1083,18 @@ begin
             EBSClient.Free;
           end;
           if assigned(onSuccess) then
-            onSuccess;
+            tthread.queue(nil,
+              procedure
+              begin
+                onSuccess;
+              end);
         except
           if assigned(onError) then
-            onError;
+            tthread.queue(nil,
+              procedure
+              begin
+                onError;
+              end);
         end;
       end).start;
   except
@@ -996,6 +1106,7 @@ end;
 procedure TfrmMain.SignSetupExecutables(const OperatingSystem: string;
 const onSuccess, onError: TProc);
 begin
+  // TODO : tester si plateforme XXX présente dans le projet
   try
     tthread.CreateAnonymousThread(
       procedure
@@ -1042,13 +1153,25 @@ begin
               tfile.delete(SetupFilePath);
 {$ENDIF}
             if assigned(onSuccess) then
-              onSuccess;
+              tthread.queue(nil,
+                procedure
+                begin
+                  onSuccess;
+                end);
           end
           else if assigned(onError) then
-            onError;
+            tthread.queue(nil,
+              procedure
+              begin
+                onError;
+              end);
         except
           if assigned(onError) then
-            onError;
+            tthread.queue(nil,
+              procedure
+              begin
+                onError;
+              end);
         end;
       end).start;
   except
