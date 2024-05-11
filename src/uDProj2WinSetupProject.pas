@@ -45,6 +45,8 @@ type
     class function GetDelphiProjectFileNameFromDProj2WinSetupProjectFileName
       (Const ADProj2WinSetupProjectFileName: string): string;
     class function IsOpened: boolean;
+    class function GetISSProjectFilePath(Const OperatingSystem: string): string;
+    class function GetSetupFilePath(Const OperatingSystem: string): string;
   end;
 
 implementation
@@ -113,6 +115,14 @@ begin
   result := ProjectFile.getValue('ISGuid64', '');
 end;
 
+class function TDProj2WinSetupProject.GetISSProjectFilePath
+  (const OperatingSystem: string): string;
+begin
+  result := tpath.combine(tpath.GetTempPath,
+    tpath.GetFileNameWithoutExtension(DelphiProjectFileName) + '-' +
+    OperatingSystem + '-setup.iss');
+end;
+
 class function TDProj2WinSetupProject.GetISTitle32: string;
 begin
   result := ProjectFile.getValue('ISTitle32', '');
@@ -131,6 +141,13 @@ end;
 class function TDProj2WinSetupProject.GetISVersion64: string;
 begin
   result := ProjectFile.getValue('ISVersion64', '');
+end;
+
+class function TDProj2WinSetupProject.GetSetupFilePath(const OperatingSystem
+  : string): string;
+begin
+  tpath.combine(tpath.GetTempPath, tpath.GetFileNameWithoutExtension
+    (DelphiProjectFileName) + '-' + OperatingSystem + '-setup.exe');
 end;
 
 class function TDProj2WinSetupProject.GetSignTitle: string;
