@@ -161,7 +161,8 @@ uses
   fOptions,
   uDProj2WinSetupProject,
   ExeBulkSigningClientLib,
-  DosCommand;
+  DosCommand,
+  Olf.RTL.DPROJReader;
 
 procedure TfrmMain.BlockScreen(const AEnabled: Boolean);
 begin
@@ -413,88 +414,94 @@ end;
 procedure TfrmMain.CompileISSProject(const OperatingSystem: string;
 const onSuccess, onError: TProc);
 begin
-  // TODO : tester si plateforme XXX présente dans le projet
-  try
-    tthread.CreateAnonymousThread(
-      procedure
-      var
-        ISSFilePath, SetupFilePath, ISCCPath: string;
-        InnoSetupCompileCmd: string;
-        DosCommand: TDosCommand;
-      begin
-        try
-          ISSFilePath := TDProj2WinSetupProject.GetISSProjectFilePath
-            (OperatingSystem);
-          if not tfile.Exists(ISSFilePath) then
-            raise exception.Create('Inno Setup Script file for ' +
-              OperatingSystem + ' doesn''t exist !');
-
-          SetupFilePath := TDProj2WinSetupProject.GetSetupFilePath
-            (OperatingSystem);
-          if tfile.Exists(SetupFilePath) then
-            tfile.delete(SetupFilePath);
-
-          if not tconfig.InnoSetupCompilerPath.IsEmpty then
-            ISCCPath := tconfig.InnoSetupCompilerPath
-          else if not tconfig.InnoSetupCompilerPathByDefault.IsEmpty then
-            ISCCPath := tconfig.InnoSetupCompilerPathByDefault
-          else
-            raise exception.Create
-              ('Please define where ISCC.exe is located in the menu Tools/Options/Inno Setup');
-
-          // Exemple de commande pour compiler un script Inno Setup en ligne de commande :
-          // "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /O+ "/OC:\DossierDeDestination" "/FNomDuSetupEXESansExtension" /Q "C:\CheminVersScriptInnoSetupACompiler.iss"
-          InnoSetupCompileCmd := '"' + ISCCPath + '" /O+ "/O' +
-            tpath.GetDirectoryName(SetupFilePath) + '" /F' +
-            tpath.GetFileNameWithoutExtension(SetupFilePath) + ' "' +
-            ISSFilePath + '"';
-          // /Q (quiet) a été retiré au cas où l'absence de sortie de ISCC perturbe DosCommand entrainant un plantage (cf https://github.com/DeveloppeurPascal/DProj2WinSetup/issues/39 )
-
-          DosCommand := TDosCommand.Create(nil);
+  if TDProj2WinSetupProject.HasPlatform(OperatingSystem) then
+    try
+      tthread.CreateAnonymousThread(
+        procedure
+        var
+          ISSFilePath, SetupFilePath, ISCCPath: string;
+          InnoSetupCompileCmd: string;
+          DosCommand: TDosCommand;
+        begin
           try
-            DosCommand.CommandLine := InnoSetupCompileCmd;
-            DosCommand.InputToOutput := false;
-            DosCommand.Execute;
+            ISSFilePath := TDProj2WinSetupProject.GetISSProjectFilePath
+              (OperatingSystem);
+            if not tfile.Exists(ISSFilePath) then
+              raise exception.Create('Inno Setup Script file for ' +
+                OperatingSystem + ' doesn''t exist !');
 
-            while DosCommand.IsRunning and
-              (DosCommand.EndStatus = TEndStatus.esStill_Active) do
-              sleep(100);
-          finally
-            DosCommand.Free;
-          end;
+            SetupFilePath := TDProj2WinSetupProject.GetSetupFilePath
+              (OperatingSystem);
+            if tfile.Exists(SetupFilePath) then
+              tfile.delete(SetupFilePath);
 
-          if tfile.Exists(SetupFilePath) then
-          begin
+            if not tconfig.InnoSetupCompilerPath.IsEmpty then
+              ISCCPath := tconfig.InnoSetupCompilerPath
+            else if not tconfig.InnoSetupCompilerPathByDefault.IsEmpty then
+              ISCCPath := tconfig.InnoSetupCompilerPathByDefault
+            else
+              raise exception.Create
+                ('Please define where ISCC.exe is located in the menu Tools/Options/Inno Setup');
+
+            // Exemple de commande pour compiler un script Inno Setup en ligne de commande :
+            // "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /O+ "/OC:\DossierDeDestination" "/FNomDuSetupEXESansExtension" /Q "C:\CheminVersScriptInnoSetupACompiler.iss"
+            InnoSetupCompileCmd := '"' + ISCCPath + '" /O+ "/O' +
+              tpath.GetDirectoryName(SetupFilePath) + '" /F' +
+              tpath.GetFileNameWithoutExtension(SetupFilePath) + ' "' +
+              ISSFilePath + '"';
+            // /Q (quiet) a été retiré au cas où l'absence de sortie de ISCC perturbe DosCommand entrainant un plantage (cf https://github.com/DeveloppeurPascal/DProj2WinSetup/issues/39 )
+
+            DosCommand := TDosCommand.Create(nil);
+            try
+              DosCommand.CommandLine := InnoSetupCompileCmd;
+              DosCommand.InputToOutput := false;
+              DosCommand.Execute;
+
+              while DosCommand.IsRunning and
+                (DosCommand.EndStatus = TEndStatus.esStill_Active) do
+                sleep(100);
+            finally
+              DosCommand.Free;
+            end;
+
+            if tfile.Exists(SetupFilePath) then
+            begin
 {$IFDEF RELEASE}
-            if tfile.Exists(ISSFilePath) then
-              tfile.delete(ISSFilePath);
+              if tfile.Exists(ISSFilePath) then
+                tfile.delete(ISSFilePath);
 {$ENDIF}
-            if assigned(onSuccess) then
+              if assigned(onSuccess) then
+                tthread.queue(nil,
+                  procedure
+                  begin
+                    onSuccess;
+                  end);
+            end
+            else if assigned(onError) then
               tthread.queue(nil,
                 procedure
                 begin
-                  onSuccess;
+                  onError;
                 end);
-          end
-          else if assigned(onError) then
-            tthread.queue(nil,
-              procedure
-              begin
-                onError;
-              end);
-        except
-          if assigned(onError) then
-            tthread.queue(nil,
-              procedure
-              begin
-                onError;
-              end);
-        end;
-      end).start;
-  except
-    if assigned(onError) then
-      onError;
-  end;
+          except
+            if assigned(onError) then
+              tthread.queue(nil,
+                procedure
+                begin
+                  onError;
+                end);
+          end;
+        end).start;
+    except
+      if assigned(onError) then
+        onError;
+    end
+  else if assigned(onSuccess) then
+    tthread.queue(nil,
+      procedure
+      begin
+        onSuccess;
+      end);
 end;
 
 procedure TfrmMain.DoEditChange(Sender: TObject);
@@ -566,172 +573,213 @@ end;
 procedure TfrmMain.GenerateISSProject(const OperatingSystem: string;
 const onSuccess, onError: TProc);
 begin
-  // TODO : tester si plateforme XXX présente dans le projet
-  try
-    tthread.CreateAnonymousThread(
-      procedure
-      var
-        ISScript: string;
-        s: string;
-        Publisher: string;
-      begin
-        try
-          ISScript :=
-            '; Generated by DProj2WinSetup (https://dproj2winsetup.olfsoftware.fr/)'
-            + sLineBreak;
-          ISScript := ISScript +
-            '; Don''t change anything there, it will be erase next time !' +
-            sLineBreak;
-          ISScript := ISScript + '; Generation date : ' + DateTimeToStr(now) +
-            sLineBreak;
-          ISScript := ISScript + sLineBreak;
-          if (OperatingSystem = 'Win32') and
-            not TDProj2WinSetupProject.ISTitle32.IsEmpty then
-            s := TDProj2WinSetupProject.ISTitle32
-          else if (OperatingSystem = 'Win64') and
-            not TDProj2WinSetupProject.ISTitle64.IsEmpty then
-            s := TDProj2WinSetupProject.ISTitle64
-          else
-            s := TDProj2WinSetupProject.SignTitle;
-          ISScript := ISScript + '#define MyAppName "' + s + '"' + sLineBreak;
-          if (OperatingSystem = 'Win32') then
-            s := TDProj2WinSetupProject.ISVersion32
-          else if (OperatingSystem = 'Win64') then
-            s := TDProj2WinSetupProject.ISVersion64
-          else
-            s := '';
-          ISScript := ISScript + '#define MyAppVersion "' + s + '"' +
-            sLineBreak;
-          if (OperatingSystem = 'Win32') then
-            Publisher := TDProj2WinSetupProject.ISPublisher32
-          else if (OperatingSystem = 'Win64') then
-            Publisher := TDProj2WinSetupProject.ISPublisher64
-          else
-            Publisher := '';
-          if not Publisher.IsEmpty then
-            ISScript := ISScript + '#define MyAppPublisher "' + Publisher + '"'
+  if TDProj2WinSetupProject.HasPlatform(OperatingSystem) then
+    try
+      tthread.CreateAnonymousThread(
+        procedure
+        var
+          ISScript: string;
+          s: string;
+          Publisher: string;
+          FilesToDeploy: TOlfFilesToDeployList;
+          i: integer;
+        begin
+          try
+            ISScript :=
+              '; Generated by DProj2WinSetup (https://dproj2winsetup.olfsoftware.fr/)'
               + sLineBreak;
-          if (OperatingSystem = 'Win32') and not TDProj2WinSetupProject.ISURL32.IsEmpty
-          then
-            s := TDProj2WinSetupProject.ISURL32
-          else if (OperatingSystem = 'Win64') and
-            not TDProj2WinSetupProject.ISURL64.IsEmpty then
-            s := TDProj2WinSetupProject.ISURL64
-          else
-            s := TDProj2WinSetupProject.SignURL;
-          ISScript := ISScript + '#define MyAppURL "' + s + '"' + sLineBreak;
-          ISScript := ISScript + '#define MyAppExeName "' +
-            TDProj2WinSetupProject.GetProjectExecutableFileName(OperatingSystem)
-            + '"' + sLineBreak;
-
-          ISScript := ISScript + '[Setup]' + sLineBreak;
-          if (OperatingSystem = 'Win32') then
-            s := TDProj2WinSetupProject.ISGUID32
-          else if (OperatingSystem = 'Win64') then
-            s := TDProj2WinSetupProject.ISGUID64
-          else
-            raise exception.Create('No GUID specified for ' + OperatingSystem +
-              ' setup.');
-          ISScript := ISScript + 'AppId={' + s + sLineBreak;
-          ISScript := ISScript + 'AppName={#MyAppName}' + sLineBreak;
-          ISScript := ISScript + 'AppVersion={#MyAppVersion}' + sLineBreak;
-          if not Publisher.IsEmpty then
-          begin
-            ISScript := ISScript + 'AppPublisher={#MyAppPublisher}' +
-              sLineBreak;
-            ISScript := ISScript + 'AppPublisherURL={#MyAppURL}' + sLineBreak;
-          end;
-          ISScript := ISScript + 'AppSupportURL={#MyAppURL}' + sLineBreak;
-          ISScript := ISScript + 'AppUpdatesURL={#MyAppURL}' + sLineBreak;
-          if Publisher.IsEmpty then
-            ISScript := ISScript + 'DefaultDirName={autopf}\{#MyAppName}' +
-              sLineBreak
-          else
             ISScript := ISScript +
-              'DefaultDirName={autopf}\{#MyAppPublisher}\{#MyAppName}' +
+              '; Don''t change anything there, it will be erase next time !' +
               sLineBreak;
-          ISScript := ISScript + 'DisableProgramGroupPage=yes' + sLineBreak;
-          ISScript := ISScript + 'PrivilegesRequired=lowest' + sLineBreak;
-          ISScript := ISScript + 'PrivilegesRequiredOverridesAllowed=dialog' +
-            sLineBreak;
-          ISScript := ISScript + 'OutputDir=' + tpath.GetDirectoryName
-            (TDProj2WinSetupProject.GetSetupFilePath(OperatingSystem)) +
-            sLineBreak;
-          ISScript := ISScript + 'OutputBaseFilename=' +
-            tpath.GetFileNameWithoutExtension
-            (TDProj2WinSetupProject.GetSetupFilePath(OperatingSystem)) +
-            sLineBreak;
-          ISScript := ISScript + 'Compression=lzma' + sLineBreak;
-          ISScript := ISScript + 'SolidCompression=yes' + sLineBreak;
-          ISScript := ISScript + 'WizardStyle=modern' + sLineBreak;
+            ISScript := ISScript + '; Generation date : ' + DateTimeToStr(now) +
+              sLineBreak;
+            ISScript := ISScript + sLineBreak;
+            if (OperatingSystem = 'Win32') and
+              not TDProj2WinSetupProject.ISTitle32.IsEmpty then
+              s := TDProj2WinSetupProject.ISTitle32
+            else if (OperatingSystem = 'Win64') and
+              not TDProj2WinSetupProject.ISTitle64.IsEmpty then
+              s := TDProj2WinSetupProject.ISTitle64
+            else
+              s := TDProj2WinSetupProject.SignTitle;
+            ISScript := ISScript + '#define MyAppName "' + s + '"' + sLineBreak;
+            if (OperatingSystem = 'Win32') then
+              s := TDProj2WinSetupProject.ISVersion32
+            else if (OperatingSystem = 'Win64') then
+              s := TDProj2WinSetupProject.ISVersion64
+            else
+              s := '';
+            ISScript := ISScript + '#define MyAppVersion "' + s + '"' +
+              sLineBreak;
+            if (OperatingSystem = 'Win32') then
+              Publisher := TDProj2WinSetupProject.ISPublisher32
+            else if (OperatingSystem = 'Win64') then
+              Publisher := TDProj2WinSetupProject.ISPublisher64
+            else
+              Publisher := '';
+            if not Publisher.IsEmpty then
+              ISScript := ISScript + '#define MyAppPublisher "' + Publisher +
+                '"' + sLineBreak;
+            if (OperatingSystem = 'Win32') and
+              not TDProj2WinSetupProject.ISURL32.IsEmpty then
+              s := TDProj2WinSetupProject.ISURL32
+            else if (OperatingSystem = 'Win64') and
+              not TDProj2WinSetupProject.ISURL64.IsEmpty then
+              s := TDProj2WinSetupProject.ISURL64
+            else
+              s := TDProj2WinSetupProject.SignURL;
+            ISScript := ISScript + '#define MyAppURL "' + s + '"' + sLineBreak;
+            ISScript := ISScript + '#define MyAppExeName "' +
+              tpath.GetFileName
+              (TDProj2WinSetupProject.GetProjectExecutableFileName
+              (OperatingSystem)) + '"' + sLineBreak;
 
-          if OperatingSystem = 'Win64' then
-          begin
-            ISScript := ISScript + 'ArchitecturesAllowed=x64 arm64 ia64' +
+            ISScript := ISScript + '[Setup]' + sLineBreak;
+            if (OperatingSystem = 'Win32') then
+              s := TDProj2WinSetupProject.ISGUID32
+            else if (OperatingSystem = 'Win64') then
+              s := TDProj2WinSetupProject.ISGUID64
+            else
+              raise exception.Create('No GUID specified for ' + OperatingSystem
+                + ' setup.');
+            ISScript := ISScript + 'AppId={' + s + sLineBreak;
+            ISScript := ISScript + 'AppName={#MyAppName}' + sLineBreak;
+            ISScript := ISScript + 'AppVersion={#MyAppVersion}' + sLineBreak;
+            if not Publisher.IsEmpty then
+            begin
+              ISScript := ISScript + 'AppPublisher={#MyAppPublisher}' +
+                sLineBreak;
+              ISScript := ISScript + 'AppPublisherURL={#MyAppURL}' + sLineBreak;
+            end;
+            ISScript := ISScript + 'AppSupportURL={#MyAppURL}' + sLineBreak;
+            ISScript := ISScript + 'AppUpdatesURL={#MyAppURL}' + sLineBreak;
+            if Publisher.IsEmpty then
+              ISScript := ISScript + 'DefaultDirName={autopf}\{#MyAppName}' +
+                sLineBreak
+            else
+              ISScript := ISScript +
+                'DefaultDirName={autopf}\{#MyAppPublisher}\{#MyAppName}' +
+                sLineBreak;
+            ISScript := ISScript + 'DisableProgramGroupPage=yes' + sLineBreak;
+            ISScript := ISScript + 'PrivilegesRequired=lowest' + sLineBreak;
+            ISScript := ISScript + 'PrivilegesRequiredOverridesAllowed=dialog' +
+              sLineBreak;
+            ISScript := ISScript + 'OutputDir=' + tpath.GetDirectoryName
+              (TDProj2WinSetupProject.GetSetupFilePath(OperatingSystem)) +
+              sLineBreak;
+            ISScript := ISScript + 'OutputBaseFilename=' +
+              tpath.GetFileNameWithoutExtension
+              (TDProj2WinSetupProject.GetSetupFilePath(OperatingSystem)) +
+              sLineBreak;
+            ISScript := ISScript + 'Compression=lzma' + sLineBreak;
+            ISScript := ISScript + 'SolidCompression=yes' + sLineBreak;
+            ISScript := ISScript + 'WizardStyle=modern' + sLineBreak;
+
+            if OperatingSystem = 'Win64' then
+            begin
+              ISScript := ISScript + 'ArchitecturesAllowed=x64 arm64 ia64' +
+                sLineBreak;
+              ISScript := ISScript +
+                'ArchitecturesInstallIn64BitMode=x64 arm64 ia64' + sLineBreak;
+            end;
+
+            ISScript := ISScript + '[Languages]' + sLineBreak;
+            ISScript := ISScript +
+              'Name: "english"; MessagesFile: "compiler:Default.isl"' +
               sLineBreak;
             ISScript := ISScript +
-              'ArchitecturesInstallIn64BitMode=x64 arm64 ia64' + sLineBreak;
+              'Name: "french"; MessagesFile: "compiler:Languages\French.isl"' +
+              sLineBreak;
+
+            ISScript := ISScript + '[Tasks]' + sLineBreak;
+            ISScript := ISScript +
+              'Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked'
+              + sLineBreak;
+
+            ISScript := ISScript + '[Files]' + sLineBreak;
+            FilesToDeploy := TDProj2WinSetupProject.GetFilesToDeploy
+              (OperatingSystem, 'Release');
+            try
+              for i := 0 to FilesToDeploy.count - 1 do
+                if tfile.Exists(tpath.combine(FilesToDeploy[i].Frompath,
+                  FilesToDeploy[i].FromFileName)) then
+                begin
+                  if FilesToDeploy[i].FromFileName = tpath.GetFileName
+                    (TDProj2WinSetupProject.GetProjectExecutableFileName
+                    (OperatingSystem)) then
+                    FilesToDeploy[i].FromFileName :=
+                      tpath.GetFileNameWithoutExtension(FilesToDeploy[i]
+                      .FromFileName) + '-signed.exe';
+                  ISScript := ISScript + 'Source: "' +
+                    tpath.combine(FilesToDeploy[i].Frompath,
+                    FilesToDeploy[i].FromFileName) + '";';
+
+                  if FilesToDeploy[i].ToPath.IsEmpty then
+                    ISScript := ISScript + ' DestDir: "{app}";'
+                  else
+                    ISScript := ISScript + ' DestDir: "{app}\"' + FilesToDeploy
+                      [i].ToPath;
+
+                  ISScript := ISScript + ' DestName: "' + FilesToDeploy[i]
+                    .ToFileName + '";';
+
+                  if FilesToDeploy[i].Overwrite then
+                    ISScript := ISScript + ' Flags: ignoreversion'
+                  else
+                    ISScript := ISScript +
+                      ' Flags: ignoreversion onlyifdoesntexist';
+
+                  ISScript := ISScript + sLineBreak;
+                end
+                else
+                begin
+                  // TODO : signaler l'absence du fichier détecté (permet de passer outre les fichiers conditionnés comme SKIA dans une v1.0 du programme)
+                end;
+            finally
+              FilesToDeploy.Free;
+            end;
+
+            ISScript := ISScript + '[Icons]' + sLineBreak;
+            ISScript := ISScript +
+              'Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"'
+              + sLineBreak;
+            ISScript := ISScript +
+              'Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon'
+              + sLineBreak;
+
+            ISScript := ISScript + '[Run]' + sLineBreak;
+            ISScript := ISScript +
+              'Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, ''&'', ''&&'')}}"; Flags: nowait postinstall skipifsilent'
+              + sLineBreak;
+
+            tfile.WriteAllText(TDProj2WinSetupProject.GetISSProjectFilePath
+              (OperatingSystem), ISScript, TEncoding.UTF8);
+
+            if assigned(onSuccess) then
+              tthread.queue(nil,
+                procedure
+                begin
+                  onSuccess;
+                end);
+          except
+            if assigned(onError) then
+              tthread.queue(nil,
+                procedure
+                begin
+                  onError;
+                end);
           end;
-
-          ISScript := ISScript + '[Languages]' + sLineBreak;
-          ISScript := ISScript +
-            'Name: "english"; MessagesFile: "compiler:Default.isl"' +
-            sLineBreak;
-          ISScript := ISScript +
-            'Name: "french"; MessagesFile: "compiler:Languages\French.isl"' +
-            sLineBreak;
-
-          ISScript := ISScript + '[Tasks]' + sLineBreak;
-          ISScript := ISScript +
-            'Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked'
-            + sLineBreak;
-
-          ISScript := ISScript + '[Files]' + sLineBreak;
-          ISScript := ISScript + 'Source: "' +
-            tpath.combine(tpath.GetDirectoryName
-            (TDProj2WinSetupProject.DelphiProjectFileName), OperatingSystem,
-            'RELEASE', tpath.GetFileNameWithoutExtension
-            (TDProj2WinSetupProject.GetProjectExecutableFileName
-            (OperatingSystem)) + '-signed.exe') +
-            '"; DestDir: "{app}"; DestName: "{#MyAppExeName}"; Flags: ignoreversion'
-            + sLineBreak;
-          // TODO : prendre la liste des fichiers depuis la rubrique DEPLOY/WinXX du fichier DPROJ
-
-          ISScript := ISScript + '[Icons]' + sLineBreak;
-          ISScript := ISScript +
-            'Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"'
-            + sLineBreak;
-          ISScript := ISScript +
-            'Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon'
-            + sLineBreak;
-
-          ISScript := ISScript + '[Run]' + sLineBreak;
-          ISScript := ISScript +
-            'Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, ''&'', ''&&'')}}"; Flags: nowait postinstall skipifsilent'
-            + sLineBreak;
-
-          tfile.WriteAllText(TDProj2WinSetupProject.GetISSProjectFilePath
-            (OperatingSystem), ISScript, TEncoding.UTF8);
-
-          if assigned(onSuccess) then
-            tthread.queue(nil,
-              procedure
-              begin
-                onSuccess;
-              end);
-        except
-          if assigned(onError) then
-            tthread.queue(nil,
-              procedure
-              begin
-                onError;
-              end);
-        end;
-      end).start;
-  except
-    if assigned(onError) then
-      onError;
-  end;
+        end).start;
+    except
+      if assigned(onError) then
+        onError;
+    end
+  else if assigned(onSuccess) then
+    tthread.queue(nil,
+      procedure
+      begin
+        onSuccess;
+      end);
 end;
 
 function TfrmMain.HasProjectChanged: Boolean;
@@ -932,6 +980,9 @@ begin
       TDProj2WinSetupProject.LoadFromFile(DProj2WinSetupProjectFileName)
     else
       TDProj2WinSetupProject.CreateFromFile(DelphiProjectFileName);
+
+    tiSetupWin32.Visible := TDProj2WinSetupProject.HasWin32Platform;
+    tiSetupWin64.Visible := TDProj2WinSetupProject.HasWin64Platform;
   end;
 
   if TDProj2WinSetupProject.IsOpened then
@@ -1076,31 +1127,28 @@ begin
       procedure
       var
         EBSClient: TESBClient;
-        ProjectFolder, ExeFileName: string;
+        ExeFileName: string;
       begin
         try
           EBSClient := TESBClient.Create(tconfig.ExeBulkSigningServerIP,
             tconfig.ExeBulkSigningServerPort, tconfig.ExeBulkSigningAuthKey);
           try
-            // TODO : detect project executables depending on DPROJ settings
-            ProjectFolder := tpath.GetDirectoryName
-              (TDProj2WinSetupProject.DelphiProjectFileName);
-
-            // TODO : tester si plateforme XXX présente dans le projet
-            ExeFileName := tpath.combine(ProjectFolder, 'Win32', 'RELEASE',
-              tpath.GetFileNameWithoutExtension
-              (TDProj2WinSetupProject.DelphiProjectFileName) + '.exe');
-            if tfile.Exists(ExeFileName) then
-              EBSClient.SendFileToServer(TDProj2WinSetupProject.SignTitle,
-                TDProj2WinSetupProject.SignURL, ExeFileName);
-
-            ExeFileName := tpath.combine(ProjectFolder, 'Win64', 'RELEASE',
-              tpath.GetFileNameWithoutExtension
-              (TDProj2WinSetupProject.DelphiProjectFileName) + '.exe');
-            if tfile.Exists(ExeFileName) then
-              EBSClient.SendFileToServer(TDProj2WinSetupProject.SignTitle,
-                TDProj2WinSetupProject.SignURL, ExeFileName);
-
+            if TDProj2WinSetupProject.HasWin32Platform then
+            begin
+              ExeFileName :=
+                TDProj2WinSetupProject.GetProjectExecutableFileName('Win32');
+              if tfile.Exists(ExeFileName) then
+                EBSClient.SendFileToServer(TDProj2WinSetupProject.SignTitle,
+                  TDProj2WinSetupProject.SignURL, ExeFileName);
+            end;
+            if TDProj2WinSetupProject.HasWin64Platform then
+            begin
+              ExeFileName :=
+                TDProj2WinSetupProject.GetProjectExecutableFileName('Win64');
+              if tfile.Exists(ExeFileName) then
+                EBSClient.SendFileToServer(TDProj2WinSetupProject.SignTitle,
+                  TDProj2WinSetupProject.SignURL, ExeFileName);
+            end;
             while (EBSClient.HasWaitingFiles > 0) do
               sleep(1000);
           finally
@@ -1130,78 +1178,86 @@ end;
 procedure TfrmMain.SignSetupExecutables(const OperatingSystem: string;
 const onSuccess, onError: TProc);
 begin
-  // TODO : tester si plateforme XXX présente dans le projet
-  try
-    tthread.CreateAnonymousThread(
-      procedure
-      var
-        EBSClient: TESBClient;
-        SetupFilePath, SignedSetupFilePath, FinalSetupFilePath,
-          FinalSetupFilePathWithoutSignedText: string;
-      begin
-        try
-          EBSClient := TESBClient.Create(tconfig.ExeBulkSigningServerIP,
-            tconfig.ExeBulkSigningServerPort, tconfig.ExeBulkSigningAuthKey);
+  if TDProj2WinSetupProject.HasPlatform(OperatingSystem) then
+    try
+      tthread.CreateAnonymousThread(
+        procedure
+        var
+          EBSClient: TESBClient;
+          SetupFilePath, SignedSetupFilePath, FinalSetupFilePath,
+            FinalSetupFilePathWithoutSignedText: string;
+        begin
           try
-            SetupFilePath := TDProj2WinSetupProject.GetSetupFilePath
-              (OperatingSystem);
-            if tfile.Exists(SetupFilePath) then
-              EBSClient.SendFileToServer(TDProj2WinSetupProject.SignTitle + ' ('
-                + OperatingSystem + ' setup)', TDProj2WinSetupProject.SignURL,
-                SetupFilePath);
+            EBSClient := TESBClient.Create(tconfig.ExeBulkSigningServerIP,
+              tconfig.ExeBulkSigningServerPort, tconfig.ExeBulkSigningAuthKey);
+            try
+              SetupFilePath := TDProj2WinSetupProject.GetSetupFilePath
+                (OperatingSystem);
+              if tfile.Exists(SetupFilePath) then
+                EBSClient.SendFileToServer(TDProj2WinSetupProject.SignTitle +
+                  ' (' + OperatingSystem + ' setup)',
+                  TDProj2WinSetupProject.SignURL, SetupFilePath);
 
-            while (EBSClient.HasWaitingFiles > 0) do
-              sleep(1000);
-          finally
-            EBSClient.Free;
-          end;
-          SignedSetupFilePath :=
-            tpath.combine(tpath.GetDirectoryName(SetupFilePath),
-            tpath.GetFileNameWithoutExtension(SetupFilePath) + '-signed.exe');
-          if tfile.Exists(SignedSetupFilePath) then
-          begin
-            FinalSetupFilePath :=
-              tpath.combine(tpath.GetDirectoryName
-              (TDProj2WinSetupProject.DelphiProjectFileName),
-              tpath.GetFileNameWithoutExtension(SignedSetupFilePath) + '.exe');
-            if tfile.Exists(FinalSetupFilePath) then
-              tfile.delete(FinalSetupFilePath);
-            tfile.Move(SignedSetupFilePath, FinalSetupFilePath);
-            FinalSetupFilePathWithoutSignedText :=
-              FinalSetupFilePath.Replace('-signed.exe', '.exe');
-            if tfile.Exists(FinalSetupFilePathWithoutSignedText) then
-              tfile.delete(FinalSetupFilePathWithoutSignedText);
-            tfile.Move(FinalSetupFilePath, FinalSetupFilePathWithoutSignedText);
+              while (EBSClient.HasWaitingFiles > 0) do
+                sleep(1000);
+            finally
+              EBSClient.Free;
+            end;
+            SignedSetupFilePath :=
+              tpath.combine(tpath.GetDirectoryName(SetupFilePath),
+              tpath.GetFileNameWithoutExtension(SetupFilePath) + '-signed.exe');
+            if tfile.Exists(SignedSetupFilePath) then
+            begin
+              FinalSetupFilePath :=
+                tpath.combine(tpath.GetDirectoryName
+                (TDProj2WinSetupProject.DelphiProjectFileName),
+                tpath.GetFileNameWithoutExtension(SignedSetupFilePath)
+                + '.exe');
+              if tfile.Exists(FinalSetupFilePath) then
+                tfile.delete(FinalSetupFilePath);
+              tfile.Move(SignedSetupFilePath, FinalSetupFilePath);
+              FinalSetupFilePathWithoutSignedText :=
+                FinalSetupFilePath.Replace('-signed.exe', '.exe');
+              if tfile.Exists(FinalSetupFilePathWithoutSignedText) then
+                tfile.delete(FinalSetupFilePathWithoutSignedText);
+              tfile.Move(FinalSetupFilePath,
+                FinalSetupFilePathWithoutSignedText);
 {$IFDEF RELEASE}
-            if tfile.Exists(SetupFilePath) then
-              tfile.delete(SetupFilePath);
+              if tfile.Exists(SetupFilePath) then
+                tfile.delete(SetupFilePath);
 {$ENDIF}
-            if assigned(onSuccess) then
+              if assigned(onSuccess) then
+                tthread.queue(nil,
+                  procedure
+                  begin
+                    onSuccess;
+                  end);
+            end
+            else if assigned(onError) then
               tthread.queue(nil,
                 procedure
                 begin
-                  onSuccess;
+                  onError;
                 end);
-          end
-          else if assigned(onError) then
-            tthread.queue(nil,
-              procedure
-              begin
-                onError;
-              end);
-        except
-          if assigned(onError) then
-            tthread.queue(nil,
-              procedure
-              begin
-                onError;
-              end);
-        end;
-      end).start;
-  except
-    if assigned(onError) then
-      onError;
-  end;
+          except
+            if assigned(onError) then
+              tthread.queue(nil,
+                procedure
+                begin
+                  onError;
+                end);
+          end;
+        end).start;
+    except
+      if assigned(onError) then
+        onError;
+    end
+  else if assigned(onSuccess) then
+    tthread.queue(nil,
+      procedure
+      begin
+        onSuccess;
+      end);
 end;
 
 procedure TfrmMain.UpdateFileMenuOptionsVisibility;

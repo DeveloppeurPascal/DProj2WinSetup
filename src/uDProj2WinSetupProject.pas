@@ -2,6 +2,9 @@ unit uDProj2WinSetupProject;
 
 interface
 
+uses
+  Olf.RTL.DPROJReader;
+
 type
   TDProj2WinSetupProject = class
   private
@@ -63,6 +66,11 @@ type
     class function GetSetupFilePath(Const OperatingSystem: string): string;
     class function GetProjectExecutableFileName(const OperatingSystem
       : string): string;
+    class function HasPlatform(const OperatingSystem: string): boolean;
+    class function HasWin32Platform: boolean;
+    class function HasWin64Platform: boolean;
+    class function GetFilesToDeploy(Const APlatform: string;
+      Const AConfiguration: string = 'Release'): TOlfFilesToDeployList;
   end;
 
 implementation
@@ -74,6 +82,7 @@ uses
 
 var
   ProjectFile: TParamsFile;
+  DPROJReader: TOlfDPROJReader;
 
 procedure InitProjectFile(Const ADelphiProjectFileName,
   ADProj2WinSetupProjectFileName: string);
@@ -87,11 +96,22 @@ begin
   TDProj2WinSetupProject.FDProj2WinSetupProjectFileName :=
     ADProj2WinSetupProjectFileName;
   ProjectFile := TParamsFile.Create(ADProj2WinSetupProjectFileName);
+  DPROJReader := TOlfDPROJReader.Create(ADelphiProjectFileName);
+  DPROJReader.BDSVersion := '23.0'; // TODO : à remplacer par un paramétrage
+  DPROJReader.onGetPathForAliasFunc := function(Const AAlias: string): string
+    begin
+      if AAlias = 'SKIADIR' then
+        result := 'c:\temp'
+        // TODO : à remplacer par le bon chemin d'installation par défaut ou choisi par l'utilisateur dans la configuration du projet
+      else
+        result := '';
+    end;
 end;
 
 class procedure TDProj2WinSetupProject.Close;
 begin
   Freeandnil(ProjectFile);
+  Freeandnil(DPROJReader);
 end;
 
 class procedure TDProj2WinSetupProject.CreateFromFile
@@ -119,6 +139,12 @@ begin
   result := tpath.combine(tpath.GetDirectoryName(ADelphiProjectFileName),
     tpath.GetFileNameWithoutExtension(ADelphiProjectFileName) +
     '.dproj2winsetup');
+end;
+
+class function TDProj2WinSetupProject.GetFilesToDeploy(const APlatform,
+  AConfiguration: string): TOlfFilesToDeployList;
+begin
+  result := DPROJReader.GetFilesToDeploy(APlatform, AConfiguration);
 end;
 
 class function TDProj2WinSetupProject.GetISGUID32: string;
@@ -182,8 +208,7 @@ end;
 class function TDProj2WinSetupProject.GetProjectExecutableFileName
   (const OperatingSystem: string): string;
 begin
-  // TODO : get the executable filename from the DROJ file for 'Win32' or 'Win64'
-  result := tpath.GetFileNameWithoutExtension(DelphiProjectFileName) + '.exe';
+  result := DPROJReader.GetProjectExecutable(OperatingSystem, 'Release');
 end;
 
 class function TDProj2WinSetupProject.GetSetupFilePath(const OperatingSystem
@@ -202,6 +227,23 @@ end;
 class function TDProj2WinSetupProject.GetSignURL: string;
 begin
   result := ProjectFile.getValue('SignURL', '');
+end;
+
+class function TDProj2WinSetupProject.HasPlatform(const OperatingSystem
+  : string): boolean;
+begin
+  result := DPROJReader.HasPlatform(OperatingSystem) and
+    (not DPROJReader.GetProjectExecutable(OperatingSystem, 'Release').isempty);
+end;
+
+class function TDProj2WinSetupProject.HasWin32Platform: boolean;
+begin
+  result := HasPlatform('Win32');
+end;
+
+class function TDProj2WinSetupProject.HasWin64Platform: boolean;
+begin
+  result := HasPlatform('Win64');
 end;
 
 class function TDProj2WinSetupProject.IsOpened: boolean;
@@ -288,6 +330,7 @@ end;
 initialization
 
 ProjectFile := nil;
+DPROJReader := nil;
 
 finalization
 

@@ -19,7 +19,9 @@ uses
   ExeBulkSigningClientServerAPIConsts in '..\lib-externes\ExeBulkSigning\src\ExeBulkSigningClientServerAPIConsts.pas',
   Olf.RTL.GenRandomID in '..\lib-externes\librairies\src\Olf.RTL.GenRandomID.pas',
   uDProj2WinSetupProject in 'uDProj2WinSetupProject.pas',
-  DosCommand in '..\lib-externes\DOSCommand\Source\DosCommand.pas';
+  DosCommand in '..\lib-externes\DOSCommand\Source\DosCommand.pas',
+  Olf.RTL.DPROJReader in '..\lib-externes\librairies\src\Olf.RTL.DPROJReader.pas',
+  Olf.RTL.PathAliases in '..\lib-externes\librairies\src\Olf.RTL.PathAliases.pas';
 
 {$R *.res}
 

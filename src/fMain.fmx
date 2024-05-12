@@ -13,8 +13,8 @@ object frmMain: TfrmMain
   DesignerMasterStyle = 0
   object OlfAboutDialog1: TOlfAboutDialog
     Titre = 'DProj2WinSetup'
-    VersionNumero = '0.0a'
-    VersionDate = '20240507'
+    VersionNumero = '1.0'
+    VersionDate = '20240512'
     MultiResBitmap = <
       item
       end>
@@ -279,7 +279,7 @@ object frmMain: TfrmMain
             Position.X = 5.000000000000000000
             Position.Y = 153.000000000000000000
             Size.Width = 630.000000000000000000
-            Size.Height = 50.000000000000000000
+            Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 5
             Text = 'Sign project EXE files'
@@ -293,7 +293,7 @@ object frmMain: TfrmMain
             Margins.Right = 5.000000000000000000
             Margins.Bottom = 5.000000000000000000
             Position.X = 5.000000000000000000
-            Position.Y = 213.000000000000000000
+            Position.Y = 203.000000000000000000
             Size.Width = 630.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
