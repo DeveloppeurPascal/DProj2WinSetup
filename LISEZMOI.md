@@ -1,6 +1,6 @@
 # DProj2WinSetup
 
-[This page in english.](README.md)
+[This page in English.](README.md)
 
 DProj2WinSetup est un générateur de programmes d'installation pour logiciels sous Windows développés sous Delphi (dans une version récente).
 
