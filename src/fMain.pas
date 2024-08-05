@@ -1,3 +1,40 @@
+/// <summary>
+/// ***************************************************************************
+///
+/// DProj to Windows setup (DProj2WinSetup)
+///
+/// Copyright 2024 Patrick Prémartin under AGPL 3.0 license.
+///
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+/// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+/// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+/// DEALINGS IN THE SOFTWARE.
+///
+/// ***************************************************************************
+///
+/// DProj2WinSetup is a generator of installation programs for Windows
+/// software developed under Delphi (in a recent version).
+///
+/// ***************************************************************************
+///
+/// Author(s) :
+/// Patrick PREMARTIN
+///
+/// Site :
+/// https://dproj2winsetup.olfsoftware.fr/
+///
+/// Project site :
+/// https://github.com/DeveloppeurPascal/DProj2WinSetup
+///
+/// ***************************************************************************
+/// File last update : 2024-08-05T18:45:06.000+02:00
+/// Signature : a2fe2f2ad2db89de0d67c083d8bed1eb37df242f
+/// ***************************************************************************
+/// </summary>
+
 unit fMain;
 
 interface
@@ -92,6 +129,7 @@ type
     lblWin32Publisher: TLabel;
     lblWin32URL: TLabel;
     btnSignEXEAndGenerateSetup: TButton;
+    btnGenerateSetupWithoutSigning: TButton;
     procedure FormCreate(Sender: TObject);
     procedure OlfAboutDialog1URLClick(const AURL: string);
     procedure mnuToolsOptionsClick(Sender: TObject);
@@ -117,6 +155,7 @@ type
     procedure btnSignInnoSetupProgramWin32Click(Sender: TObject);
     procedure btnSignInnoSetupProgram64Click(Sender: TObject);
     procedure btnSignEXEAndGenerateSetupClick(Sender: TObject);
+    procedure btnGenerateSetupWithoutSigningClick(Sender: TObject);
   private
   protected
     procedure DoEditChange(Sender: TObject);
@@ -139,9 +178,11 @@ type
     procedure SignProjectExecutables(Const onSuccess: TProc;
       Const onError: TProc = nil);
     procedure GenerateISSProject(Const OperatingSystem: string;
-      Const onSuccess: TProc; Const onError: TProc = nil);
+      Const onSuccess: TProc; Const onError: TProc = nil;
+      const EXESigning: Boolean = true);
     procedure CompileISSProject(Const OperatingSystem: string;
-      Const onSuccess: TProc; Const onError: TProc = nil);
+      Const onSuccess: TProc; Const onError: TProc = nil;
+      const EXESigning: Boolean = true);
     procedure SignSetupExecutables(Const OperatingSystem: string;
       Const onSuccess: TProc; Const onError: TProc = nil);
   end;
@@ -250,6 +291,49 @@ begin
       begin
         BlockScreen(false);
       end);
+  except
+    BlockScreen(false);
+  end;
+end;
+
+procedure TfrmMain.btnGenerateSetupWithoutSigningClick(Sender: TObject);
+begin
+  BlockScreen(true);
+  try
+    GenerateISSProject('Win32',
+      procedure
+      begin
+        GenerateISSProject('Win64',
+          procedure
+          begin
+            CompileISSProject('Win32',
+              procedure
+              begin
+                CompileISSProject('Win64',
+                  procedure
+                  begin
+                    ShowMessage('Opération terminée');
+                    BlockScreen(false);
+                  end,
+                  procedure
+                  begin
+                    BlockScreen(false);
+                  end, false);
+              end,
+              procedure
+              begin
+                BlockScreen(false);
+              end, false);
+          end,
+          procedure
+          begin
+            BlockScreen(false);
+          end, false);
+      end,
+      procedure
+      begin
+        BlockScreen(false);
+      end, false);
   except
     BlockScreen(false);
   end;
@@ -412,7 +496,7 @@ begin
 end;
 
 procedure TfrmMain.CompileISSProject(const OperatingSystem: string;
-const onSuccess, onError: TProc);
+const onSuccess, onError: TProc; const EXESigning: Boolean);
 begin
   if TDProj2WinSetupProject.HasPlatform(OperatingSystem) then
     try
@@ -431,7 +515,7 @@ begin
                 OperatingSystem + ' doesn''t exist !');
 
             SetupFilePath := TDProj2WinSetupProject.GetSetupFilePath
-              (OperatingSystem);
+              (OperatingSystem, EXESigning);
             if tfile.Exists(SetupFilePath) then
               tfile.delete(SetupFilePath);
 
@@ -571,7 +655,7 @@ begin
 end;
 
 procedure TfrmMain.GenerateISSProject(const OperatingSystem: string;
-const onSuccess, onError: TProc);
+const onSuccess, onError: TProc; const EXESigning: Boolean);
 begin
   if TDProj2WinSetupProject.HasPlatform(OperatingSystem) then
     try
@@ -665,12 +749,12 @@ begin
             ISScript := ISScript + 'PrivilegesRequiredOverridesAllowed=dialog' +
               sLineBreak;
             ISScript := ISScript + 'OutputDir=' + tpath.GetDirectoryName
-              (TDProj2WinSetupProject.GetSetupFilePath(OperatingSystem)) +
-              sLineBreak;
+              (TDProj2WinSetupProject.GetSetupFilePath(OperatingSystem,
+              EXESigning)) + sLineBreak;
             ISScript := ISScript + 'OutputBaseFilename=' +
               tpath.GetFileNameWithoutExtension
-              (TDProj2WinSetupProject.GetSetupFilePath(OperatingSystem)) +
-              sLineBreak;
+              (TDProj2WinSetupProject.GetSetupFilePath(OperatingSystem,
+              EXESigning)) + sLineBreak;
             ISScript := ISScript + 'Compression=lzma' + sLineBreak;
             ISScript := ISScript + 'SolidCompression=yes' + sLineBreak;
             ISScript := ISScript + 'WizardStyle=modern' + sLineBreak;
@@ -704,9 +788,9 @@ begin
                 if tfile.Exists(tpath.combine(FilesToDeploy[i].Frompath,
                   FilesToDeploy[i].FromFileName)) then
                 begin
-                  if FilesToDeploy[i].FromFileName = tpath.GetFileName
+                  if (FilesToDeploy[i].FromFileName = tpath.GetFileName
                     (TDProj2WinSetupProject.GetProjectExecutableFileName
-                    (OperatingSystem)) then
+                    (OperatingSystem))) and EXESigning then
                     FilesToDeploy[i].FromFileName :=
                       tpath.GetFileNameWithoutExtension(FilesToDeploy[i]
                       .FromFileName) + '-signed.exe';
@@ -1192,7 +1276,7 @@ begin
               tconfig.ExeBulkSigningServerPort, tconfig.ExeBulkSigningAuthKey);
             try
               SetupFilePath := TDProj2WinSetupProject.GetSetupFilePath
-                (OperatingSystem);
+                (OperatingSystem, true);
               if tfile.Exists(SetupFilePath) then
                 EBSClient.SendFileToServer(TDProj2WinSetupProject.SignTitle +
                   ' (' + OperatingSystem + ' setup)',

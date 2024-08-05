@@ -297,10 +297,26 @@ object frmMain: TfrmMain
             Size.Width = 630.000000000000000000
             Size.Height = 40.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 6
+            TabOrder = 7
             Text = 'Sign all and generate install programs'
             TextSettings.Trimming = None
             OnClick = btnSignEXEAndGenerateSetupClick
+          end
+          object btnGenerateSetupWithoutSigning: TButton
+            Align = Top
+            Margins.Left = 5.000000000000000000
+            Margins.Top = 5.000000000000000000
+            Margins.Right = 5.000000000000000000
+            Margins.Bottom = 5.000000000000000000
+            Position.X = 5.000000000000000000
+            Position.Y = 253.000000000000000000
+            Size.Width = 630.000000000000000000
+            Size.Height = 40.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 6
+            Text = 'Generate install programs without signing'
+            TextSettings.Trimming = None
+            OnClick = btnGenerateSetupWithoutSigningClick
           end
         end
         object tiSetupWin32: TTabItem

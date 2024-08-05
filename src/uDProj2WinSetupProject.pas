@@ -1,3 +1,40 @@
+/// <summary>
+/// ***************************************************************************
+///
+/// DProj to Windows setup (DProj2WinSetup)
+///
+/// Copyright 2024 Patrick Prémartin under AGPL 3.0 license.
+///
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+/// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+/// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+/// DEALINGS IN THE SOFTWARE.
+///
+/// ***************************************************************************
+///
+/// DProj2WinSetup is a generator of installation programs for Windows
+/// software developed under Delphi (in a recent version).
+///
+/// ***************************************************************************
+///
+/// Author(s) :
+/// Patrick PREMARTIN
+///
+/// Site :
+/// https://dproj2winsetup.olfsoftware.fr/
+///
+/// Project site :
+/// https://github.com/DeveloppeurPascal/DProj2WinSetup
+///
+/// ***************************************************************************
+/// File last update : 2024-08-05T16:17:24.000+02:00
+/// Signature : 7db60e3f0b2e378c78efb135c7070cf4fff9a3e9
+/// ***************************************************************************
+/// </summary>
+
 unit uDProj2WinSetupProject;
 
 interface
@@ -63,7 +100,8 @@ type
       (Const ADProj2WinSetupProjectFileName: string): string;
     class function IsOpened: boolean;
     class function GetISSProjectFilePath(Const OperatingSystem: string): string;
-    class function GetSetupFilePath(Const OperatingSystem: string): string;
+    class function GetSetupFilePath(Const OperatingSystem: string;
+      const EXESigning: boolean): string;
     class function GetProjectExecutableFileName(const OperatingSystem
       : string): string;
     class function HasPlatform(const OperatingSystem: string): boolean;
@@ -212,11 +250,16 @@ begin
 end;
 
 class function TDProj2WinSetupProject.GetSetupFilePath(const OperatingSystem
-  : string): string;
+  : string; const EXESigning: boolean): string;
 begin
-  result := tpath.combine(tpath.GetTempPath,
-    tpath.GetFileNameWithoutExtension(DelphiProjectFileName) + '-' +
-    OperatingSystem + '-setup.exe');
+  if EXESigning then
+    result := tpath.combine(tpath.GetTempPath,
+      tpath.GetFileNameWithoutExtension(DelphiProjectFileName) + '-' +
+      OperatingSystem + '-setup.exe')
+  else
+    result := tpath.combine(tpath.GetDirectoryName(DelphiProjectFileName),
+      tpath.GetFileNameWithoutExtension(DelphiProjectFileName) + '-' +
+      OperatingSystem + '-setup.exe');
 end;
 
 class function TDProj2WinSetupProject.GetSignTitle: string;
