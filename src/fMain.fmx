@@ -13,8 +13,8 @@ object frmMain: TfrmMain
   DesignerMasterStyle = 0
   object OlfAboutDialog1: TOlfAboutDialog
     Titre = 'DProj2WinSetup'
-    VersionNumero = '1.0'
-    VersionDate = '20240512'
+    VersionNumero = '1.1'
+    VersionDate = '20240805'
     MultiResBitmap = <
       item
       end>
