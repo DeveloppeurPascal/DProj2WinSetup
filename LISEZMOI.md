@@ -32,7 +32,7 @@ Vous pouvez le télécharger et le rediffuser gratuitement à condition de ne pa
 
 Si vous utilisez régulièrement ce logiciel et en êtes satisfait vous êtes invité à en acheter une licence d'utilisateur final. L'achat d'une licence vous donnera accès aux mises à jour du logiciel en plus d'activer d'évenuelles fonctionnalités optionnelles.
 
-[Acheter une licence](https://olfsoftware.lemonsqueezy.com/buy/5d6328a0-4ccf-40e9-87b7-784ebfdc1440)
+[Acheter une licence](https://store.olfsoftware.fr/logiciels-pour-developpeurs-c-3/developpement-delphi-c-4/dproj-to-windows-setup-p-3)
 
 Vous pouvez aussi [consulter le site du logiciel](https://dproj2winsetup.olfsoftware.fr) pour en savoir plus sur son fonctionnement, accéder à des vidéos et articles, connaître les différentes versions disponibles et leurs fonctionnalités, contacter le support utilisateurs...
 
