@@ -801,8 +801,8 @@ begin
                   if FilesToDeploy[i].ToPath.IsEmpty then
                     ISScript := ISScript + ' DestDir: "{app}";'
                   else
-                    ISScript := ISScript + ' DestDir: "{app}\"' + FilesToDeploy
-                      [i].ToPath;
+                    ISScript := ISScript + ' DestDir: "{app}\' + FilesToDeploy
+                      [i].ToPath + '"';
 
                   ISScript := ISScript + ' DestName: "' + FilesToDeploy[i]
                     .ToFileName + '";';
