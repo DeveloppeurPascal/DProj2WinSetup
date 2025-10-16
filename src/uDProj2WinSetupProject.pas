@@ -1,39 +1,39 @@
-/// <summary>
-/// ***************************************************************************
-///
-/// DProj to Windows setup (DProj2WinSetup)
-///
-/// Copyright 2024 Patrick Prémartin under AGPL 3.0 license.
-///
-/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-/// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-/// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-/// DEALINGS IN THE SOFTWARE.
-///
-/// ***************************************************************************
-///
-/// DProj2WinSetup is a generator of installation programs for Windows
-/// software developed under Delphi (in a recent version).
-///
-/// ***************************************************************************
-///
-/// Author(s) :
-/// Patrick PREMARTIN
-///
-/// Site :
-/// https://dproj2winsetup.olfsoftware.fr/
-///
-/// Project site :
-/// https://github.com/DeveloppeurPascal/DProj2WinSetup
-///
-/// ***************************************************************************
-/// File last update : 2024-08-05T16:17:24.000+02:00
-/// Signature : 7db60e3f0b2e378c78efb135c7070cf4fff9a3e9
-/// ***************************************************************************
-/// </summary>
+(* C2PP
+  ***************************************************************************
+
+  DProj to Windows setup
+
+  Copyright 2024-2025 Patrick PREMARTIN under AGPL 3.0 license.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+  DEALINGS IN THE SOFTWARE.
+
+  ***************************************************************************
+
+  DProj2WinSetup is a generator of installation programs for Windows
+  software developed under Delphi (in a recent version).
+
+  ***************************************************************************
+
+  Author(s) :
+  Patrick PREMARTIN
+
+  Site :
+  https://dproj2winsetup.olfsoftware.fr
+
+  Project site :
+  https://github.com/DeveloppeurPascal/DProj2WinSetup
+
+  ***************************************************************************
+  File last update : 2025-10-16T15:26:00.124+02:00
+  Signature : b75ba54dbb06403453b6cb5f7534211c9b63742c
+  ***************************************************************************
+*)
 
 unit uDProj2WinSetupProject;
 
