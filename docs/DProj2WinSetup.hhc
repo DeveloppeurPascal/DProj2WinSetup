@@ -1,0 +1,927 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD>
+<BODY>
+    <OBJECT type="text/site properties">
+      <param name="Window Styles" value="0x800227">
+    </OBJECT>
+    <UL>      <LI> <OBJECT type="text/sitemap">
+          <param name="Name" value="DProj2WinSetup">
+          <param name="Local" value="DProj2WinSetup.html">
+          </OBJECT>
+          <UL>
+              <LI> <OBJECT type="text/sitemap">
+                  <param name="Name" value="fMain">
+                  <param name="Local" value="fMain.html">
+                  </OBJECT>
+                  <UL>
+                      <LI> <OBJECT type="text/sitemap">
+                          <param name="Name" value="Classes">
+                          </OBJECT>
+                          <UL>
+                              <LI> <OBJECT type="text/sitemap">
+                                  <param name="Name" value="TfrmMain">
+                                  <param name="Local" value="fMain.TfrmMain.html">
+                                  </OBJECT>
+                                  <UL>
+                                      <LI> <OBJECT type="text/sitemap">
+                                          <param name="Name" value="Methods">
+                                          </OBJECT>
+                                          <UL>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="BlockScreen">
+                                                  <param name="Local" value="fMain.TfrmMain.BlockScreen.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="CompileISSProject">
+                                                  <param name="Local" value="fMain.TfrmMain.CompileISSProject.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="DoEditChange">
+                                                  <param name="Local" value="fMain.TfrmMain.DoEditChange.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="FormCloseQuery">
+                                                  <param name="Local" value="fMain.TfrmMain.FormCloseQuery.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="FormCreate">
+                                                  <param name="Local" value="fMain.TfrmMain.FormCreate.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="GenerateISSProject">
+                                                  <param name="Local" value="fMain.TfrmMain.GenerateISSProject.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="HasProjectChanged">
+                                                  <param name="Local" value="fMain.TfrmMain.HasProjectChanged.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="HasProjectSettingsChanged">
+                                                  <param name="Local" value="fMain.TfrmMain.HasProjectSettingsChanged.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="HasWin32SettingsChanged">
+                                                  <param name="Local" value="fMain.TfrmMain.HasWin32SettingsChanged.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="HasWin64SettingsChanged">
+                                                  <param name="Local" value="fMain.TfrmMain.HasWin64SettingsChanged.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="InitAboutDialogBox">
+                                                  <param name="Local" value="fMain.TfrmMain.InitAboutDialogBox.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="InitMainFormCaption">
+                                                  <param name="Local" value="fMain.TfrmMain.InitMainFormCaption.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="InitProjectSettings">
+                                                  <param name="Local" value="fMain.TfrmMain.InitProjectSettings.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="InitWin32Settings">
+                                                  <param name="Local" value="fMain.TfrmMain.InitWin32Settings.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="InitWin64Settings">
+                                                  <param name="Local" value="fMain.TfrmMain.InitWin64Settings.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="OlfAboutDialog1URLClick">
+                                                  <param name="Local" value="fMain.TfrmMain.OlfAboutDialog1URLClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ReplaceCurrentGuidByANewOne">
+                                                  <param name="Local" value="fMain.TfrmMain.ReplaceCurrentGuidByANewOne.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="SaveProjectSettings">
+                                                  <param name="Local" value="fMain.TfrmMain.SaveProjectSettings.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="SaveWin32Settings">
+                                                  <param name="Local" value="fMain.TfrmMain.SaveWin32Settings.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="SaveWin64Settings">
+                                                  <param name="Local" value="fMain.TfrmMain.SaveWin64Settings.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="SignProjectExecutables">
+                                                  <param name="Local" value="fMain.TfrmMain.SignProjectExecutables.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="SignSetupExecutables">
+                                                  <param name="Local" value="fMain.TfrmMain.SignSetupExecutables.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="UpdateFileMenuOptionsVisibility">
+                                                  <param name="Local" value="fMain.TfrmMain.UpdateFileMenuOptionsVisibility.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnCompileISSWin32Click">
+                                                  <param name="Local" value="fMain.TfrmMain.btnCompileISSWin32Click.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnCompileISSWin64Click">
+                                                  <param name="Local" value="fMain.TfrmMain.btnCompileISSWin64Click.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnGenerateISSWin32Click">
+                                                  <param name="Local" value="fMain.TfrmMain.btnGenerateISSWin32Click.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnGenerateISSWin64Click">
+                                                  <param name="Local" value="fMain.TfrmMain.btnGenerateISSWin64Click.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnGenerateSetupWithoutSigningClick">
+                                                  <param name="Local" value="fMain.TfrmMain.btnGenerateSetupWithoutSigningClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnProjectCancelClick">
+                                                  <param name="Local" value="fMain.TfrmMain.btnProjectCancelClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnProjectSaveClick">
+                                                  <param name="Local" value="fMain.TfrmMain.btnProjectSaveClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnSendToExeBulkSigningClick">
+                                                  <param name="Local" value="fMain.TfrmMain.btnSendToExeBulkSigningClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnSignEXEAndGenerateSetupClick">
+                                                  <param name="Local" value="fMain.TfrmMain.btnSignEXEAndGenerateSetupClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnSignInnoSetupProgram64Click">
+                                                  <param name="Local" value="fMain.TfrmMain.btnSignInnoSetupProgram64Click.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnSignInnoSetupProgramWin32Click">
+                                                  <param name="Local" value="fMain.TfrmMain.btnSignInnoSetupProgramWin32Click.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnWin32CancelClick">
+                                                  <param name="Local" value="fMain.TfrmMain.btnWin32CancelClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnWin32GuidGenerateClick">
+                                                  <param name="Local" value="fMain.TfrmMain.btnWin32GuidGenerateClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnWin32SaveClick">
+                                                  <param name="Local" value="fMain.TfrmMain.btnWin32SaveClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnWin64CancelClick">
+                                                  <param name="Local" value="fMain.TfrmMain.btnWin64CancelClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnWin64GuidGenerateClick">
+                                                  <param name="Local" value="fMain.TfrmMain.btnWin64GuidGenerateClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnWin64SaveClick">
+                                                  <param name="Local" value="fMain.TfrmMain.btnWin64SaveClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuFileCloseClick">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuFileCloseClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuFileOpenClick">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuFileOpenClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuFileQuitClick">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuFileQuitClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuFileSaveClick">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuFileSaveClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuHelpAboutClick">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuHelpAboutClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuToolsOptionsClick">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuToolsOptionsClick.html">
+                                                  </OBJECT>
+                                          </UL>
+                                      <LI> <OBJECT type="text/sitemap">
+                                          <param name="Name" value="Fields">
+                                          </OBJECT>
+                                          <UL>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="GridPanelLayout1">
+                                                  <param name="Local" value="fMain.TfrmMain.GridPanelLayout1.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="GridPanelLayout2">
+                                                  <param name="Local" value="fMain.TfrmMain.GridPanelLayout2.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="GridPanelLayout3">
+                                                  <param name="Local" value="fMain.TfrmMain.GridPanelLayout3.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="MainMenu1">
+                                                  <param name="Local" value="fMain.TfrmMain.MainMenu1.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="OlfAboutDialog1">
+                                                  <param name="Local" value="fMain.TfrmMain.OlfAboutDialog1.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="OpenDialog1">
+                                                  <param name="Local" value="fMain.TfrmMain.OpenDialog1.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="aniBlockScreen">
+                                                  <param name="Local" value="fMain.TfrmMain.aniBlockScreen.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnCompileISSWin32">
+                                                  <param name="Local" value="fMain.TfrmMain.btnCompileISSWin32.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnCompileISSWin64">
+                                                  <param name="Local" value="fMain.TfrmMain.btnCompileISSWin64.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnGenerateISSWin32">
+                                                  <param name="Local" value="fMain.TfrmMain.btnGenerateISSWin32.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnGenerateISSWin64">
+                                                  <param name="Local" value="fMain.TfrmMain.btnGenerateISSWin64.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnGenerateSetupWithoutSigning">
+                                                  <param name="Local" value="fMain.TfrmMain.btnGenerateSetupWithoutSigning.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnProjectCancel">
+                                                  <param name="Local" value="fMain.TfrmMain.btnProjectCancel.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnProjectOpen">
+                                                  <param name="Local" value="fMain.TfrmMain.btnProjectOpen.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnProjectSave">
+                                                  <param name="Local" value="fMain.TfrmMain.btnProjectSave.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnSendToExeBulkSigning">
+                                                  <param name="Local" value="fMain.TfrmMain.btnSendToExeBulkSigning.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnSignEXEAndGenerateSetup">
+                                                  <param name="Local" value="fMain.TfrmMain.btnSignEXEAndGenerateSetup.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnSignInnoSetupProgram64">
+                                                  <param name="Local" value="fMain.TfrmMain.btnSignInnoSetupProgram64.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnSignInnoSetupProgramWin32">
+                                                  <param name="Local" value="fMain.TfrmMain.btnSignInnoSetupProgramWin32.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnWin32Cancel">
+                                                  <param name="Local" value="fMain.TfrmMain.btnWin32Cancel.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnWin32GuidGenerate">
+                                                  <param name="Local" value="fMain.TfrmMain.btnWin32GuidGenerate.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnWin32Save">
+                                                  <param name="Local" value="fMain.TfrmMain.btnWin32Save.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnWin64Cancel">
+                                                  <param name="Local" value="fMain.TfrmMain.btnWin64Cancel.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnWin64GuidGenerate">
+                                                  <param name="Local" value="fMain.TfrmMain.btnWin64GuidGenerate.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnWin64Save">
+                                                  <param name="Local" value="fMain.TfrmMain.btnWin64Save.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtSignTitle">
+                                                  <param name="Local" value="fMain.TfrmMain.edtSignTitle.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtSignURL">
+                                                  <param name="Local" value="fMain.TfrmMain.edtSignURL.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtWin32Guid">
+                                                  <param name="Local" value="fMain.TfrmMain.edtWin32Guid.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtWin32Publisher">
+                                                  <param name="Local" value="fMain.TfrmMain.edtWin32Publisher.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtWin32Title">
+                                                  <param name="Local" value="fMain.TfrmMain.edtWin32Title.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtWin32URL">
+                                                  <param name="Local" value="fMain.TfrmMain.edtWin32URL.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtWin32Version">
+                                                  <param name="Local" value="fMain.TfrmMain.edtWin32Version.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtWin64Guid">
+                                                  <param name="Local" value="fMain.TfrmMain.edtWin64Guid.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtWin64Publisher">
+                                                  <param name="Local" value="fMain.TfrmMain.edtWin64Publisher.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtWin64Title">
+                                                  <param name="Local" value="fMain.TfrmMain.edtWin64Title.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtWin64URL">
+                                                  <param name="Local" value="fMain.TfrmMain.edtWin64URL.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtWin64Version">
+                                                  <param name="Local" value="fMain.TfrmMain.edtWin64Version.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lBlockScreen">
+                                                  <param name="Local" value="fMain.TfrmMain.lBlockScreen.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblSignTitle">
+                                                  <param name="Local" value="fMain.TfrmMain.lblSignTitle.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblSignURL">
+                                                  <param name="Local" value="fMain.TfrmMain.lblSignURL.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblWin32Guid">
+                                                  <param name="Local" value="fMain.TfrmMain.lblWin32Guid.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblWin32Publisher">
+                                                  <param name="Local" value="fMain.TfrmMain.lblWin32Publisher.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblWin32Title">
+                                                  <param name="Local" value="fMain.TfrmMain.lblWin32Title.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblWin32URL">
+                                                  <param name="Local" value="fMain.TfrmMain.lblWin32URL.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblWin32Version">
+                                                  <param name="Local" value="fMain.TfrmMain.lblWin32Version.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblWin64Guid">
+                                                  <param name="Local" value="fMain.TfrmMain.lblWin64Guid.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblWin64Publisher">
+                                                  <param name="Local" value="fMain.TfrmMain.lblWin64Publisher.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblWin64Title">
+                                                  <param name="Local" value="fMain.TfrmMain.lblWin64Title.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblWin64URL">
+                                                  <param name="Local" value="fMain.TfrmMain.lblWin64URL.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblWin64Version">
+                                                  <param name="Local" value="fMain.TfrmMain.lblWin64Version.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuFile">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuFile.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuFileClose">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuFileClose.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuFileOpen">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuFileOpen.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuFileQuit">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuFileQuit.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuFileSave">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuFileSave.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuHelp">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuHelp.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuHelpAbout">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuHelpAbout.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuSeparator">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuSeparator.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuTools">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuTools.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="mnuToolsOptions">
+                                                  <param name="Local" value="fMain.TfrmMain.mnuToolsOptions.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="rBlockScreen">
+                                                  <param name="Local" value="fMain.TfrmMain.rBlockScreen.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="tcProject">
+                                                  <param name="Local" value="fMain.TfrmMain.tcProject.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="tcScreens">
+                                                  <param name="Local" value="fMain.TfrmMain.tcScreens.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="tiHome">
+                                                  <param name="Local" value="fMain.TfrmMain.tiHome.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="tiProject">
+                                                  <param name="Local" value="fMain.TfrmMain.tiProject.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="tiProjectOptions">
+                                                  <param name="Local" value="fMain.TfrmMain.tiProjectOptions.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="tiSetupWin32">
+                                                  <param name="Local" value="fMain.TfrmMain.tiSetupWin32.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="tiSetupWin64">
+                                                  <param name="Local" value="fMain.TfrmMain.tiSetupWin64.html">
+                                                  </OBJECT>
+                                          </UL>
+                                  </UL>
+                          </UL>
+                      <LI> <OBJECT type="text/sitemap">
+                          <param name="Name" value="Variables">
+                          </OBJECT>
+                          <UL>
+                              <LI> <OBJECT type="text/sitemap">
+                                  <param name="Name" value="frmMain">
+                                  <param name="Local" value="fMain.frmMain.html">
+                                  </OBJECT>
+                          </UL>
+                  </UL>
+              <LI> <OBJECT type="text/sitemap">
+                  <param name="Name" value="fOptions">
+                  <param name="Local" value="fOptions.html">
+                  </OBJECT>
+                  <UL>
+                      <LI> <OBJECT type="text/sitemap">
+                          <param name="Name" value="Classes">
+                          </OBJECT>
+                          <UL>
+                              <LI> <OBJECT type="text/sitemap">
+                                  <param name="Name" value="TfrmOptions">
+                                  <param name="Local" value="fOptions.TfrmOptions.html">
+                                  </OBJECT>
+                                  <UL>
+                                      <LI> <OBJECT type="text/sitemap">
+                                          <param name="Name" value="Methods">
+                                          </OBJECT>
+                                          <UL>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="FormCloseQuery">
+                                                  <param name="Local" value="fOptions.TfrmOptions.FormCloseQuery.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="FormCreate">
+                                                  <param name="Local" value="fOptions.TfrmOptions.FormCreate.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnCloseClick">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnCloseClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnEBSCancelClick">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnEBSCancelClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnEBSDownloadClick">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnEBSDownloadClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnEBSSaveClick">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnEBSSaveClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnEBSTestConnectionClick">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnEBSTestConnectionClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnISCancelClick">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnISCancelClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnISDownloadClick">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnISDownloadClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnISPathSelectClick">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnISPathSelectClick.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnISSaveClick">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnISSaveClick.html">
+                                                  </OBJECT>
+                                          </UL>
+                                      <LI> <OBJECT type="text/sitemap">
+                                          <param name="Name" value="Fields">
+                                          </OBJECT>
+                                          <UL>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="Layout1">
+                                                  <param name="Local" value="fOptions.TfrmOptions.Layout1.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="PasswordEditButton1">
+                                                  <param name="Local" value="fOptions.TfrmOptions.PasswordEditButton1.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="TabControl1">
+                                                  <param name="Local" value="fOptions.TfrmOptions.TabControl1.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnClose">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnClose.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnEBSCancel">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnEBSCancel.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnEBSDownload">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnEBSDownload.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnEBSSave">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnEBSSave.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnEBSTestConnection">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnEBSTestConnection.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnISCancel">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnISCancel.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnISDownload">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnISDownload.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnISPathSelect">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnISPathSelect.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="btnISSave">
+                                                  <param name="Local" value="fOptions.TfrmOptions.btnISSave.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtEBSAuthKey">
+                                                  <param name="Local" value="fOptions.TfrmOptions.edtEBSAuthKey.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtEBSServerIP">
+                                                  <param name="Local" value="fOptions.TfrmOptions.edtEBSServerIP.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtEBSServerPort">
+                                                  <param name="Local" value="fOptions.TfrmOptions.edtEBSServerPort.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="edtISPath">
+                                                  <param name="Local" value="fOptions.TfrmOptions.edtISPath.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="gplEBSSaveCancel">
+                                                  <param name="Local" value="fOptions.TfrmOptions.gplEBSSaveCancel.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="gplISSaveCancel">
+                                                  <param name="Local" value="fOptions.TfrmOptions.gplISSaveCancel.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblEBSAuthKey">
+                                                  <param name="Local" value="fOptions.TfrmOptions.lblEBSAuthKey.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblEBSDownload">
+                                                  <param name="Local" value="fOptions.TfrmOptions.lblEBSDownload.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblEBSServerIP">
+                                                  <param name="Local" value="fOptions.TfrmOptions.lblEBSServerIP.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblEBSServerPort">
+                                                  <param name="Local" value="fOptions.TfrmOptions.lblEBSServerPort.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblISDownload">
+                                                  <param name="Local" value="fOptions.TfrmOptions.lblISDownload.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="lblISPath">
+                                                  <param name="Local" value="fOptions.TfrmOptions.lblISPath.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="odISCC">
+                                                  <param name="Local" value="fOptions.TfrmOptions.odISCC.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="tiExeBulkSigning">
+                                                  <param name="Local" value="fOptions.TfrmOptions.tiExeBulkSigning.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="tiInnoSetup">
+                                                  <param name="Local" value="fOptions.TfrmOptions.tiInnoSetup.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="vsbExeBulkSigning">
+                                                  <param name="Local" value="fOptions.TfrmOptions.vsbExeBulkSigning.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="vsbInnoSetup">
+                                                  <param name="Local" value="fOptions.TfrmOptions.vsbInnoSetup.html">
+                                                  </OBJECT>
+                                          </UL>
+                                  </UL>
+                          </UL>
+                  </UL>
+              <LI> <OBJECT type="text/sitemap">
+                  <param name="Name" value="uConfig">
+                  <param name="Local" value="uConfig.html">
+                  </OBJECT>
+                  <UL>
+                      <LI> <OBJECT type="text/sitemap">
+                          <param name="Name" value="Classes">
+                          </OBJECT>
+                          <UL>
+                              <LI> <OBJECT type="text/sitemap">
+                                  <param name="Name" value="TConfig">
+                                  <param name="Local" value="uConfig.TConfig.html">
+                                  </OBJECT>
+                                  <UL>
+                                      <LI> <OBJECT type="text/sitemap">
+                                          <param name="Name" value="Properties">
+                                          </OBJECT>
+                                          <UL>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ExeBulkSigningAuthKey">
+                                                  <param name="Local" value="uConfig.TConfig.ExeBulkSigningAuthKey.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ExeBulkSigningServerIP">
+                                                  <param name="Local" value="uConfig.TConfig.ExeBulkSigningServerIP.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ExeBulkSigningServerPort">
+                                                  <param name="Local" value="uConfig.TConfig.ExeBulkSigningServerPort.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="InnoSetupCompilerPath">
+                                                  <param name="Local" value="uConfig.TConfig.InnoSetupCompilerPath.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="InnoSetupCompilerPathByDefault">
+                                                  <param name="Local" value="uConfig.TConfig.InnoSetupCompilerPathByDefault.html">
+                                                  </OBJECT>
+                                          </UL>
+                                      <LI> <OBJECT type="text/sitemap">
+                                          <param name="Name" value="Methods">
+                                          </OBJECT>
+                                          <UL>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="Cancel">
+                                                  <param name="Local" value="uConfig.TConfig.Cancel.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="Save">
+                                                  <param name="Local" value="uConfig.TConfig.Save.html">
+                                                  </OBJECT>
+                                          </UL>
+                                  </UL>
+                          </UL>
+                  </UL>
+              <LI> <OBJECT type="text/sitemap">
+                  <param name="Name" value="uDMLogo">
+                  <param name="Local" value="uDMLogo.html">
+                  </OBJECT>
+                  <UL>
+                      <LI> <OBJECT type="text/sitemap">
+                          <param name="Name" value="Classes">
+                          </OBJECT>
+                          <UL>
+                              <LI> <OBJECT type="text/sitemap">
+                                  <param name="Name" value="TdmLogo">
+                                  <param name="Local" value="uDMLogo.TdmLogo.html">
+                                  </OBJECT>
+                                  <UL>
+                                      <LI> <OBJECT type="text/sitemap">
+                                          <param name="Name" value="Fields">
+                                          </OBJECT>
+                                          <UL>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="imgLogo">
+                                                  <param name="Local" value="uDMLogo.TdmLogo.imgLogo.html">
+                                                  </OBJECT>
+                                          </UL>
+                                  </UL>
+                          </UL>
+                      <LI> <OBJECT type="text/sitemap">
+                          <param name="Name" value="Variables">
+                          </OBJECT>
+                          <UL>
+                              <LI> <OBJECT type="text/sitemap">
+                                  <param name="Name" value="dmLogo">
+                                  <param name="Local" value="uDMLogo.dmLogo.html">
+                                  </OBJECT>
+                          </UL>
+                  </UL>
+              <LI> <OBJECT type="text/sitemap">
+                  <param name="Name" value="uDProj2WinSetupProject">
+                  <param name="Local" value="uDProj2WinSetupProject.html">
+                  </OBJECT>
+                  <UL>
+                      <LI> <OBJECT type="text/sitemap">
+                          <param name="Name" value="Classes">
+                          </OBJECT>
+                          <UL>
+                              <LI> <OBJECT type="text/sitemap">
+                                  <param name="Name" value="TDProj2WinSetupProject">
+                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.html">
+                                  </OBJECT>
+                                  <UL>
+                                      <LI> <OBJECT type="text/sitemap">
+                                          <param name="Name" value="Properties">
+                                          </OBJECT>
+                                          <UL>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="DProj2WinSetupProjectFileName">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.DProj2WinSetupProjectFileName.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="DelphiProjectFileName">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.DelphiProjectFileName.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ISGUID32">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.ISGUID32.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ISGUID64">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.ISGUID64.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ISPublisher32">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.ISPublisher32.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ISPublisher64">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.ISPublisher64.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ISTitle32">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.ISTitle32.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ISTitle64">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.ISTitle64.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ISURL32">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.ISURL32.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ISURL64">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.ISURL64.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ISVersion32">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.ISVersion32.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="ISVersion64">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.ISVersion64.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="SignTitle">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.SignTitle.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="SignURL">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.SignURL.html">
+                                                  </OBJECT>
+                                          </UL>
+                                      <LI> <OBJECT type="text/sitemap">
+                                          <param name="Name" value="Methods">
+                                          </OBJECT>
+                                          <UL>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="Close">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.Close.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="CreateFromFile">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.CreateFromFile.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="GetDProj2WinSetupProjectFileNameFromDelphiProjectFileName">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.GetDProj2WinSetupProjectFileNameFromDelphiProjectFileName.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="GetDelphiProjectFileNameFromDProj2WinSetupProjectFileName">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.GetDelphiProjectFileNameFromDProj2WinSetupProjectFileName.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="GetFilesToDeploy">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.GetFilesToDeploy.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="GetISSProjectFilePath">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.GetISSProjectFilePath.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="GetProjectExecutableFileName">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.GetProjectExecutableFileName.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="GetSetupFilePath">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.GetSetupFilePath.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="HasPlatform">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.HasPlatform.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="HasWin32Platform">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.HasWin32Platform.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="HasWin64Platform">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.HasWin64Platform.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="IsOpened">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.IsOpened.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="LoadFromFile">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.LoadFromFile.html">
+                                                  </OBJECT>
+                                              <LI> <OBJECT type="text/sitemap">
+                                                  <param name="Name" value="Save">
+                                                  <param name="Local" value="uDProj2WinSetupProject.TDProj2WinSetupProject.Save.html">
+                                                  </OBJECT>
+                                          </UL>
+                                  </UL>
+                          </UL>
+                  </UL>
+          </UL>
+    </UL>
+</BODY>
+</HTML>
